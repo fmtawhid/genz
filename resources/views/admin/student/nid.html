@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                outline: 0;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+
+            .front {
+                height: 640px;
+                width: 450px;
+                overflow: hidden;
+                position: relative;
+                border: solid 1px black;
+                display: flex;
+                justify-content: center;
+            }
+
+            .front .header-gradient {
+                height: 500px;
+                width: 500px;
+                transform: rotate(45deg);
+                background: linear-gradient(
+                    45deg,
+                    #be4a19,
+                    #f2b22e,
+                    #f2b22e,
+                    #be4a19
+                );
+                position: absolute;
+                top: -300px;
+            }
+            .front .header-gradientb {
+                height: 378px;
+                width: 500px;
+                /* transform: rotate(45deg); */
+                background: linear-gradient(
+                    45deg,
+                    #be4a19,
+                    #f2b22e,
+                    #f2b22e,
+                    #be4a19
+                );
+                position: absolute;
+                top: -300px;
+            }
+
+            .front .card-content {
+                position: relative;
+                z-index: 20;
+                padding-left: 50px;
+                padding-right: 50px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+
+            .front .card-content .logo {
+                height: 75px;
+                width: 75px;
+            }
+
+            .front .card-content .image-container-main {
+                display: inline-block;
+            }
+
+            .front .card-content .image-container {
+                background: linear-gradient(
+                    to right,
+                    #be4a19,
+                    #be4a19,
+                    #f2b22e,
+                    #f2b22e,
+                    #f2b22e,
+                    #be4a19,
+                    #be4a19
+                );
+                display: flex;
+                padding: 3px;
+                margin-top: 5px;
+            }
+
+            .front .card-content .image {
+                height: 165px;
+                width: 140px;
+            }
+
+            .front .card-content h1 {
+                color: white;
+                font-size: 30px;
+                text-align: center;
+            }
+
+            .front .card-content h3 {
+                color: #be4a19;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            .t {
+                color: #be4a19;
+                font-family: sans-serif;
+                text-align: center;
+                font-size: 38px;
+            }
+
+            .front .card-content h2 {
+                font-family: sans-serif;
+                font-weight: bold;
+                text-align: center;
+                color: #be4a19;
+                margin-top: 10px;
+                font-size: 25px;
+            }
+
+            .front .card-content .content-details {
+                display: flex;
+                justify-content: start;
+                font-weight: bold;
+                font-size: 20px;
+                margin-top: 30px;
+                gap: 20px;
+            }
+
+            .front .card-content .content-details .blood {
+                color: red;
+            }
+
+            .front .card-content .sign-content {
+                display: block;
+                flex-direction: column;
+                align-items: end;
+                text-align: end;
+                margin-top: 80px;
+                margin-right: -220px;
+            }
+
+            .front .card-content .sign {
+                border-top: solid 1px black;
+                font-size: 20px;
+            }
+
+            .front .footer-gradient {
+                height: 20px;
+                width: 480px;
+                background: linear-gradient(
+                    to right,
+                    #be4a19,
+                    #be4a19,
+                    #f2b22e,
+                    #f2b22e,
+                    #f2b22e,
+                    #be4a19,
+                    #be4a19
+                );
+                position: absolute;
+                bottom: 0;
+                z-index: 10;
+            }
+
+            .front .footer-corners {
+                position: absolute;
+                bottom: -50px;
+                display: flex;
+                width: 130%;
+                justify-content: space-between;
+            }
+
+            .front .footer-corners .right-corner {
+                background: #be4a19;
+                transform: rotate(45deg);
+                height: 110px;
+                width: 110px;
+            }
+
+            .front .footer-corners .left-corner {
+                background: #be4a19;
+                transform: rotate(45deg);
+                height: 110px;
+                width: 110px;
+            }
+        </style>
+        <title>ID Card</title>
+    </head>
+
+    <body>
+
+        <section class="front">
+            <div class="header-gradient"></div>
+            <div class="card-content">
+                <img
+                    class="logo"
+                    src="http://localhost/talimulislam/public/assets/img/logo.svg"
+                    alt="logo"
+                />
+                <h1>Talimul Islam School & Madrasa</h1>
+                <div class="image-container-main">
+                    <div class="image-container">
+                        <img
+                            class="image"
+                            src="http://localhost/talimulislam/public/assets/img/mamun.jpeg"
+                            alt="image"
+                        />
+                    </div>
+                </div>
+                <h2>MD. LOKMAN HOSSAIN MBS</h2>
+                <h3>Assistant Teacher</h3>
+                <div class="content-details">
+                    <div>
+                        <p>ID No</p>
+                        <p>Mobile No</p>
+                        <p>Blood Group</p>
+                    </div>
+                    <div>
+                        <p>: 024-2006</p>
+                        <p>: 01723-631205</p>
+                        <p>: <span class="blood">B+</span></p>
+                    </div>
+                </div>
+                <div class="sign-content">
+                    <span class="sign">Signature</span>
+                </div>
+            </div>
+            <div class="footer-gradient"></div>
+            <div class="footer-corners">
+                <div class="right-corner"></div>
+                <div class="left-corner"></div>
+            </div>
+        </section>
+
+
+
+
+
+
+        <section class="front" style="margin-left: 10px">
+            <div class="header-gradientb"></div>
+            <div style="margin-top: 100px; padding: 10px">
+                <h1 style="font-size: 40px; text-align: center">
+                    If lost Please return to the following address:
+                </h1>
+                <img
+                    class="logo"
+                    src="http://localhost/talimulislam/public/assets/img/logo.svg"
+                    alt="logo"
+                    style="width: 125px; margin-top: 20px; margin-left: 155px"
+                />
+                <h2 class="t">Talimul Islam School & Madrasa</h2>
+
+                <div style="text-align: center; margin-top: 26px; font-size: 20px;">
+                    <h3>C&B Road, Sadar, Dinajpur</h3>
+                    <h3>Mobile: +88 01322-926843</h3>
+                    <h3>Email: talimulislamdnj@gmail.com</h3>
+                </div>
+            </div>
+            <div class="footer-gradient"></div>
+            <div class="footer-corners">
+                <div class="right-corner"></div>
+                <div class="left-corner"></div>
+            </div>
+        </section>
+    </body>
+</html>
