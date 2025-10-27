@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>@yield('title', 'Creative IT - Tailwind Responsive Template')</title>
-  <meta name="description" content="Responsive Tailwind template based on Creative IT homepage" />
+  <title>@yield('title', 'GenZ IT - Tailwind Responsive Template')</title>
+  <meta name="description" content="Responsive Tailwind template based on GenZ IT homepage" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -29,7 +29,7 @@
       <div class="flex items-center justify-between py-4">
         <a href="{{ url('/') }}" class="flex items-center gap-3">
           <img src="https://placehold.co/48x48?text=CI" alt="logo" class="h-10 w-10 rounded-md object-cover" />
-          <span class="font-semibold text-lg">Creative IT</span>
+          <span class="font-semibold text-lg">GenZ IT</span>
         </a>
 
         <!-- Desktop nav -->
@@ -76,7 +76,7 @@
   <footer id="contact" class="bg-slate-900 text-slate-200 py-12 mt-12">
     <div class="container mx-auto px-4 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-6">
       <div>
-        <h5 class="font-bold text-white">Creative IT</h5>
+        <h5 class="font-bold text-white">GenZ IT</h5>
         <p class="text-sm text-slate-400 mt-2">Address, phone, email here. Social links.</p>
       </div>
       <div>
@@ -106,7 +106,7 @@
 
     <div class="container mx-auto px-4 lg:px-8 mt-8 border-t border-slate-800 pt-6 text-sm text-slate-500">
       <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-        <div>© 2025 Creative IT. All rights reserved.</div>
+        <div>© 2025 GenZ IT. All rights reserved.</div>
         <div class="flex items-center gap-4">
           <a href="#" class="hover:text-white">Facebook</a>
           <a href="#" class="hover:text-white">YouTube</a>

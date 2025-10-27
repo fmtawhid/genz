@@ -176,22 +176,6 @@
     </div>
   </section>
 
-  <!-- App download -->
-  <section class="bg-white border-t py-10">
-    <div class="container mx-auto px-4 lg:px-8 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-      <div>
-        <h4 class="text-xl font-bold">Download the Creative IT App</h4>
-        <p class="text-slate-600 mt-2">Learn anytime, anywhere. Track your progress and access classes on mobile.</p>
-        <div class="mt-4 flex gap-3">
-          <a href="#" class="inline-flex items-center gap-2 border px-4 py-2 rounded">App Store</a>
-          <a href="#" class="inline-flex items-center gap-2 border px-4 py-2 rounded">Google Play</a>
-        </div>
-      </div>
-      <div class="flex justify-center lg:justify-end">
-        <img src="https://placehold.co/320x360?text=App+Mockup" alt="app" class="rounded-lg shadow" />
-      </div>
-    </div>
-  </section>
 
   <!-- Features -->
   <section class="container mx-auto px-4 lg:px-8 py-12">
