@@ -21,23 +21,23 @@ class Student extends Model
         'district',
        
         'bibag_id',
-        'roll_number',
         'type',
         'email',
         'emergency_contact',
         'date_of_birth',
         'image',
         'gender',
-        'section_id',
         'slug',
 
     ];
 
-    // app/Models/Student.php
 
-    // app/Models/Student.php
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_student')->withTimestamps();
+    }
 
-
+    
     public function attachments()
     {
         return $this->hasMany(StudentAttachment::class);

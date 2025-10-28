@@ -23,7 +23,7 @@
 </head>
 
 <body>
-    <h2>Nurani Talimul Quran Madrasha</h2>
+    <h2>Gen-Z IT Institute</h2>
     <h2>Payments Report</h2>
     <p>From Date: {{ $fromDate ?? 'N/A' }}</p>
     <p>To Date: {{ $toDate ?? 'N/A' }}</p>

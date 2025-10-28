@@ -125,7 +125,7 @@
                         <!-- Dynamically updated message will appear here -->
                         Enter your message to see it on the screen.
                         <br><br>
-                        <span class="">Talimul Islam School and Madrasha</span>
+                        <span class="">Gen-Z IT Institute</span>
                     </div>
 
                     <!-- Icons placed inside the screen -->
@@ -299,12 +299,12 @@
             // function updateMessage() {
             //     var message = document.querySelector('textarea[name="message"]').value;
             //     var messageDiv = document.getElementById('mobile-message');
-            //     messageDiv.innerHTML = message + "<br><br><span class=''>Talimul Islam School and Madrasha</span>";
+            //     messageDiv.innerHTML = message + "<br><br><span class=''>Gen-Z IT Institute</span>";
             // }
             function updateMessage() {
                 var message = document.querySelector('textarea[name="message"]').value;
                 var messageDiv = document.getElementById('mobile-message');
-                messageDiv.innerHTML = message + "<br><br><span class=''>Talimul Islam School and Madrasha</span>";
+                messageDiv.innerHTML = message + "<br><br><span class=''>Gen-Z IT Institute</span>";
 
                 var charCount = 160 - message.length;
                 var charCountElement = document.getElementById('charCount');

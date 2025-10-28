@@ -34,7 +34,7 @@ class SmsController extends Controller
         ]);
 
         $phoneNumbers = explode(',', $request->input('phone_number'));  // Separate the phone numbers by comma
-        $message = $request->input('message') . "\n\nTalimul Islam School and Madrasha";
+        $message = $request->input('message') . "\n\nGen-Z IT Institute";
 
         // Loop through each phone number and send SMS
         foreach ($phoneNumbers as $phoneNumber) {

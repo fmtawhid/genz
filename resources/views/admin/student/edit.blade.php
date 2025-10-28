@@ -88,29 +88,6 @@
                         </div>
 
                         <div class="row">
-                            <!-- Mobile -->
-                            
-                            <div class="mb-3 col-md-6">
-                                <label for="mother_name" class="form-label">Mother Name </label>
-                                <input class="form-control" name="mother_name" value="{{ old('mother_name', $student->mother_name) }}" type="text"
-                                    id="mother_name" placeholder="Enter Mother Number">
-                                @error('mother_name')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="mother_phone" class="form-label">Mother Phone Number </label>
-                                <input class="form-control" name="mother_phone" value="{{ old('mother_phone', $student->mother_phone) }}" type="text"
-                                    id="mother_phone" placeholder="Enter Mother Number">
-                                @error('mother_phone')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-
-                            
-                        </div>
-                        <div class="row">
                             <div class="mb-3 col-md-4">
                                 <label for="bibag_id" class="form-label">Bibhag  </label>
                                 <select class="form-control select2" id="bibag_id" name="bibag_id" style="width: 100%;">
@@ -150,35 +127,6 @@
                         </div>
                         
 
-                        <div class="row">
-                            <!-- Academic Session -->
-                            <div class="mb-3 col-md-6">
-                                <label for="academic_session" class="form-label">Academic Session  </label>
-                                <input class="form-control" name="academic_session"
-                                    value="{{ old('academic_session', $student->academic_session) }}" type="text" id="academic_session"
-                                    placeholder="e.g., 2023-2024" required>
-                                @error('academic_session')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3 col-md-6">
-                                <label for="sreni_id" class="form-label">Class  </label>
-                                <select class="form-control select2" id="sreni_id" name="sreni_id" style="width: 100%;"
-                                    >
-                                    <option selected="selected" value="">Select Class</option>
-                                    @foreach ($srenis as $sreni)
-                                        <option {{ $sreni->id == old('sreni_id', $student->sreni_id) ? 'selected' : '' }}
-                                            value="{{ $sreni->id }}">
-                                            {{ $sreni->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('sreni_id')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        </div>
 
                         <div class="row">
                             <!-- Gender -->
@@ -194,17 +142,16 @@
                                     <div class="text-danger my-2">{{ $message }}</div>
                                 @enderror
                             </div>
-
-                            <!-- Roll Number -->
                             <div class="mb-3 col-md-6">
-                                <label for="roll_number" class="form-label">Roll Number  </label>
-                                <input type="number" class="form-control" name="roll_number"
-                                    value="{{ old('roll_number', $student->roll_number) }}" placeholder="Enter Roll Number" id="roll_number">
-                                                              
-                                @error('roll_number')
+                                <label for="emergency_contact" class="form-label">Whatsapp Number </label>
+                                <input class="form-control" name="emergency_contact" type="text"
+                                    id="emergency_contact" value="{{ old('emergency_contact', $student->emergency_contact) }}"
+                                    placeholder="Enter Whatsapp Number">
+                                @error('emergency_contact')
                                     <div class="text-danger my-2">{{ $message }}</div>
                                 @enderror
-                            </div>                            
+                            </div>
+                                                      
                         </div>
  
                         <div class="row">
@@ -229,48 +176,6 @@
                             </div>
                         </div>
 
-                        <!-- Whatsapp Number -->
-                        <div class="row">
-                            <div class="mb-3 col-md-6">
-                                <label for="emergency_contact" class="form-label">Whatsapp Number </label>
-                                <input class="form-control" name="emergency_contact" type="text"
-                                    id="emergency_contact" value="{{ old('emergency_contact', $student->emergency_contact) }}"
-                                    placeholder="Enter Whatsapp Number">
-                                @error('emergency_contact')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="mb-3 col-md-6">
-                                <label for="section_id" class="form-label">Section</label>
-                                <select class="form-control select2" id="section_id" name="section_id">
-                                    <option value="">Select Section</option>
-                                    @foreach ($sections as $section)
-                                        <option value="{{ $section->id }}" {{ old('section_id', $student->section_id ?? '') == $section->id ? 'selected' : '' }}>
-                                            {{ $section->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <!-- Select Services -->
-                            <div class="mb-3 col-md-12">
-                                <label>Select Services</label>
-                                <div>
-                                    @foreach($optionalServices as $service)
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" name="services[]" value="{{ $service->id }}"
-                                                id="service_{{ $service->id }}"
-                                                {{ in_array($service->id, json_decode($student->services) ?: []) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="service_{{ $service->id }}">
-                                                {{ $service->service_type }} ({{ $service->amount }})
-                                            </label>
-                                        </div>
-                                    @endforeach
-
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="row">
                             <!-- Image Upload -->
@@ -350,110 +255,91 @@
     </div>
 
 @endsection
-
 @section('scripts')
-    <script>
-        $("#dhakila_date").flatpickr({
-            dateFormat: "d-m-Y"
-        });
+<script>
+$("#dhakila_date").flatpickr({ dateFormat: "d-m-Y" });
 
-        Dropzone.autoDiscover = false;
-        $(document).ready(function() {
-            var selectedFiles = [];
+Dropzone.autoDiscover = false;
 
-            var dropzone = new Dropzone("#attachmentsDropzone", {
-                url: "#", // No upload URL since we'll handle files on form submission
-                autoProcessQueue: false,
-                uploadMultiple: false,
-                parallelUploads: 10,
-                maxFilesize: 0.5, // MB
-                acceptedFiles: 'image/*,.pdf',
-                addRemoveLinks: true,
-                dictDefaultMessage: "Drag and drop files here or click to upload.",
-                init: function() {
-                    var dz = this;
+$(document).ready(function () {
+    var selectedFiles = [];
 
-                    dz.on("addedfile", function(file) {
-                        if (selectedFiles.length >= 10) {
-                            dz.removeFile(file);
-                            toastr.warning('Maximum 10 files are allowed.');
-                        } else {
-                            selectedFiles.push(file);
-                        }
-                    });
+    // Dropzone setup
+    var dropzone = new Dropzone("#attachmentsDropzone", {
+        url: "#",
+        autoProcessQueue: false,
+        maxFilesize: 0.5,
+        acceptedFiles: 'image/*,.pdf',
+        addRemoveLinks: true,
+        init: function () {
+            var dz = this;
 
-                    dz.on("removedfile", function(file) {
-                        var index = selectedFiles.indexOf(file);
-                        if (index > -1) {
-                            selectedFiles.splice(index, 1);
-                        }
-                    });
+            dz.on("addedfile", function (file) {
+                if (selectedFiles.length >= 10) {
+                    dz.removeFile(file);
+                    toastr.warning('Maximum 10 files allowed.');
+                } else {
+                    selectedFiles.push(file);
                 }
             });
 
-            $('#saveAttachments').click(function() {
-                selectedFiles.forEach(function(file, index) {
-                    $('#attachmentsPreview').append(`
-                        <div class="position-relative attachment-container m-2">
-                            <a href="#" target="_blank" data-title="${file.name}">
-                                <i class="fa fa-file-pdf-o fa-5x text-danger attachment-icon"></i>
-                            </a>
-                            <span class="d-block mt-2 text-center attachment-name">${file.name}</span>
-                            <button type="button" class="btn btn-danger btn-sm remove-preview position-absolute top-0 end-0" data-index="${index}">&times;</button>
-                            <input type="hidden" name="attachments[]" value="${file.name}">
-                        </div>
-                    `);
-                });
-
-                $('#attachmentsModal').modal('hide');
+            dz.on("removedfile", function (file) {
+                var index = selectedFiles.indexOf(file);
+                if (index > -1) selectedFiles.splice(index, 1);
             });
+        }
+    });
 
-            $(document).on('click', '.remove-preview', function() {
-                var index = $(this).data('index');
-                selectedFiles.splice(index, 1); // Remove from selected files array
-                $(this).parent().remove(); // Remove the preview from the UI
-            });
-
-            // Handle removal of existing attachments
-            $(document).on('click', '.remove-existing-attachment', function() {
-                var attachmentId = $(this).data('id');
-                var $attachmentDiv = $(this).closest('.existing-attachment');
-
-                // Mark the attachment for deletion by adding a hidden input
-                $('#createStudentForm').append(`
-                    <input type="hidden" name="delete_attachments[]" value="${attachmentId}">
-                `);
-
-                // Remove the attachment preview from the UI
-                $attachmentDiv.remove();
-            });
-
-            // === Add this block for AJAX form submit with attachments ===
-            $('#createStudentForm').submit(function(event) {
-                event.preventDefault();
-                var formData = new FormData(this);
-
-                selectedFiles.forEach(function(file) {
-                    formData.append('attachments[]', file);
-                });
-
-                $.ajax({
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(response) {
-                        toastr.success('Student updated successfully!');
-                        window.location.href = "{{ route('students.index') }}";
-                    },
-                    error: function(xhr) {
-                        toastr.error('An error occurred while submitting the form.');
-                        $('#submit').prop('disabled', false).text('Submit');
-                    }
-                });
-            });
-            // === End block ===
+    // Save attachments
+    $('#saveAttachments').click(function () {
+        selectedFiles.forEach(function (file, index) {
+            $('#attachmentsPreview').append(`
+                <div class="position-relative attachment-container m-2">
+                    <i class="fa fa-file fa-5x text-secondary"></i>
+                    <span class="d-block mt-2 text-center">${file.name}</span>
+                    <button type="button" class="btn btn-danger btn-sm remove-preview" data-index="${index}">&times;</button>
+                </div>
+            `);
         });
-    </script>
+        $('#attachmentsModal').modal('hide');
+    });
+
+    // Remove preview file
+    $(document).on('click', '.remove-preview', function () {
+        var index = $(this).data('index');
+        selectedFiles.splice(index, 1);
+        $(this).parent().remove();
+    });
+
+    // Remove existing file
+    $(document).on('click', '.remove-existing-attachment', function () {
+        var id = $(this).data('id');
+        $('#createStudentForm').append(`<input type="hidden" name="delete_attachments[]" value="${id}">`);
+        $(this).closest('.existing-attachment').remove();
+    });
+
+    // Submit Form (Update)
+    $('#createStudentForm').submit(function (event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        selectedFiles.forEach(file => formData.append('attachments[]', file));
+
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                toastr.success('Student updated successfully!');
+                window.location.href = "{{ route('students.index') }}";
+            },
+            error: function () {
+                toastr.error('Error updating student.');
+            }
+        });
+    });
+});
+</script>
 @endsection
+

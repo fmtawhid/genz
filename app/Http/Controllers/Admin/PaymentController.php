@@ -296,7 +296,7 @@ class PaymentController extends Controller
             . "Receipt No: {$request->reciept_no}\n"
             . "Date: {$request->date}\n"
             . "Thank you!\n"
-            . "Talimul Islam School and Madrasha";
+            . "Gen-Z IT Institute";
 
         // ✅ SMS পাঠানো `SmsHelper` দিয়ে
         $response = SmsHelper::sendSms($request->mobile, $message);

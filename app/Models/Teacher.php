@@ -41,4 +41,8 @@ class Teacher extends Model
     {
         return $this->hasOne(User::class, 'teacher_id');
     }
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'course_teacher')->withTimestamps();
+    }
 }

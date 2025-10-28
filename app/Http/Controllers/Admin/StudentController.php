@@ -351,71 +351,6 @@ class StudentController extends Controller
         return response()->json(['success' => "Admission Successful"]);
     }
 
-    public function assign(int $studentId)
-    {
-        // Validate the incoming request
-        $student = Student::findOrFail($studentId); // Find the student using the passed student_id
-
-        // Get the service IDs from the student's services JSON column
-        $serviceIds = json_decode($student->services);  // Get the selected service IDs from the JSON column
-
-        // Loop through each selected service and add it to the assigned_fees table
-        foreach ($serviceIds as $serviceId) {
-            $service = OptionalService::findOrFail($serviceId);
-
-            // Only add if the service is 'accepted'
-            if ($service->status == 'accepted') {
-                AssignedFee::create([
-                    'student_id' => $student->id,
-                    'fee_category_id' => null,  // You can set the fee category here if applicable
-                    'optional_service_id' => $service->id,  // This is the service ID being assigned
-                    'amount' => $service->amount,
-                    'is_optional' => false,  // Mark as optional
-                    'sreni_id' => $student->sreni_id,
-                    'bibag_id' => $student->bibag_id,
-                ]);
-            }
-        }
-
-        // Return a success message
-        return redirect()->route('assign-optional-service.create')->with('success', 'Services assigned successfully.');
-    }
-
-
-
-
-    private function assignFeesToStudent($student)
-    {
-        // Get the current year from dhakila_date
-        $currentYear = Carbon::parse($student->dhakila_date)->year;
-
-        // Get the FeeCategories based on the student's sreni_id and bibag_id
-        $feeCategories = FeeCategory::where('sreni_id', $student->sreni_id)
-            ->where('bibag_id', $student->bibag_id)
-            ->get();
-
-        // Loop through each FeeCategory and check if the fee has already been assigned for the current year
-        foreach ($feeCategories as $feeCategory) {
-            // Check if a fee is already assigned for the current year
-            $assignedFee = AssignedFee::where('student_id', $student->id)
-                ->where('fee_category_id', $feeCategory->id)
-                ->whereYear('created_at', $currentYear)  // Ensure it's the current year
-                ->first();
-
-            // If no fee is assigned for the current year, assign it
-            if (!$assignedFee) {
-                AssignedFee::create([
-                    'student_id' => $student->id,
-                    'fee_category_id' => $feeCategory->id,
-                    'amount' => $feeCategory->amount,
-                    'sreni_id' => $feeCategory->sreni_id,
-                    'bibag_id' => $feeCategory->bibag_id,
-                    'is_optional' => false, // You can set this based on the business logic
-                ]);
-            }
-        }
-    }
-
 
 
     public function edit($id)
@@ -426,16 +361,14 @@ class StudentController extends Controller
         // Fetch the lists for Sreni, Bibag, and Sections
         $srenis = Sreni::all();
         $bibags = Bibag::all();
-        $sections = SreniSection::latest()->get();
 
         // Fetch existing attachments
         $attachments = $student->attachments()->get(['id', 'file_path', 'file_name', 'file_type']);
 
         // Convert dhakila_date to Carbon instance and format it to 'd-m-Y'
         $dhakila_date = Carbon::parse($student->dhakila_date)->format('d-m-Y');
-        $optionalServices = OptionalService::all();
         // Return the edit view with data, including the formatted dhakila_date
-        return view('admin.student.edit', compact('student', 'srenis', 'attachments', 'bibags', 'sections', 'dhakila_date', 'optionalServices'));
+        return view('admin.student.edit', compact('student', 'srenis', 'attachments', 'bibags' , 'dhakila_date'));
     }
 
 
@@ -450,10 +383,7 @@ class StudentController extends Controller
             'father_name' => 'required|string|max:255',
             'mobile' => 'required|string|max:15',
             'district' => 'nullable|string|max:255',
-            'academic_session' => 'required|string|max:50',
-            'sreni_id' => 'required|exists:srenis,id',
             'bibag_id' => 'required|exists:bibags,id',
-            'roll_number' => 'nullable|integer',
             'gender' => 'nullable|in:male,female',
             'email' => 'nullable|email|max:255',  // email validation
             'emergency_contact' => 'nullable|string|max:15',
@@ -464,10 +394,6 @@ class StudentController extends Controller
             'type' => 'required|in:Active,Deactive', // Validate type field
             'address' => 'nullable|string|max:255', // Validate address field
 
-            'mother_name' => 'nullable|string|max:255', // Validate address field
-            'mother_phone' => 'nullable|string|max:255', // Validate address field
-
-            'services' => 'nullable|array', // Validate services field
         ]);
 
         // Fetch the student record
@@ -488,17 +414,13 @@ class StudentController extends Controller
         $student->father_name = $request->father_name;
         $student->mobile = $request->mobile;
         $student->district = $request->address;
-        $student->academic_session = $request->academic_session;
         $student->sreni_id = $request->sreni_id;
         $student->bibag_id = $request->bibag_id;
-        $student->roll_number = $request->roll_number;
         $student->type = $request->type;  // Store type
         $student->gender = $request->gender;
         $student->slug = $slug;
-        $student->section_id = $request->section_id;
 
-        $student->mother_name = $request->mother_name;
-        $student->mother_phone = $request->mother_phone;
+
 
         if ($request->has('email')) {
             $student->email = $request->email;
@@ -521,66 +443,12 @@ class StudentController extends Controller
             $request->file('image')->move(public_path('img/profile'), $fileNameToStore);
             $student->image = $fileNameToStore;
         }
-        // Update services
-        if ($request->has('services')) {
-            $student->services = json_encode($request->services); // Store selected service IDs as JSON
-        }
+       
 
         // Save the updated student record
         $student->save();
 
-        if ($request->has('services') && count($request->services) > 0) {
-            // Detach all previous services
-            $student->optionalServices()->detach();
-
-            // Attach the new selected services
-            $student->optionalServices()->attach($request->services); // Attach the selected services to student_service table
-        } else {
-            // If no services are selected, remove all services from student_service table
-            $student->optionalServices()->detach();  // Detach all services if none are selected
-        }
-
-        //     // Handle file attachments (if any)
-        //     if ($request->hasFile('attachments')) {
-        //         $files = $request->file('attachments');
-        //         foreach ($files as $file) {
-        //             $filenameWithExt = $file->getClientOriginalName();
-        //             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-        //             $file->move(public_path('assets/attachements'), $fileNameToStore);
-
-        //             // Save the attachment information in the database
-        //             StudentAttachment::create([
-        //                 'student_id' => $student->id,
-        //                 'file_path' => $fileNameToStore,
-        //                 'file_name' => $fileNameToStore,
-        //                 'file_type' => $extension,
-        //             ]);
-        //         }
-        //     }
-        //     if ($request->hasFile('attachments')) {
-        //         $files = $request->file('attachments');
-        //         foreach ($files as $file) {
-        //             $filenameWithExt = $file->getClientOriginalName();
-        //             $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-        //             $extension = $file->getClientOriginalExtension();
-        //             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-        //             $file->move(public_path('assets/attachements'), $fileNameToStore);
-
-        //             StudentAttachment::create([
-        //                 'student_id' => $student->id,
-        //                 'file_path' => $fileNameToStore,
-        //                 'file_name' => $fileNameToStore,
-        //                 'file_type' => $extension,
-        //             ]);
-        //         }
-        //     }
-        //     $this->assignFeesToStudent($student);
-
-        //     // Redirect with success message
-        //     return redirect()->route('students.index')->with('success', 'Student updated successfully!');
-        // }
+       
         // === Remove selected attachments ===
         if ($request->has('delete_attachments')) {
             foreach ($request->delete_attachments as $attachmentId) {
@@ -614,7 +482,6 @@ class StudentController extends Controller
             }
         }
 
-        $this->assignFeesToStudent($student);
 
         // === Ajax হলে JSON রেসপন্স দিন ===
         if ($request->ajax()) {
@@ -815,29 +682,7 @@ class StudentController extends Controller
         // JSON আকারে রিটার্ন
         return response()->json($payments);
     }
-    public function getAttendances($id)
-    {
-        $attendances = Attendance::join('students', 'attendances.student_id', '=', 'students.id')
-            ->join('attendance_types', 'attendances.attendance_type_id', '=', 'attendance_types.id')
-            ->where('attendances.student_id', $id)  // এখানে 'attendances.id' দিয়ে Attendance ID ফিল্টার করা হচ্ছে
-            ->select('attendances.student_id', 'attendances.date', 'attendance_types.name as attendance_type', 'attendance_types.color', 'attendances.remark')
-            ->get();
-        // Add DT_RowIndex manually
-        // $attendances->transform(function ($attendance, $key) {
-        //     $attendance->DT_RowIndex = $key + 1; // Adds the row index starting from 1
-        //     return $attendance;
-        // });
-        return DataTables::of($attendances)
-            ->addIndexColumn()
-            ->editColumn('attendance_type', function ($attendance) {
-                return "<span style='color: {$attendance->color}; font-weight: bold;'>{$attendance->attendance_type}</span>";
-            })
-            ->rawColumns(['attendance_type'])
-            ->make(true);
-
-        Log::info($attendances);
-        return response()->json($attendances);
-    }
+    
 
 
 
@@ -880,121 +725,7 @@ class StudentController extends Controller
         return view('admin.student.search_id_card');
     }
 
-    // ekhane indivisual vabe dekhay 
-    // public function dueStudents(Request $request)
-    // {
-    //     // Get all students with their due fee assignments
-    //     $students = Student::with(['assignedFees' => function($query) {
-    //         // Apply the 'due' scope to only get due fees (fees with an amount > 0)
-    //         $query->due();
-    //     }])
-    //     ->join('srenis', 'students.sreni_id', '=', 'srenis.id')
-    //     ->join('bibags', 'students.bibag_id', '=', 'bibags.id')
-    //     ->select('students.id', 'students.student_name', 'srenis.name as sreni_name', 'bibags.name as bibag_name')
-    //     ->get();
-
-    //     return view('admin.student.due', compact('students'));
-    // }
-    // StudentController.php
-    public function dueStudents(Request $request)
-    {
-        // Get the filter parameters from the request
-        $sreniId = $request->input('sreni_id');
-        $bibagId = $request->input('bibag_id');
-        $searchTerm = $request->input('search.value', ''); // For search functionality
-
-        // Query to fetch the students based on filters
-        $studentsQuery = Student::with(['assignedFees.feeCategory'])
-            ->join('srenis', 'students.sreni_id', '=', 'srenis.id')
-            ->join('bibags', 'students.bibag_id', '=', 'bibags.id')
-            ->select('students.id', 'students.student_name', 'srenis.name as sreni_name', 'bibags.name as bibag_name', 'students.dhakila_number')
-            ->when($sreniId, function ($query) use ($sreniId) {
-                return $query->where('students.sreni_id', $sreniId);
-            })
-            ->when($bibagId, function ($query) use ($bibagId) {
-                return $query->where('students.bibag_id', $bibagId);
-            })
-            ->when($searchTerm, function ($query) use ($searchTerm) {
-                return $query->where('students.student_name', 'like', "%{$searchTerm}%")
-                    ->orWhere('students.dhakila_number', 'like', "%{$searchTerm}%");
-            });
-
-        // Fetching data for Sreni and Bibag for filters
-        $srenis = Sreni::all();
-        $bibags = Bibag::all();
-
-        // Fetch all students (without pagination, as DataTables will handle it)
-        $students = $studentsQuery->get();
-
-        // Calculate total due fee for each student
-        foreach ($students as $student) {
-            $totalDue = 0;
-            foreach ($student->assignedFees as $fee) {
-                $totalDue += $fee->amount;
-            }
-            $student->total_due = $totalDue; // Store total due fee
-
-            // Fetch payments made by the student based on the dhakila_number
-            $payments = Payment::where('dhakila_number', $student->dhakila_number)->sum('amount');
-
-            // Subtract the total payments from the total due fee
-            $student->total_due_after_payment = $student->total_due - $payments;
-        }
-
-        // If it's an AJAX request, return the DataTables response
-        if ($request->ajax()) {
-            // Return DataTables JSON response
-            return DataTables::of($students)
-                ->addIndexColumn()
-                ->addColumn('total_due', function ($row) {
-                    return $row->total_due;  // Add the total due amount
-                })
-                ->addColumn('total_due_after_payment', function ($row) {
-                    return $row->total_due_after_payment;  // Add the total due after payment amount
-                })
-                ->addColumn('actions', function ($row) {
-                    return '<button class="btn btn-info btn-sm view-details" data-id="' . $row->id . '">View Details</button>';
-                })
-                ->rawColumns(['actions'])  // Allow raw HTML for the actions column
-                ->make(true);  // Return the DataTables JSON response
-        }
-
-        // Return view if not AJAX request
-        return view('admin.student.due', compact('students', 'bibags', 'srenis'));
-    }
-
-    public function dueStudentDetails($id)
-    {
-        // Get student data along with assigned fees
-        $student = Student::with(['assignedFees.feeCategory'])
-            ->join('srenis', 'students.sreni_id', '=', 'srenis.id')
-            ->join('bibags', 'students.bibag_id', '=', 'bibags.id')
-            ->select('students.id', 'students.student_name', 'srenis.name as sreni_name', 'bibags.name as bibag_name', 'students.dhakila_number')
-            ->where('students.id', $id)
-            ->first();
-
-        // Check if student is found
-        if (!$student) {
-            return redirect()->route('students.due')->with('error', 'Student not found');
-        }
-
-        // Calculate total due fee for the student
-        $totalDue = 0;
-        foreach ($student->assignedFees as $fee) {
-            $totalDue += $fee->amount;
-        }
-        $student->total_due = $totalDue; // Store total due fee
-
-        // Fetch payments made by the student based on the dhakila_number
-        $payments = Payment::where('dhakila_number', $student->dhakila_number)->sum('amount');
-
-        // Subtract the total payments from the total due fee
-        $student->total_due_after_payment = $student->total_due - $payments;
-
-        // Return student details view
-        return view('admin.student.view_due', compact('student', 'payments'));
-    }
-
+   
     public function admitCard($exam_id, $student_id)
     {
         $student = Student::findOrFail($student_id);

@@ -88,17 +88,19 @@
     </div>
 
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      @foreach($courses as $course)
       <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-        <img src="https://placehold.co/600x340?text=Course+1" alt="course" class="w-full h-44 object-cover" />
+        <img src="{{ asset('uploads/courses/' . $course->image) }}" alt="course" class="w-full h-44 object-cover" />
         <div class="p-4">
-          <h3 class="font-semibold text-lg">Graphic Design Masterclass</h3>
-          <p class="text-sm text-slate-500 mt-1">12 weeks • Live + Recorded</p>
+          <h3 class="font-semibold text-lg">{{ $course->title }}</h3>
+          <p class="text-sm text-slate-500 mt-1">{{ $course->duration }} • {{ $course->format }}</p>
           <div class="mt-4 flex items-center justify-between">
-            <div class="text-lg font-bold">$120</div>
+            <div class="text-lg font-bold">${{ $course->price }}</div>
             <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm">Enroll</a>
           </div>
         </div>
       </article>
+      @endforeach
 
       <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
         <img src="https://placehold.co/600x340?text=Course+2" alt="course" class="w-full h-44 object-cover" />

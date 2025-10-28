@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\Notice;
 use App\Models\Gallery;
+use App\Models\Course;
 use App\Models\Teacher;
 class PageController extends Controller
 {
@@ -45,11 +46,13 @@ class PageController extends Controller
     
     public function course()
     {
-        return view('frontend/course'); 
+        $courses = Course::all();
+        return view('frontend/course', compact('courses')); 
     }
-    public function courseDetails()
+    public function courseDetails($slug)
     {
-        return view('frontend/course_details'); 
+        $course = Course::where('slug', $slug)->firstOrFail();
+        return view('frontend/course_details', compact('course')); 
     }
 
     public function successStory()

@@ -577,6 +577,27 @@
                         </li>
                     @endcanany
 
+                    <!-- Gallery Section -->
+                    @canany(['course_view', 'course_add', 'course_edit', 'course_delete'])
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#course" aria-expanded="false" class="side-nav-link">
+                                <i class="ri-gallery-line"></i>
+                                <span>Course</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="course">
+                                <ul class="side-nav-second-level">
+                                    @can('course_add')
+                                        <li><a href="{{ route('courses.create') }}">Add Course</a></li>
+                                    @endcan
+                                    @can('course_view')
+                                        <li><a href="{{ route('courses.index') }}">All Courses</a></li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </li>
+                    @endcanany
+
                   
                     <!-- Expenses Section -->
                     @canany(['expense_view', 'expense_add', 'expense_edit', 'expense_delete', 'expense_head_view', 'expense_head_add', 'expense_head_edit', 'expense_head_delete'])
@@ -769,10 +790,6 @@
                                             <a href="{{ route('setting.index') }}">Manage Setting</a>
                                         </li>
                                     @endcan
-                                    @canany(['sreni_view', 'sreni_add', 'sreni_edit', 'sreni_delete'])
-                                        <li><a href="{{ route('srenis.index') }}">Classes</a></li>
-                                        <li><a href="{{ route('sreni-sections.index') }}">Sreni Section</a></li>
-                                    @endcanany
                                     @canany(['bibag_view', 'bibag_add', 'bibag_edit', 'bibag_delete'])
                                         <li><a href="{{ route('bibags.index') }}">Bibhag</a></li>
                                     @endcanany
@@ -782,26 +799,6 @@
                         </li>
                     @endcanany
                     @endif
-
-
-
-
-                    <!-- Trush Section
-            <li class="side-nav-item">
-                <a data-bs-toggle="collapse" href="#trush" aria-expanded="false" aria-controls="sidebarTasks"
-                    class="side-nav-link">
-                    <i class="ri-notification-3-line"></i>
-                    <span>Trush</span>
-                    <span class="menu-arrow"></span>
-                </a>
-                <div class="collapse" id="trush">
-                    <ul class="side-nav-second-level">
-                        <li>
-                            <a href="#">Trush Notice</a>
-                        </li>
-                    </ul>
-                </div>
-            </li> -->
 
 
                 </ul>

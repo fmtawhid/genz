@@ -25,6 +25,9 @@ use App\Http\Controllers\AttachmentTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\LessonController;
+use App\Http\Controllers\CourseController;
+
+
 
 use App\Models\Notice;
 use App\Models\Teacher;
@@ -33,6 +36,7 @@ use App\Models\Bibag;
 use App\Models\Sreni;
 use App\Http\Controllers\ComplaintController;
 use App\Models\Attachment;
+use App\Models\Course;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\Admin\SubjectController;
@@ -63,6 +67,8 @@ Route::get('/', function () {
 
     $notices = Notice::latest()->paginate(15);
 
+    $courses = Course::with(['teachers', 'topics'])->latest()->get();
+
 
     // Map notices into the event format for the calendar
     $events = $notices->map(function ($notice) {
@@ -77,7 +83,7 @@ Route::get('/', function () {
         ];
     });
 
-    return view('frontend/home', compact('notices', 'noticeOne', 'teachers', 'events',));
+    return view('frontend/home', compact('notices', 'noticeOne', 'teachers', 'events', 'courses'));
 });
 
 
@@ -191,6 +197,21 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function 
     Route::middleware(['permission:user_edit'])->put('/users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::middleware(['permission:user_delete'])->delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     Route::post('/check-student-dakhila-number', [UserController::class, 'checkStudentDakhilaNumber'])->name('checkStudentDakhilaNumber');
+
+
+
+
+
+    // 🟢 Course Admin Routes with Spatie Permissions
+    Route::middleware(['permission:course_view'])->get('/courses', [CourseController::class, 'index'])->name('courses.index'); // Show all courses
+    Route::middleware(['permission:course_add'])->get('/courses/create', [CourseController::class, 'create'])->name('courses.create'); // Show form to add a new course
+    Route::middleware(['permission:course_add'])->post('/courses/store', [CourseController::class, 'store'])->name('courses.store'); // Store new course
+    Route::middleware(['permission:course_edit'])->get('/courses/{course}/edit', [CourseController::class, 'edit'])->name('courses.edit'); // Show form to edit course
+    Route::middleware(['permission:course_edit'])->put('/courses/{course}/update', [CourseController::class, 'update'])->name('courses.update'); // Update course
+    Route::middleware(['permission:course_delete'])->delete('/courses/{course}/destroy', [CourseController::class, 'destroy'])->name('courses.destroy'); // Delete course
+
+
+
 
 
     // Route::get('/get-phone-numbers', function() {
@@ -634,5 +655,5 @@ Route::get('/singelnotice/{id}', [PageController::class, 'singelnotice'])->name(
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/courses', [PageController::class, 'course'])->name('course');
-Route::get('/course-details', [PageController::class, 'courseDetails'])->name('course.details');
+Route::get('/course-details/{slug}', [PageController::class, 'courseDetails'])->name('course.details');
 Route::get('/success-stories', [PageController::class, 'successStory'])->name('success.stories');

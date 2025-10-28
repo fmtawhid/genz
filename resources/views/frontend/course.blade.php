@@ -37,84 +37,19 @@
 <section class="container mx-auto px-4 lg:px-8 pb-16">
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-    <!-- 1 -->
-    <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80" alt="Web Development" class="w-full h-44 object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">Full Stack Web Development</h3>
-        <p class="text-sm text-slate-500 mt-1">6 months • Hands-on • Advanced</p>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="text-lg font-bold text-brand">$420</div>
-          <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm hover:bg-brand/90 transition">Enroll</a>
+    @foreach ($courses as $course)
+      <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+        <img src="{{ asset('uploads/courses/' . $course->image) }}" alt="course" class="w-full h-44 object-cover" />
+        <div class="p-4">
+          <h3 class="font-semibold text-lg">{{ $course->title }}</h3>
+          <p class="text-sm text-slate-500 mt-1">{{ $course->duration }} • {{ $course->format }}</p>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-lg font-bold">${{ $course->price }}</div>
+            <a href="{{ route('course.details', $course->slug) }}" class="px-3 py-2 bg-brand text-white rounded-md text-sm">Visit</a>
+          </div>
         </div>
-      </div>
-    </article>
-
-    <!-- 2 -->
-    <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=800&q=80" alt="Graphic Design Masterclass" class="w-full h-44 object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">Graphic Design Masterclass</h3>
-        <p class="text-sm text-slate-500 mt-1">12 weeks • Live + Recorded • Beginner</p>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="text-lg font-bold text-brand">$120</div>
-          <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm hover:bg-brand/90 transition">Enroll</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 3 -->
-    <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=80" alt="Digital Marketing" class="w-full h-44 object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">Digital Marketing Pro</h3>
-        <p class="text-sm text-slate-500 mt-1">10 weeks • Project-based • Intermediate</p>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="text-lg font-bold text-brand">$180</div>
-          <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm hover:bg-brand/90 transition">Enroll</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 4 -->
-    <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1581093588401-22d8d6c0b36c?auto=format&fit=crop&w=800&q=80" alt="UI/UX Design" class="w-full h-44 object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">UI/UX Design Essentials</h3>
-        <p class="text-sm text-slate-500 mt-1">8 weeks • Live Class • Beginner</p>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="text-lg font-bold text-brand">$200</div>
-          <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm hover:bg-brand/90 transition">Enroll</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 5 -->
-    <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1537432376769-00a4c7174a8e?auto=format&fit=crop&w=800&q=80" alt="Motion Graphics" class="w-full h-44 object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">Motion Graphics Bootcamp</h3>
-        <p class="text-sm text-slate-500 mt-1">10 weeks • Project-based • Intermediate</p>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="text-lg font-bold text-brand">$150</div>
-          <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm hover:bg-brand/90 transition">Enroll</a>
-        </div>
-      </div>
-    </article>
-
-    <!-- 6 -->
-    <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-      <img src="https://images.unsplash.com/photo-1522204505660-9893f4bd3f4b?auto=format&fit=crop&w=800&q=80" alt="Python Programming" class="w-full h-44 object-cover">
-      <div class="p-4">
-        <h3 class="font-semibold text-lg">Python Programming with Django</h3>
-        <p class="text-sm text-slate-500 mt-1">4 months • Hands-on • Advanced</p>
-        <div class="mt-4 flex items-center justify-between">
-          <div class="text-lg font-bold text-brand">$320</div>
-          <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm hover:bg-brand/90 transition">Enroll</a>
-        </div>
-      </div>
-    </article>
-
+      </article>
+    @endforeach
   </div>
 
   <!-- Pagination -->

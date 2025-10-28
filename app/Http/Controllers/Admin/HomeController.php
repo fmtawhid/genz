@@ -34,26 +34,7 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    // public function __construct()
-    // {
-    //     foreach (self::middlewareList() as $middleware => $methods) {
-    //         $this->middleware($middleware)->only($methods);
-    //     }
-    // }
-
-    // public static function middlewareList(): array
-    // {
-    //     return [
-    //         'permission:dashboard_view' => ['dashboard'],
-
-    //     ];
-    // }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
+   
     public function index()
     {
         return view('home');
@@ -81,27 +62,7 @@ class HomeController extends Controller
         $complaints = Complaint::all();
         $notices = Notice::all();
 
-        // Teachers Attendence Last month
-        // Get the first and last day of the current month
-        $startOfMonth = Carbon::now()->startOfMonth();
-        $endOfMonth = Carbon::now()->endOfMonth();
 
-        // Fetch attendance data for this month
-        $attendanceData = TeacherAttendance::whereBetween('date', [$startOfMonth, $endOfMonth])
-            ->with('teacher')
-            ->get();
-
-        // Group attendance by teacher and count present and absent days
-        $teacherAttendance = $attendanceData->groupBy('teacher_id')->map(function ($attendances) {
-            $present = $attendances->where('attendance_type_id', 1)->count(); // 1 = Present
-            $absent = $attendances->where('attendance_type_id', 2)->count(); // 2 = Absent
-
-            return [
-                'teacher_name' => $attendances->first()->teacher->name,
-                'present' => $present,
-                'absent' => $absent
-            ];
-        });
 
         // Speacific Payment
         $revenues = Payment::selectRaw('purpose_id, SUM(amount) as total_amount')
