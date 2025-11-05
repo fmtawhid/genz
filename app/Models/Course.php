@@ -31,4 +31,8 @@ class Course extends Model
     {
         return $this->belongsToMany(Student::class, 'course_student')->withTimestamps();
     }
+    public function studentReviews()
+    {
+        return $this->hasMany(\App\Models\StudentReview::class)->latest();
+    }
 }

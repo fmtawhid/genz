@@ -42,7 +42,7 @@
         </nav>
 
         <div class="flex items-center gap-3">
-          <a href="{{ route('contact') }}" class="hidden sm:inline-block bg-brand text-white px-4 py-2 rounded-md shadow">Apply Now</a>
+          <a href="{{ route('admission') }}" class="hidden sm:inline-block bg-brand text-white px-4 py-2 rounded-md shadow">Admission Now</a>
 
           <!-- Mobile menu button -->
           <button id="mobileMenuBtn" class="inline-flex lg:hidden items-center justify-center p-2 rounded-md hover:bg-slate-100">

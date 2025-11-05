@@ -567,8 +567,7 @@
                                     @can('student_view')
                                         <li><a href="{{ route('students.index') }}">All Student</a></li>
                                         <li><a href="{{ route('students.inactive') }}">Inactive Student</a></li>
-                                        <!-- <li><a href="{{ route('optional-services.index') }}">Service (bus, daycaring)</a></li>
-                                        <li><a href="{{ route('assign-optional-service.create') }}">Assign Service</a></li> -->
+                            
 
                                     @endcan
 
@@ -577,26 +576,7 @@
                         </li>
                     @endcanany
 
-                    <!-- Gallery Section -->
-                    @canany(['course_view', 'course_add', 'course_edit', 'course_delete'])
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#course" aria-expanded="false" class="side-nav-link">
-                                <i class="ri-gallery-line"></i>
-                                <span>Course</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="course">
-                                <ul class="side-nav-second-level">
-                                    @can('course_add')
-                                        <li><a href="{{ route('courses.create') }}">Add Course</a></li>
-                                    @endcan
-                                    @can('course_view')
-                                        <li><a href="{{ route('courses.index') }}">All Courses</a></li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </li>
-                    @endcanany
+                  
 
                   
                     <!-- Expenses Section -->
@@ -645,12 +625,7 @@
                                 @can('payment_view')
                                     <li><a href="{{ route('payments.report') }}">Payment Report</a></li>
                                 @endcan
-                                <!-- @can('payment_view')
-                                    <li><a href="{{ route('students.due') }}">Students Due</a></li>
-                                @endcan
-                                @can('payment_view')
-                                    <li><a href="{{ route('fee-categories.index') }}">All Fees Added</a></li>
-                                @endcan -->
+                   
                                 @canany(['purpose_view', 'purpose_add', 'purpose_edit', 'purpose_delete'])
                                     <li><a href="{{ route('purposes.index') }}">Purposes</a></li>
                                 @endcanany
@@ -702,18 +677,18 @@
                     <!-- Gallery Section -->
                     @canany(['gallery_view', 'gallery_add', 'gallery_edit', 'gallery_delete'])
                         <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#gallery" aria-expanded="false" class="side-nav-link">
+                            <a data-bs-toggle="collapse" href="#reviews" aria-expanded="false" class="side-nav-link">
                                 <i class="ri-gallery-line"></i>
-                                <span>Gallery</span>
+                                <span>Reviews</span>
                                 <span class="menu-arrow"></span>
                             </a>
-                            <div class="collapse" id="gallery">
+                            <div class="collapse" id="reviews">
                                 <ul class="side-nav-second-level">
                                     @can('gallery_add')
-                                        <li><a href="{{ route('gallery.create') }}">Add Gallery Image</a></li>
+                                        <li><a href="{{ route('reviews.create') }}">Add Review</a></li>
                                     @endcan
                                     @can('gallery_view')
-                                        <li><a href="{{ route('gallery.list') }}">All Gallery Images</a></li>
+                                        <li><a href="{{ route('reviews.index') }}">All Reviews</a></li>
                                     @endcan
                                 </ul>
                             </div>

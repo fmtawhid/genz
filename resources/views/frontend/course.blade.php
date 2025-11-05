@@ -1,64 +1,92 @@
 @extends('layouts.master')
 @section('content')
 
-<!-- Hero / Page title -->
-<section class="bg-gradient-to-r from-brand/5 to-white py-20">
-  <div class="container mx-auto px-4 lg:px-8 text-center">
-    <h1 class="text-4xl lg:text-5xl font-extrabold">Our Professional Courses</h1>
-    <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
-      Explore expert-led courses and grow your skills in design, development, and marketing — from beginner to pro level.
-    </p>
-  </div>
-</section>
+<!-- Hero / Page title + Search -->
+<section class="bg-gradient-to-r from-brand/5 to-white py-16">
+  <div class="container mx-auto px-4 lg:px-8">
+    <div class="text-center">
+      <h1 class="text-4xl lg:text-5xl font-extrabold">Our Professional Courses</h1>
+      <p class="mt-4 text-slate-600 max-w-2xl mx-auto">
+        Explore expert-led courses and grow your skills in design, development, and marketing — from beginner to pro level.
+      </p>
+    </div>
 
-<!-- Filters -->
-<section class="container mx-auto px-4 lg:px-8 py-10">
-  <div class="flex flex-col sm:flex-row gap-4 items-center justify-between">
-    <div class="flex flex-wrap gap-3">
-      <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">All</button>
-      <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">Graphic Design</button>
-      <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">Motion Graphics</button>
-      <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">Web Development</button>
-      <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">Digital Marketing</button>
-      <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">UI/UX Design</button>
-    </div>
-    <div>
-      <select class="px-4 py-2 border border-slate-300 rounded-md">
-        <option>All Levels</option>
-        <option>Beginner</option>
-        <option>Intermediate</option>
-        <option>Advanced</option>
-      </select>
-    </div>
+    <!-- Search -->
+    <form method="GET" action="{{ route('course') }}" class="mt-8 max-w-2xl mx-auto">
+      <div class="flex gap-3">
+        <input
+          type="text"
+          name="q"
+          value="{{ request('q') }}"
+          placeholder="Search courses by title or description…"
+          class="flex-1 px-4 py-3 border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-brand/50"
+        />
+        <button class="px-5 py-3 bg-brand text-white rounded-md hover:bg-brand/90 transition">
+          Search
+        </button>
+        @if(request('q'))
+          <a href="{{ route('course') }}" class="px-5 py-3 bg-white border border-slate-300 rounded-md hover:bg-slate-50">
+            Clear
+          </a>
+        @endif
+      </div>
+      @if(request('q'))
+        <p class="text-sm text-slate-500 mt-2">
+          Showing results for: <span class="font-medium">“{{ request('q') }}”</span>
+        </p>
+      @endif
+    </form>
   </div>
 </section>
 
 <!-- Courses grid -->
 <section class="container mx-auto px-4 lg:px-8 pb-16">
-  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  @if($courses->count())
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 
-    @foreach ($courses as $course)
-      <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-        <img src="{{ asset('uploads/courses/' . $course->image) }}" alt="course" class="w-full h-44 object-cover" />
-        <div class="p-4">
-          <h3 class="font-semibold text-lg">{{ $course->title }}</h3>
-          <p class="text-sm text-slate-500 mt-1">{{ $course->duration }} • {{ $course->format }}</p>
-          <div class="mt-4 flex items-center justify-between">
-            <div class="text-lg font-bold">${{ $course->price }}</div>
-            <a href="{{ route('course.details', $course->slug) }}" class="px-3 py-2 bg-brand text-white rounded-md text-sm">Visit</a>
+      @foreach ($courses as $course)
+        @php
+          $imgPath = $course->image ? public_path('uploads/courses/'.$course->image) : null;
+          $imageUrl = ($imgPath && file_exists($imgPath))
+              ? asset('uploads/courses/'.$course->image)
+              : 'https://via.placeholder.com/800x400.png?text=Course';
+          $priceText = isset($course->price) ? '৳'.number_format((float)$course->price, 2) : 'Free';
+        @endphp
+
+        <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
+          <img src="{{ $imageUrl }}" alt="{{ $course->title }}" class="w-full h-44 object-cover" />
+          <div class="p-4">
+            <h3 class="font-semibold text-lg line-clamp-1">{{ $course->title }}</h3>
+            <p class="text-sm text-slate-500 mt-1">
+              {{ $course->duration ?? 'N/A' }}
+            </p>
+            <p class="text-sm text-slate-600 mt-2 line-clamp-2">
+              {{ $course->short_description }}
+            </p>
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-lg font-bold">{{ $priceText }}</div>
+              <a href="{{ route('course.details', $course->slug) }}" class="px-3 py-2 bg-brand text-white rounded-md text-sm">
+                Visit
+              </a>
+            </div>
           </div>
-        </div>
-      </article>
-    @endforeach
-  </div>
+        </article>
+      @endforeach
+    </div>
 
-  <!-- Pagination -->
-  <div class="mt-10 flex justify-center gap-3">
-    <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">1</button>
-    <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">2</button>
-    <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">3</button>
-    <button class="px-4 py-2 bg-white border border-slate-300 rounded-md hover:bg-brand hover:text-white transition">Next →</button>
-  </div>
+    <!-- Pagination -->
+    <div class="mt-10">
+      {{ $courses->onEachSide(1)->links() }} {{-- Tailwind pagination --}}
+    </div>
+  @else
+    <div class="bg-white border border-slate-200 rounded-lg p-8 text-center">
+      <h3 class="text-xl font-semibold">No courses found</h3>
+      <p class="text-slate-600 mt-2">Try a different search term or clear the filter.</p>
+      <a href="{{ route('course') }}" class="mt-4 inline-block px-5 py-3 bg-brand text-white rounded-md">
+        View all courses
+      </a>
+    </div>
+  @endif
 </section>
 
 <!-- CTA -->

@@ -8,6 +8,7 @@ use App\Models\Notice;
 use App\Models\Gallery;
 use App\Models\Course;
 use App\Models\Teacher;
+use App\Models\StudentReview;
 class PageController extends Controller
 {
     // Show Home Page
@@ -44,21 +45,43 @@ class PageController extends Controller
         return view('frontend/about'); 
     }
     
-    public function course()
+
+
+
+    public function course(Request $request)
     {
-        $courses = Course::all();
-        return view('frontend/course', compact('courses')); 
+        $q = trim($request->get('q', ''));
+
+        $courses = Course::query()
+            ->when($q, function ($query) use ($q) {
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('title', 'like', "%{$q}%")
+                        ->orWhere('short_description', 'like', "%{$q}%")
+                        ->orWhere('long_description', 'like', "%{$q}%");
+                });
+            })
+            ->latest()
+            ->paginate(3)        
+            ->withQueryString(); 
+
+        return view('frontend.course', compact('courses', 'q'));
     }
+
+
     public function courseDetails($slug)
     {
         $course = Course::where('slug', $slug)->firstOrFail();
         return view('frontend/course_details', compact('course')); 
     }
 
+
+
     public function successStory()
     {
-        return view('frontend/success-stories'); 
+        $reviews = StudentReview::with('course:id,title')->latest()->get();
+        return view('frontend.success-stories', compact('reviews'));
     }
+
     public function admission()
     {
         return view('frontend/admission'); 

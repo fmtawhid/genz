@@ -28,6 +28,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\CourseController;
 
 
+use App\Http\Controllers\StudentReviewController;
 
 use App\Models\Notice;
 use App\Models\Teacher;
@@ -95,83 +96,19 @@ Route::prefix('panel')->group(function () {
 Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function () {
 
 
-    Route::resource('fee-categories', FeeCategoryController::class);
-    Route::resource('assigned-fees', AssignedFeeController::class);
-
-    Route::resource('optional-services', OptionalServiceController::class);
-    Route::get('/assign-optional-services', [OptionalServiceController::class, 'assignCreate'])->name('assign-optional-service.create');
-    Route::post('/assign-optional-services', [OptionalServiceController::class, 'assign'])->name('optional-service.assign');
 
     Route::get('dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     // Route::get('studentD', [HomeController::class, 'studentD'])->name('studentD');
 
-    Route::get('/get-subjects/{sreniId}', [LessonController::class, 'getSubjectsBySreni'])->name('get.subjects.by.sreni');
-
 
     Route::middleware(['permission:sms_add'])->get('/sms-form', [SmsController::class, 'smsForm'])->name('sms.form');
     Route::middleware(['permission:sms_add'])->post('/send-sms', [SmsController::class, 'sendSmsToStudent'])->name('sms.send');
-
-
-    // Route::resource('subjects', SubjectController::class);
-    Route::middleware(['permission:subject_view'])->get('/subjects', [SubjectController::class, 'index'])->name('subjects.index');
-    Route::middleware(['permission:subject_add'])->get('/subjects/create', [SubjectController::class, 'create'])->name('subjects.create');
-    Route::middleware(['permission:subject_add'])->post('/subjects', [SubjectController::class, 'store'])->name('subjects.store');
-    Route::middleware(['permission:subject_edit'])->get('/subjects/{subject}/edit', [SubjectController::class, 'edit'])->name('subjects.edit');
-    Route::middleware(['permission:subject_edit'])->put('/subjects/{subject}', [SubjectController::class, 'update'])->name('subjects.update');
-    Route::middleware(['permission:subject_delete'])->delete('/subjects/{subject}', [SubjectController::class, 'destroy'])->name('subjects.destroy');
-
-    // Route::resource('lessons', LessonController::class);
-    Route::middleware(['permission:lesson_view'])->get('/lessons', [LessonController::class, 'index'])->name('lessons.index');
-    Route::middleware(['permission:lesson_add'])->get('/lessons/create', [LessonController::class, 'create'])->name('lessons.create');
-    Route::middleware(['permission:lesson_add'])->post('/lessons', [LessonController::class, 'store'])->name('lessons.store');
-    Route::middleware(['permission:lesson_edit'])->get('/lessons/{lesson}/edit', [LessonController::class, 'edit'])->name('lessons.edit');
-    Route::middleware(['permission:lesson_edit'])->put('/lessons/{lesson}', [LessonController::class, 'update'])->name('lessons.update');
-    Route::middleware(['permission:lesson_delete'])->delete('/lessons/{lesson}', [LessonController::class, 'destroy'])->name('lessons.destroy');
-
-
-
-    // Route for exams CRUD operations
-    // Route::resource('exams', ExamController::class);
-    Route::middleware(['permission:exam_view'])->get('/exams', [ExamController::class, 'index'])->name('exams.index');
-    Route::middleware(['permission:exam_add'])->get('/exams/create', [ExamController::class, 'create'])->name('exams.create');
-    Route::middleware(['permission:exam_add'])->post('/exams', [ExamController::class, 'store'])->name('exams.store');
-    Route::middleware(['permission:exam_edit'])->get('/exams/{exam}/edit', [ExamController::class, 'edit'])->name('exams.edit');
-    Route::middleware(['permission:exam_edit'])->put('/exams/{exam}', [ExamController::class, 'update'])->name('exams.update');
-    Route::middleware(['permission:exam_delete'])->delete('/exams/{exam}', [ExamController::class, 'destroy'])->name('exams.destroy');
-
-    Route::get('/filter-subjects', [ExamController::class, 'getSubjectsByBibagAndSreni'])->name('filter.subjects');
-
-    // web.php 
-    // Route::get('/results/export/excel', [ResultController::class, 'exportExcel'])->name('results.export.excel');
-    Route::get('/results/export-pdf', [ResultController::class, 'exportPDF'])->name('results.export.pdf');
-    Route::get('/student/marksheet', [ResultController::class, 'studentMarksheet'])->name('student.marksheet');
-    Route::get('/student/marksheet/download', [ResultController::class, 'downloadMarksheet'])->name('student.marksheet.download');
-    // Route::post('/results/store/{examId}', [ResultController::class, 'storeResults'])->name('results.store');
-    // Route::get('/results/{studentId}/{examId}', [ResultController::class, 'showResults'])->name('results.show');
-    Route::resource('results', ResultController::class);
-    Route::get('results/view', [ResultController::class, 'show'])->name('results.view');
-    // Route::get('results/filter', [ResultController::class, 'index'])->name('results.index');
 
     // Route::middleware(['permission:result_view'])->get('exams/{exam_id}/add-marks', [ExamController::class, 'addMarksForm'])->name('exams.addMarksForm');
     // Route::middleware(['permission:result_view'])->post('exams/{exam_id}/add-marks', [ExamController::class, 'addMarks'])->name('exams.addMarks');
 
     Route::get('/student/{dhakila_number}/generate-id', [StudentController::class, 'generateID'])->name('student.generateID');
 
-    // // Permission Route 
-    // Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.index');
-    // Route::get('/permissions/create', [PermissionController::class, 'create'])->name('permissions.create');
-    // Route::post('/permissions/store', [PermissionController::class, 'store'])->name('permissions.store');
-    // Route::get('/permissions/{id}/edit', [PermissionController::class, 'edit'])->name('permissions.edit');
-    // Route::put('/permissions/{id}/update', [PermissionController::class, 'update'])->name('permissions.update');
-    // Route::delete('/permissions/{id}', [PermissionController::class, 'destroy'])->name('permissions.destroy');
-
-    // // Role Route
-    // Route::get('/roles', [RoleController::class, 'index'])->name('roles.index');
-    // Route::get('/roles/create', [RoleController::class, 'create'])->name('roles.create');
-    // Route::post('/roles', [RoleController::class, 'store'])->name('roles.store');
-    // Route::get('/roles/{id}/edit', [RoleController::class, 'edit'])->name('roles.edit');
-    // Route::put('/roles/{id}', [RoleController::class, 'update'])->name('roles.update');
-    // Route::delete('/roles/{id}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
     // Role Routes
     Route::middleware(['permission:role_view'])->get('/roles', [RoleController::class, 'index'])->name('roles.index');
@@ -430,14 +367,6 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function 
 
 
 
-    // Route::resource('students', StudentController::class);
-    // Route::resource('srenis', SreniController::class);
-    // Route::resource('expense_heads', ExpenseHeadController::class);
-    // Route::resource('purposes', PurposeController::class);
-    // Route::resource('expenses', ExpenseController::class);
-    // Route::resource('payments', PaymentController::class);
-    // Route::resource('bibags', BibagController::class);
-
 
     // 🟢 Sreni (Class) Management Routes with Spatie Permissions
     Route::middleware(['permission:sreni_view'])->get('/srenis', [SreniController::class, 'index'])->name('srenis.index'); // View Sreni list
@@ -589,8 +518,25 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function 
     Route::middleware(['permission:student_edit'])->put('/students/{id}/update', [StudentController::class, 'update'])->name('students.update'); // Update student data
     Route::middleware(['permission:student_delete'])->delete('/students/{id}/destroy', [StudentController::class, 'destroy'])->name('students.destroy'); // Delete student
 
+// Admin panel routes (prefix/group করলে নিজের মতো wrap করতে পারো)
 
-});
+    Route::resource('reviews', StudentReviewController::class)
+        ->parameters(['reviews' => 'review'])
+        ->names([
+            'index'   => 'reviews.index',
+            'create'  => 'reviews.create',
+            'store'   => 'reviews.store',
+            'edit'    => 'reviews.edit',
+            'update'  => 'reviews.update',
+            'destroy' => 'reviews.destroy',
+        ]);
+    });
+
+
+// routes/web.php
+
+
+
 
 
 Route::prefix('panel')->middleware(['auth', 'checkRole:student'])->group(function () {
@@ -657,3 +603,4 @@ Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/courses', [PageController::class, 'course'])->name('course');
 Route::get('/course-details/{slug}', [PageController::class, 'courseDetails'])->name('course.details');
 Route::get('/success-stories', [PageController::class, 'successStory'])->name('success.stories');
+Route::get('/admission', [PageController::class, 'admission'])->name('admission');
