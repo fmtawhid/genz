@@ -23,14 +23,14 @@
         </div>
 
         <div class="flex justify-center lg:justify-end">
-          <img src="https://placehold.co/520x360/png?text=Hero+Image" alt="hero" class="rounded-lg shadow-lg w-full max-w-[520px] object-cover" />
+          <img src="{{ asset('assets/img/home1.jpeg') }}" alt="hero" class="rounded-lg shadow-lg w-full max-w-[520px] object-cover" />
         </div>
       </div>
     </div>
   </section>
 
   <!-- Categories quick menu -->
-  <section class="container mx-auto px-4 lg:px-8 py-8">
+  <!-- <section class="container mx-auto px-4 lg:px-8 py-8">
     <div class="overflow-x-auto">
       <div class="flex gap-4 items-center py-2">
         <a href="#" class="flex-shrink-0 w-40 bg-white rounded-lg p-4 shadow hover:shadow-md transition">
@@ -55,10 +55,10 @@
         </a>
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- Instructors banner -->
-  <section class="bg-white border-t border-b py-8">
+  <!-- <section class="bg-white border-t border-b py-8">
     <div class="container mx-auto px-4 lg:px-8 flex flex-col lg:flex-row items-center gap-6">
       <div class="flex gap-4 items-center">
         <img src="https://placehold.co/84x84?text=Instructor+1" alt="instr" class="rounded-full" />
@@ -73,60 +73,156 @@
         <a href="#instructors" class="inline-flex items-center gap-2 border border-brand text-brand px-4 py-2 rounded-md">Meet Instructors</a>
       </div>
     </div>
-  </section>
+  </section> -->
 
-  <!-- Popular courses -->
-  <section id="courses" class="container mx-auto px-4 lg:px-8 py-12">
+  <!-- Popular Courses -->
+  <section id="courses" class="container mx-auto px-4 lg:px-8 py-14">
     <div class="flex items-center justify-between">
       <div>
-        <h2 class="text-2xl font-bold">Popular Courses</h2>
-        <p class="text-sm text-slate-600">Top picks for beginners & career changers</p>
+        <h2 class="text-3xl font-bold text-slate-800">🔥 Popular Courses</h2>
+        <p class="text-slate-500 text-sm mt-1">Top picks crafted for learners & career builders</p>
       </div>
       <div class="hidden sm:block">
-        <a href="#" class="text-sm text-brand hover:underline">View All Courses →</a>
+        <a href="#" class="text-sm font-medium text-brand hover:underline">View All Courses →</a>
       </div>
     </div>
 
-    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      @foreach($courses as $course)
-      <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-        <img src="{{ asset('uploads/courses/' . $course->image) }}" alt="course" class="w-full h-44 object-cover" />
-        <div class="p-4">
-          <h3 class="font-semibold text-lg">{{ $course->title }}</h3>
-          <p class="text-sm text-slate-500 mt-1">{{ $course->duration }} • {{ $course->format }}</p>
-          <div class="mt-4 flex items-center justify-between">
-            <div class="text-lg font-bold">${{ $course->price }}</div>
-            <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm">Enroll</a>
-          </div>
-        </div>
-      </article>
-      @endforeach
+    <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      
+    @foreach($courses as $course)
+    <article class="bg-white rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-100 overflow-hidden">
 
-      <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-        <img src="https://placehold.co/600x340?text=Course+2" alt="course" class="w-full h-44 object-cover" />
-        <div class="p-4">
-          <h3 class="font-semibold text-lg">Motion Graphics Bootcamp</h3>
-          <p class="text-sm text-slate-500 mt-1">10 weeks • Project based</p>
-          <div class="mt-4 flex items-center justify-between">
-            <div class="text-lg font-bold">$150</div>
-            <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm">Enroll</a>
-          </div>
-        </div>
-      </article>
+        <div class="relative">
+            <img src="{{ asset('uploads/courses/' . $course->image) }}" 
+                alt="{{ $course->title }} Banner"
+                class="w-full h-48 object-cover group-hover:scale-105 transition duration-300 rounded-t-xl" />
 
-      <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-        <img src="https://placehold.co/600x340?text=Course+3" alt="course" class="w-full h-44 object-cover" />
-        <div class="p-4">
-          <h3 class="font-semibold text-lg">Full Stack Web Development</h3>
-          <p class="text-sm text-slate-500 mt-1">6 months • Hands-on</p>
-          <div class="mt-4 flex items-center justify-between">
-            <div class="text-lg font-bold">$420</div>
-            <a href="#" class="px-3 py-2 bg-brand text-white rounded-md text-sm">Enroll</a>
-          </div>
+            <span class="absolute top-4 left-4 text-sm font-medium text-amber-600">
+                All Course </span>
         </div>
-      </article>
+
+        <div class="p-5">
+            <h3 class="font-semibold text-xl text-slate-800 mb-2">
+                {{ $course->title }}
+            </h3>
+            
+            <div class="flex items-center justify-between text-sm">
+                <div class="flex items-center space-x-2">
+                    <div class="flex text-amber-400">
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-5 h-5 fill-current text-gray-300" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
+                    <span class="text-slate-600">
+                        {{ number_format($course->reviews_count) }} Reviews 
+                        </span>
+                </div>
+                
+                <span class="text-slate-600 font-medium">
+                    {{ number_format($course->students_count) }} Student 
+                    </span>
+            </div>
+
+            <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+                <p class="text-xl font-bold text-slate-800">
+                    Course Fee {{ number_format($course->price) }} BDT
+                </p>
+                
+                <a href="{{ route('course.details', $course->slug) }}" 
+                  class="px-4 py-2 bg-white text-orange-600 border border-orange-400 rounded-md text-sm font-medium hover:bg-orange-50 transition duration-150">
+                    Visit Now
+                </a>
+            </div>
+        </div>
+    </article>
+    @endforeach
+
+
+
     </div>
   </section>
+
+      <!-- Why Choose Us -->
+    <section class="container mx-auto px-4 lg:px-8 py-16">
+      <h2 class="text-3xl font-bold text-center">Why Choose Us</h2>
+      <p class="text-center text-slate-600 mt-2">We help students grow with practical learning & career support</p>
+
+      <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+        <!-- Card 1 -->
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-xl transition group border border-slate-100">
+          <div class="w-14 h-14 bg-brand/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6l4 2"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mt-4">Project-Based Learning</h4>
+          <p class="text-slate-600 text-sm mt-2">Hands-on training with real-world projects & instructor guidance.</p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-xl transition group border border-slate-100">
+          <div class="w-14 h-14 bg-brand/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mt-4">Expert Instructors</h4>
+          <p class="text-slate-600 text-sm mt-2">Learn from highly experienced and industry-certified trainers.</p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-xl transition group border border-slate-100">
+          <div class="w-14 h-14 bg-brand/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mt-4">Modern Curriculum</h4>
+          <p class="text-slate-600 text-sm mt-2">Updated course materials designed for today’s job market.</p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-xl transition group border border-slate-100">
+          <div class="w-14 h-14 bg-brand/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-brand" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h18M3 12h18M3 17h18"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mt-4">Small Batches</h4>
+          <p class="text-slate-600 text-sm mt-2">Focused sessions ensuring personal attention for every student.</p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-xl transition group border border-slate-100">
+          <div class="w-14 h-14 bg-brand/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-brand" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path d="M12 14l9-5-9-5-9 5 9 5z"/>
+              <path d="M12 14l6.16-3.422a12 12 0 01-12.32 0L12 14z"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 14v7"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mt-4">Job Placement Support</h4>
+          <p class="text-slate-600 text-sm mt-2">CV review, portfolio building & interview preparation.</p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="bg-white rounded-xl p-6 shadow hover:shadow-xl transition group border border-slate-100">
+          <div class="w-14 h-14 bg-brand/10 rounded-lg flex items-center justify-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4l8 8-8 8"/>
+            </svg>
+          </div>
+          <h4 class="text-lg font-semibold mt-4">Flexible Class Schedule</h4>
+          <p class="text-slate-600 text-sm mt-2">Weekend & evening batches suitable for busy learners.</p>
+        </div>
+
+      </div>
+    </section>
+
 
   <!-- Stats -->
   <section class="bg-gradient-to-r from-brand/5 to-white py-8">
@@ -151,128 +247,95 @@
   <!-- Success Stories -->
   <section class="container mx-auto px-4 lg:px-8 py-12">
     <h3 class="text-2xl font-bold">Success Stories</h3>
+
     <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <figure class="bg-white p-4 rounded-lg shadow">
-        <img src="https://placehold.co/400x260?text=Student+1" alt="student" class="w-full h-40 object-cover rounded" />
-        <figcaption class="mt-3">
-          <div class="font-semibold">Rahat — UI Designer</div>
-          <p class="text-sm text-slate-600">"Got my first job within 2 months of finishing the course."</p>
-        </figcaption>
-      </figure>
 
-      <figure class="bg-white p-4 rounded-lg shadow">
-        <img src="https://placehold.co/400x260?text=Student+2" alt="student" class="w-full h-40 object-cover rounded" />
-        <figcaption class="mt-3">
-          <div class="font-semibold">Mina — Motion Artist</div>
-          <p class="text-sm text-slate-600">"Portfolio-ready projects and mentor feedback helped a lot."</p>
-        </figcaption>
-      </figure>
+      @foreach($reviews as $review)
+        <figure class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
+          
+          <!-- Image -->
+          <img 
+            src="{{ $review->image ? asset('img/reviews/' . $review->image) : 'https://placehold.co/400x260?text=No+Image' }}" 
+            alt="student" 
+            class="w-full h-40 object-cover rounded"
+          />
 
-      <figure class="bg-white p-4 rounded-lg shadow">
-        <img src="https://placehold.co/400x260?text=Student+3" alt="student" class="w-full h-40 object-cover rounded" />
-        <figcaption class="mt-3">
-          <div class="font-semibold">Arif — Frontend Dev</div>
-          <p class="text-sm text-slate-600">"Hands-on classes made concepts very clear."</p>
-        </figcaption>
-      </figure>
+          <figcaption class="mt-3">
+
+            <!-- Name + Position -->
+            <div class="font-semibold">
+              {{ $review->student_name }} 
+              @if($review->position_name)
+                — {{ $review->position_name }}
+              @endif
+            </div>
+
+            <!-- Review Text -->
+            <p class="text-sm text-slate-600 mt-1">
+              {{ Str::limit($review->body, 150) }}
+            </p>
+
+            <!-- Video Button (if available) -->
+            @if($review->video_url)
+              <a href="{{ $review->video_url }}" target="_blank" 
+                class="mt-3 inline-block text-sm text-brand font-medium hover:underline">
+                ▶ Watch Video Review
+              </a>
+            @endif
+
+          </figcaption>
+
+        </figure>
+      @endforeach
+
     </div>
   </section>
 
 
-  <!-- Features -->
-  <section class="container mx-auto px-4 lg:px-8 py-12">
-    <h3 class="text-2xl font-bold">Exclusive Solutions that Set Us Apart</h3>
-    <div class="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h4 class="font-semibold">Industry Experts</h4>
-        <p class="text-sm text-slate-600 mt-2">Practitioner-led sessions and real-world projects.</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h4 class="font-semibold">Online + Offline</h4>
-        <p class="text-sm text-slate-600 mt-2">Flexible learning modes to suit your needs.</p>
-      </div>
-      <div class="bg-white p-6 rounded-lg shadow">
-        <h4 class="font-semibold">Career Support</h4>
-        <p class="text-sm text-slate-600 mt-2">Portfolio reviews, interview prep, and placement help.</p>
-      </div>
-    </div>
-  </section>
 
-  <!-- Courses by category -->
-  <section class="bg-brand/5 py-10">
-    <div class="container mx-auto px-4 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg p-4 shadow">
-          <h5 class="font-semibold">Graphic & Motion</h5>
-          <ul class="mt-3 text-sm text-slate-600 space-y-2">
-            <li>Graphic Design</li>
-            <li>Motion Graphics</li>
-            <li>3D Animation</li>
-          </ul>
-        </div>
-        <div class="bg-white rounded-lg p-4 shadow">
-          <h5 class="font-semibold">Web & Software</h5>
-          <ul class="mt-3 text-sm text-slate-600 space-y-2">
-            <li>Full Stack</li>
-            <li>Python & Django</li>
-            <li>React & Next.js</li>
-          </ul>
-        </div>
-        <div class="bg-white rounded-lg p-4 shadow">
-          <h5 class="font-semibold">Digital Marketing</h5>
-          <ul class="mt-3 text-sm text-slate-600 space-y-2">
-            <li>SEO</li>
-            <li>Facebook & Google Ads</li>
-            <li>Content Strategy</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Seminar -->
   <section id="seminar" class="container mx-auto px-4 lg:px-8 py-12">
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-      <div>
-        <h4 class="text-xl font-bold">Join Our Free Seminars</h4>
-        <p class="mt-2 text-slate-600">Weekly seminars that introduce you to career paths and practical skills.</p>
-        <a href="#" class="mt-4 inline-block px-4 py-2 bg-brand text-white rounded-md">Register</a>
-      </div>
-      <div>
-        <img src="https://placehold.co/640x380?text=Seminar" alt="seminar" class="rounded-lg shadow" />
-      </div>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
+
+    <div>
+      <h4 class="text-xl font-bold">Join Our Free Seminars</h4>
+      <p class="mt-2 text-slate-600">
+        Every week we arrange industry-oriented seminars where students learn about 
+        trending skills, job opportunities, and real career pathways in the digital world.
+      </p>
+
+      <ul class="mt-4 space-y-2 text-slate-700 text-sm">
+        <li class="flex items-start gap-2">
+          <span class="text-brand mt-1">✔</span>  
+          Understand which skill suits your future career.
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-brand mt-1">✔</span>
+          Get a clear roadmap for freelancing & local job market.
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-brand mt-1">✔</span>
+          Talk directly with mentors & ask your questions live.
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="text-brand mt-1">✔</span>
+          Learn how to build a strong portfolio as a beginner.
+        </li>
+      </ul>
+
+      <a href="#" class="mt-6 inline-block px-5 py-2.5 bg-brand text-white rounded-md shadow hover:shadow-lg transition">
+        Register for Free
+      </a>
     </div>
 
-    <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-white rounded-lg p-6 shadow flex gap-4">
-        <img src="https://placehold.co/120x120?text=Class" alt="class" class="rounded" />
-        <div>
-          <h5 class="font-semibold">Project-based Classes</h5>
-          <p class="text-sm text-slate-600 mt-1">Small batches, real projects, instructor feedback.</p>
-        </div>
-      </div>
-      <div class="bg-white rounded-lg p-6 shadow flex gap-4">
-        <img src="https://placehold.co/120x120?text=Job" alt="job" class="rounded" />
-        <div>
-          <h5 class="font-semibold">Career Services</h5>
-          <p class="text-sm text-slate-600 mt-1">CV help, portfolio reviews, and employer connects.</p>
-        </div>
-      </div>
+    <div>
+      <img src="{{ asset('assets/img/home2.jpeg') }}" alt="seminar" class="rounded-lg shadow-lg" />
     </div>
-  </section>
 
-  <!-- Partners -->
-  <section id="partners" class="bg-white py-12 border-t">
-    <div class="container mx-auto px-4 lg:px-8">
-      <h4 class="text-xl font-bold">3000+ Companies Are Connected to Us</h4>
-      <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-6 items-center">
-        <img src="https://placehold.co/120x60?text=Logo+1" alt="logo" class="object-contain" />
-        <img src="https://placehold.co/120x60?text=Logo+2" alt="logo" class="object-contain" />
-        <img src="https://placehold.co/120x60?text=Logo+3" alt="logo" class="object-contain" />
-        <img src="https://placehold.co/120x60?text=Logo+4" alt="logo" class="object-contain" />
-        <img src="https://placehold.co/120x60?text=Logo+5" alt="logo" class="object-contain" />
-        <img src="https://placehold.co/120x60?text=Logo+6" alt="logo" class="object-contain" />
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
+
+
 @endsection

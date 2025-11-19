@@ -130,32 +130,7 @@
                                 @enderror
                             </div>
 
-                            <!-- Class (Sreni) -->
-                            <div class="mb-3 col-md-12">
-                                <label for="sreni_id" class="form-label">Class <span class="text-danger">*</span></label>
-                                <select class="form-control select2" id="sreni_id" name="sreni_id" style="width: 100%;"
-                                    required>
-                                    <option value="">Select Class</option>
-                                    @foreach ($srenis as $sreni)
-                                        <option value="{{ $sreni->id }}"
-                                            {{ old('sreni_id') == $sreni->id ? 'selected' : '' }}>
-                                            {{ $sreni->name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('sreni_id')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <div class="mb-3 col-md-12">
-                                <label for="mobile" class="form-label">Send Payment SMS <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" id="mobile" name="mobile"
-                                    value="{{ old('mobile') }}" placeholder="Enter mobile" required>
-                                @error('mobile')
-                                    <div class="text-danger my-2">{{ $message }}</div>
-                                @enderror
-                            </div>
+                           
 
 
                             <!-- Attachments Section -->

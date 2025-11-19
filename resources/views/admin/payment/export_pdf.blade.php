@@ -50,7 +50,7 @@
                 <th>Purpose</th>
                 <th>Amount</th>
                 <th>Amount in Words</th>
-                <th>Class</th>
+               
                 <th>Bibhag</th>
                 <th>Created At</th>
             </tr>
@@ -67,7 +67,6 @@
                     <td>{{ $payment->purpose->purpose_name }}</td>
                     <td>{{ $payment->amount }} TK</td>
                     <td>{{ $payment->amount_in_words }}</td>
-                    <td>{{ $payment->sreni->name }}</td>
                     <td>{{ $payment->bibag->name }}</td>
                     <td>{{ $payment->created_at->format('Y-m-d') }}</td>
                 </tr>

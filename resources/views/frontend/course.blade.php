@@ -42,7 +42,7 @@
 <!-- Courses grid -->
 <section class="container mx-auto px-4 lg:px-8 pb-16">
   @if($courses->count())
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
       @foreach ($courses as $course)
         @php
@@ -51,22 +51,52 @@
               ? asset('uploads/courses/'.$course->image)
               : 'https://via.placeholder.com/800x400.png?text=Course';
           $priceText = isset($course->price) ? '৳'.number_format((float)$course->price, 2) : 'Free';
+          $reviewsCount = $course->reviews_count ?? 0;
+          $studentsCount = $course->students_count ?? 0;
         @endphp
 
-        <article class="bg-white rounded-lg shadow hover:shadow-lg transition overflow-hidden">
-          <img src="{{ $imageUrl }}" alt="{{ $course->title }}" class="w-full h-44 object-cover" />
-          <div class="p-4">
-            <h3 class="font-semibold text-lg line-clamp-1">{{ $course->title }}</h3>
-            <p class="text-sm text-slate-500 mt-1">
-              {{ $course->duration ?? 'N/A' }}
+        <article class="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-slate-100 overflow-hidden group">
+          
+          <div class="relative">
+            <img src="{{ $imageUrl }}" alt="{{ $course->title }}" 
+                 class="w-full h-48 object-cover rounded-t-xl group-hover:scale-105 transition duration-300" />
+            
+            <span class="absolute top-4 left-4 text-sm font-medium text-amber-600 bg-white/70 px-2 py-1 rounded">
+              All Course
+            </span>
+          </div>
+
+          <div class="p-5">
+            <h3 class="font-semibold text-xl text-slate-800 mb-2 line-clamp-1">{{ $course->title }}</h3>
+
+            <p class="text-sm text-slate-500">
+              {{ $course->duration ?? 'N/A' }} Months
             </p>
-            <p class="text-sm text-slate-600 mt-2 line-clamp-2">
-              {{ $course->short_description }}
-            </p>
-            <div class="mt-4 flex items-center justify-between">
-              <div class="text-lg font-bold">{{ $priceText }}</div>
-              <a href="{{ route('course.details', $course->slug) }}" class="px-3 py-2 bg-brand text-white rounded-md text-sm">
-                Visit
+
+            <p class="text-sm text-slate-600 mt-2 line-clamp-2">{{ $course->short_description }}</p>
+
+            <!-- Rating + Students -->
+            <div class="mt-4 flex items-center justify-between text-sm text-slate-600">
+              <div class="flex items-center gap-2">
+                <div class="flex text-amber-400">
+                  @for($i=1; $i<=5; $i++)
+                    <svg class="w-5 h-5 fill-current {{ $i <= round($course->average_rating ?? 0) ? '' : 'text-gray-300' }}" viewBox="0 0 24 24">
+                      <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+                    </svg>
+                  @endfor
+                </div>
+                <span>{{ number_format($reviewsCount) }} Reviews</span>
+              </div>
+
+              <span>{{ number_format($studentsCount) }} Students</span>
+            </div>
+
+            <!-- Price + Visit -->
+            <div class="mt-4 pt-4 border-t border-slate-100 flex items-center justify-between">
+              <p class="text-xl font-bold text-slate-800">Course Fee {{ $priceText }}</p>
+              <a href="{{ route('course.details', $course->slug) }}" 
+                 class="px-4 py-2 bg-white text-orange-600 border border-orange-400 rounded-md text-sm font-medium hover:bg-orange-50 transition duration-150">
+                 Visit Now
               </a>
             </div>
           </div>
@@ -76,8 +106,9 @@
 
     <!-- Pagination -->
     <div class="mt-10">
-      {{ $courses->onEachSide(1)->links() }} {{-- Tailwind pagination --}}
+      {{ $courses->onEachSide(1)->links() }}
     </div>
+
   @else
     <div class="bg-white border border-slate-200 rounded-lg p-8 text-center">
       <h3 class="text-xl font-semibold">No courses found</h3>

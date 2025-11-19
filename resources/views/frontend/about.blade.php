@@ -10,7 +10,7 @@
       <a href="#mission" class="mt-6 inline-block px-6 py-3 bg-brand text-white rounded-md shadow hover:bg-brand/90 transition">Learn More</a>
     </div>
     <div class="lg:w-1/2 flex justify-center">
-      <img src="https://placehold.co/500x350?text=About+Creative+IT" alt="About Creative IT" class="rounded-lg shadow-lg w-full max-w-md object-cover">
+      <img src="{{ asset("assets/img/home2.jpeg") }}" alt="About Creative IT" class="rounded-lg shadow-lg w-full max-w-md object-cover">
     </div>
   </div>
 </section>
@@ -47,26 +47,16 @@
     <h3 class="text-3xl font-bold">Meet Our Expert Team</h3>
     <p class="mt-2 text-slate-600">Industry professionals who guide and mentor you.</p>
     <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+    
+      @foreach ($teacher as $t)
       <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-        <img src="https://placehold.co/150x150?text=Rahat+Ahmed" alt="Instructor 1" class="w-32 h-32 mx-auto rounded-full object-cover">
-        <h5 class="mt-4 font-semibold">Rahat Ahmed</h5>
-        <p class="text-slate-600 text-sm mt-1">UI/UX Designer</p>
+        <img src="{{ asset('img/teachers/'.$t->image) }}" alt="{{ $t->name }}" class="w-32 h-32 mx-auto rounded-full object-cover">
+        <h5 class="mt-4 font-semibold">{{ $t->name }}</h5>
+        <p class="text-slate-600 text-sm mt-1">{{ $t->designation }}</p>
       </div>
-      <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-        <img src="https://placehold.co/150x150?text=Mina+Khatun" alt="Instructor 2" class="w-32 h-32 mx-auto rounded-full object-cover">
-        <h5 class="mt-4 font-semibold">Mina Khatun</h5>
-        <p class="text-slate-600 text-sm mt-1">Motion Graphics Artist</p>
-      </div>
-      <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-        <img src="https://placehold.co/150x150?text=Arif+Hossain" alt="Instructor 3" class="w-32 h-32 mx-auto rounded-full object-cover">
-        <h5 class="mt-4 font-semibold">Arif Hossain</h5>
-        <p class="text-slate-600 text-sm mt-1">Frontend Developer</p>
-      </div>
-      <div class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition">
-        <img src="https://placehold.co/150x150?text=Sadia+Rahman" alt="Instructor 4" class="w-32 h-32 mx-auto rounded-full object-cover">
-        <h5 class="mt-4 font-semibold">Sadia Rahman</h5>
-        <p class="text-slate-600 text-sm mt-1">Digital Marketing Specialist</p>
-      </div>
+      @endforeach
+      
     </div>
   </div>
 </section>
@@ -94,36 +84,24 @@
   <div class="container mx-auto px-4 lg:px-8 text-center">
     <h3 class="text-3xl font-bold">What Our Students Say</h3>
     <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      @foreach ($student_review as $sr)
       <figure class="bg-white p-6 rounded-lg shadow">
-        <img src="https://placehold.co/150x150?text=Rifat" alt="Student 1" class="w-full h-40 object-cover rounded">
+        <img src="{{ asset('img/reviews/'.$sr->image) }}" alt="{{ $sr->name }}" class="w-full h-40 object-cover rounded">
         <figcaption class="mt-4">
-          <div class="font-semibold">Rifat — Web Developer</div>
-          <p class="text-slate-600 text-sm mt-1">"Hands-on projects and guidance helped me land a great job."</p>
+          <div class="font-semibold">{{ $sr->name }} — {{ $sr->course->title }}</div>
         </figcaption>
       </figure>
-      <figure class="bg-white p-6 rounded-lg shadow">
-        <img src="https://placehold.co/150x150?text=Sadia" alt="Student 2" class="w-full h-40 object-cover rounded">
-        <figcaption class="mt-4">
-          <div class="font-semibold">Sadia — Motion Designer</div>
-          <p class="text-slate-600 text-sm mt-1">"Mentors are very supportive and courses are practical."</p>
-        </figcaption>
-      </figure>
-      <figure class="bg-white p-6 rounded-lg shadow">
-        <img src="https://placehold.co/150x150?text=Arif" alt="Student 3" class="w-full h-40 object-cover rounded">
-        <figcaption class="mt-4">
-          <div class="font-semibold">Arif — UI/UX Designer</div>
-          <p class="text-slate-600 text-sm mt-1">"Great environment for learning with real-world projects."</p>
-        </figcaption>
-      </figure>
+      @endforeach
+      
     </div>
   </div>
 </section>
 
 <!-- CTA / Apply Now -->
 <section class="bg-white py-16 text-center">
-  <h3 class="text-3xl font-bold">Start Your Career with Creative IT Today</h3>
+  <h3 class="text-3xl font-bold">Start Your Career with GenZ IT Today</h3>
   <p class="mt-4 text-slate-600 max-w-lg mx-auto">Enroll in our courses and gain the skills to succeed in the digital world.</p>
-  <a href="#apply" class="mt-6 inline-block px-6 py-3 bg-brand text-white rounded-md shadow hover:bg-brand/90 transition">Apply Now</a>
+  <a href="{{ route('admission') }}" class="mt-6 inline-block px-6 py-3 bg-brand text-white rounded-md shadow hover:bg-brand/90 transition">Apply Now</a>
 </section>
 
 @endsection

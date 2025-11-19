@@ -95,10 +95,10 @@ class PaymentController extends Controller
                 ->make(true);
         }
 
-        $srenis = Sreni::all(); // Assuming Sreni represents classes
+       
         $bibags = Bibag::all(); // Assuming Sreni represents classes
         $purposes = Purpose::all(); // Assuming Sreni represents classes
-        return view('admin.payment.index', compact('srenis', 'bibags', 'purposes'));
+        return view('admin.payment.index', compact('bibags', 'purposes'));
     }
 
     public function payment_report(Request $request)
@@ -160,87 +160,16 @@ class PaymentController extends Controller
                 ->make(true);
         }
     
-        $srenis = Sreni::all();
+  
         $bibags = Bibag::all(); // ✅ Already present
         $purposes = Purpose::all();
-    
-        return view('admin.payment.payments_report', compact('srenis', 'bibags', 'purposes', 'totalAmount'));
+
+        return view('admin.payment.payments_report', compact('bibags', 'purposes', 'totalAmount'));
     }
     
     
     
 
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //         'reciept_no' => 'required|unique:payments,reciept_no',
-    //         'date' => 'required|date_format:d-m-Y',
-    //         'name' => 'required|string|max:255',
-    //         'dhakila_number' => 'nullable|numeric',
-
-    //         'mobile' => 'required|string|max:15', // Validate mobile
-
-    //         'address' => 'required|string|max:255',
-    //         'amount' => 'required|numeric|min:0',
-    //         'amount_in_words' => 'required|string|max:255',
-    //         'sreni_id' => 'required|exists:srenis,id',
-    //         'bibag_id' => 'required|exists:bibags,id',
-    //         'purpose_id' => 'required|exists:purposes,id',
-    //         'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,gif,svg,pdf|max:512', // 512 KB
-    //         // 'amount_in_words' will be handled server-side
-    //     ]);
-
-    //     $payment =  Payment::create([
-    //         'reciept_no' => $request->reciept_no,
-    //         'date' => Carbon::createFromFormat('d-m-Y', $request->date),
-    //         'name' => $request->name,
-    //         'dhakila_number' => $request->dhakila_number,
-    //         'address' => $request->address,
-    //         'purpose_id' => $request->purpose_id,
-    //         'amount' => $request->amount,
-    //         'amount_in_words' => $request->amount_in_words,
-    //         'sreni_id' => $request->sreni_id,
-    //         'bibag_id' => $request->bibag_id,
-    //     ]);
-
-    //     if ($request->hasFile('attachments')) {
-    //         $files = $request->file('attachments');
- 
-    //         foreach ($files as $file) {
-    //             $filenameWithExt = $file->getClientOriginalName();
-    //             $filename        = pathinfo($filenameWithExt, PATHINFO_FILENAME);
-    //             $extension       = $file->getClientOriginalExtension();
-    //             $fileNameToStore = $filename . '_' . time() . '.' . $extension;
-    //             $file->move(public_path('assets/attachements'), $fileNameToStore);
-
-    //             PaymentAttachment::create([
-    //                 'payment_id' => $payment->id,
-    //                 'file_path' => $fileNameToStore,
-    //                 'file_name' => $fileNameToStore,
-    //                 'file_type' => $extension, // Add this field to the database
-    //             ]);
-    //         }
-    //     }
-
-    //     // ✅ SMS Send Section (Example using API like SMS API BD or others)
-    //     $mobile = $request->mobile;
-    //     $smsBody = "Payment Received:\n"
-    //             . "Name: {$request->name}\n"
-    //             . "Amount: {$request->amount} Tk\n"
-    //             . "Receipt No: {$request->reciept_no}\n"
-    //             . "Date: {$request->date}\n"
-    //             . "Thank you!";
-
-    //     // Replace below with your SMS API (e.g., sms.net.bd)
-    //     Http::get("https://api.yoursmsprovider.com/send", [
-    //         'api_key' => 'your_api_key',
-    //         'to' => $mobile,
-    //         'message' => $smsBody,
-    //         // 'sender_id' => 'GROWSOFT' // Optional
-    //     ]);
-
-    //     return response()->json(['success' => "Payment created Successfully"]);
-    // }
 
     public function store(Request $request)
     {
@@ -252,10 +181,9 @@ class PaymentController extends Controller
             'address' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
             'amount_in_words' => 'required|string|max:255',
-            'sreni_id' => 'required|exists:srenis,id',
+            
             'bibag_id' => 'required|exists:bibags,id',
             'purpose_id' => 'required|exists:purposes,id',
-            'mobile' => 'required|regex:/^01[0-9]{9}$/', // Add this for mobile validation
             'attachments.*' => 'nullable|file|mimes:jpg,jpeg,png,gif,svg,pdf|max:512',
         ]);
 
@@ -268,7 +196,6 @@ class PaymentController extends Controller
             'purpose_id' => $request->purpose_id,
             'amount' => $request->amount,
             'amount_in_words' => $request->amount_in_words,
-            'sreni_id' => $request->sreni_id,
             'bibag_id' => $request->bibag_id,
         ]);
 
@@ -330,7 +257,6 @@ class PaymentController extends Controller
             'dhakila_number' => 'required|integer',
             'address' => 'required|string|max:255',
             'amount' => 'required|numeric|min:0',
-            'sreni_id' => 'required|exists:srenis,id',
             'bibag_id' => 'required|exists:bibags,id',
             'purpose_id' => 'required|exists:purposes,id',
             'amount_in_words' => 'required|string|max:255',
@@ -347,7 +273,6 @@ class PaymentController extends Controller
             'dhakila_number' => $request->dhakila_number,
             'address' => $request->address,
             'amount' => $request->amount,
-            'sreni_id' => $request->sreni_id,
             'bibag_id' => $request->bibag_id,
             'purpose_id' => $request->purpose_id,
             'amount_in_words' => $request->amount_in_words,

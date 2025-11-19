@@ -95,4 +95,9 @@ class StudentReviewController extends Controller
 
         return redirect()->route('admin.reviews.index')->with('success', 'Review deleted successfully.');
     }
+    public function show(StudentReview $review)
+    {
+        // Show details of a single review
+        return view('admin.reviews.show', compact('review'));
+    }
 }

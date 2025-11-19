@@ -116,76 +116,7 @@ class HomeController extends Controller
         ]);
     }
 
-    // public function studentD()
-    // {
-    //     return view('admin.dashboard.student');
-    // }
-
-
-
-    // public function studentD()
-    // {
-    //     // Get the logged-in user
-    //     $user = auth()->user();
-
-    //     // Check if the user has a dhakila_number
-    //     if ($user && $user->student_dhakila_number) {
-    //         // Find the student using the dhakila_number from the user
-    //         $student = Student::where('dhakila_number', $user->student_dhakila_number)->first();
-
-    //         // If the student is found, fetch the necessary information
-    //         if ($student) {
-    //             // Fetch payments, attendances, and attachments for the student
-    //             $payments = $student->payments;
-    //             $attendances = $student->attendances ?? collect([]);
-    //             $attachments = $student->attachments;
-
-    //             // Set the active tab to basic-info by default
-    //             $activeTab = 'basic-info';
-
-    //             // Return the view with the student data and related info
-    //             return view('admin.dashboard.student', compact('student', 'payments', 'attendances', 'attachments', 'activeTab'));
-    //         } else {
-    //             return redirect()->route('studentD')->with('error', 'Student profile not found.');
-    //         }
-    //     }
-
-    //     return redirect()->route('studentD')->with('error', 'User does not have a valid student profile.');
-    // }
-//     public function studentD()
-// {
-//     $user = auth()->user();
-
-//     if ($user && $user->student_dhakila_number) {
-//         $student = Student::where('dhakila_number', $user->student_dhakila_number)->first();
-
-//         if ($student) {
-//             // Fetch the payments, attendances, and exams for the student
-//             $payments = $student->payments;
-//             $attendances = $student->attendances ?? collect([]);
-//             $attachments = $student->attachments;
-//             $exams = $student->exams;
-
-//             // Fetch the class (Sreni) the student belongs to and its subjects
-//             $sreni = $student->sreni; // Assuming the student has a relationship with sreni
-//             $subjects = Subject::where('sreni_id', $sreni->id)->get();
-
-//             // Fetch lessons for each subject
-//             $lessons = collect();
-//             foreach ($subjects as $subject) {
-//                 $lessons = $lessons->merge($subject->lessons); // Assuming subject has a relationship with lessons
-//             }
-
-//             $activeTab = 'basic-info';
-
-//             return view('admin.dashboard.student', compact('student', 'payments', 'attendances', 'attachments', 'exams', 'sreni', 'subjects', 'lessons', 'activeTab'));
-//         } else {
-//             return redirect()->route('studentD')->with('error', 'Student profile not found.');
-//         }
-//     }
-
-//     return redirect()->route('studentD')->with('error', 'User does not have a valid student profile.');
-// }
+   
 public function studentD(Request $request)
 {
     $user = auth()->user();
@@ -202,46 +133,18 @@ public function studentD(Request $request)
 
             // Class & subject
             $sreni = $student->sreni;
-            $subjects = Subject::where('sreni_id', $sreni->id)->get();
-
-            // Lessons
-            $lessons = collect();
-            foreach ($subjects as $subject) {
-                $lessons = $lessons->merge($subject->lessons()->with('subject')->get());
-            }
-
-            // ✅ Assigned Fees ডাটা আনছি
-            $assignedFees = AssignedFee::with('feeCategory')
-                ->where('student_id', $student->id)
-                ->get();
-
-            $fees = [];
-
+           
             
 
-            foreach ($assignedFees as $assigned) {
-                $fees[] = [
-                    'category' => $assigned->feeCategory->category_name ?? $assigned->optionalService->service_type,
-                    'month'    => $assigned->created_at->format('F Y'),
-                    'amount'   => $assigned->amount,
-                ];
-            }
-
-            if ($request->ajax()) {
-                return response()->json([
-                    'exams' => DataTables::of($exams)->make(true)->getData(),
-                    'lessons' => DataTables::of($lessons)->make(true)->getData(),
-                ]);
-            }
+        
 
             $activeTab = 'basic-info';
-            $totalAssigned = collect($fees)->sum('amount');
+          
             $totalPayments = $payments->sum('amount');
-            $remainingDue = $totalAssigned - $totalPayments;
             // ✅ নতুন ভ্যারিয়েবল $fees পাঠানো হলো view-এ
             return view('admin.dashboard.student', compact(
                 'student', 'payments', 'attendances', 'attachments',
-                'exams', 'sreni', 'subjects', 'lessons', 'activeTab', 'fees', 'totalAssigned', 'totalPayments', 'remainingDue'
+                'exams', 'sreni', 'activeTab', 
             ));
         } else {
             return redirect()->route('studentD')->with('error', 'Student profile not found.');

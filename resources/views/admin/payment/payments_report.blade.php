@@ -108,7 +108,6 @@
                                 <th>Purpose</th>
                                 <th>Amount</th>
                                 <th>Amount in Words</th>
-                                <th>Class</th>
                                 <th>Bibhag</th>
                                 <th>Actions</th>
                             </tr>
@@ -185,7 +184,6 @@
                     { data: 'purpose', name: 'purpose' },
                     { data: 'amount', name: 'amount' },
                     { data: 'amount_in_words', name: 'amount_in_words' },
-                    { data: 'sreni', name: 'sreni' },
                     { data: 'bibag', name: 'bibag' },
                     { data: 'actions', name: 'actions', orderable: false, searchable: false }
                 ]

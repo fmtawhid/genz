@@ -1,6 +1,4 @@
 
-    
-
 <br><br>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,11 +44,7 @@
                                 <td class="px-4  text-center">:</td>
                                 <td class="px-4 text-sm font-normal font-mono capitalize">{{ $student->dhakila_number }}</td>
                             </tr>
-                            <tr>
-                                <td class="px-4 text-sm font-bold font-mono capitalize">Class</td>
-                                <td class="px-4  text-center">:</td>
-                                <td class="px-4 text-sm font-normal font-mono capitalize">{{ $student->sreni->name }}</td>
-                            </tr>
+                            
                             <tr>
                                 <td class="px-4 text-sm font-bold font-mono capitalize">Section</td>
                                 <td class="px-4  text-center">:</td>

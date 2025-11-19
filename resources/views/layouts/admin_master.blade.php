@@ -556,17 +556,17 @@
                         <li class="side-nav-item">
                             <a data-bs-toggle="collapse" href="#productMenu" aria-expanded="false" class="side-nav-link">
                                 <i class="ri-user-add-line"></i>
-                                <span>Admission</span>
+                                <span>Students</span>
                                 <span class="menu-arrow"></span>
                             </a>
                             <div class="collapse" id="productMenu">
                                 <ul class="side-nav-second-level">
                                     @can('student_add')
-                                        <li><a href="{{ route('students.create') }}">Admission</a></li>
+                                        <li><a href="{{ route('students.create') }}">Add Student</a></li>
                                     @endcan
                                     @can('student_view')
-                                        <li><a href="{{ route('students.index') }}">All Student</a></li>
-                                        <li><a href="{{ route('students.inactive') }}">Inactive Student</a></li>
+                                        <li><a href="{{ route('students.index') }}">All Students</a></li>
+                                        <li><a href="{{ route('students.inactive') }}">Inactive Students</a></li>
                             
 
                                     @endcan
@@ -575,6 +575,42 @@
                             </div>
                         </li>
                     @endcanany
+
+                    
+                        <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#course" aria-expanded="false" class="side-nav-link">
+                                <i class="ri-gallery-line"></i>
+                                <span>Courses</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="course">
+                                <ul class="side-nav-second-level">
+                                    @can('course_add')
+                                        <li><a href="{{ route('courses.create') }}">Add Course</a></li>
+                                    @endcan
+                                    @can('course_view')
+                                        <li><a href="{{ route('courses.index') }}">All Courses</a></li>
+                                    @endcan
+                                </ul>
+                            </div>
+                        </li>
+                         <li class="side-nav-item">
+                            <a data-bs-toggle="collapse" href="#reviews" aria-expanded="false" class="side-nav-link">
+                                <i class="ri-gallery-line"></i>
+                                <span>Reviews</span>
+                                <span class="menu-arrow"></span>
+                            </a>
+                            <div class="collapse" id="reviews">
+                                <ul class="side-nav-second-level">
+                            
+                                        <li><a href="{{ route('reviews.create') }}">Add Review</a></li>
+                               
+                                        <li><a href="{{ route('reviews.index') }}">All Reviews</a></li>
+                                 
+                                </ul>
+                            </div>
+                        </li>
+            
 
                   
 
@@ -634,66 +670,11 @@
                     </li>
                 @endcanany
 
-                    <!-- Notices Section -->
-                    @canany(['notice_add', 'notice_view', 'notice_edit', 'notice_delete'])
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#notice" aria-expanded="false" class="side-nav-link">
-                                <i class="ri-notification-3-line"></i>
-                                <span>Notices</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="notice">
-                                <ul class="side-nav-second-level">
-                                    @can('notice_add')
-                                        <li><a href="{{ route('notices.add') }}">Add Notice</a></li>
-                                    @endcan
-                                    @can('notice_view')
-                                        <li><a href="{{ route('notices.list') }}">All Notices</a></li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </li>
-                    @endcanany
-
-                    <!-- Complaints Section -->
-                    @canany(['complaint_view', 'complaint_delete'])
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#Complaints" aria-expanded="false" class="side-nav-link">
-                                <i class="ri-folder-3-line"></i>
-                                <span>Complaints</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="Complaints">
-                                <ul class="side-nav-second-level">
-                                    @can('complaint_view')
-                                        <li><a href="{{ route('complaints.index') }}">All Complaints</a></li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </li>
-                    @endcanany
 
 
-                    <!-- Gallery Section -->
-                    @canany(['gallery_view', 'gallery_add', 'gallery_edit', 'gallery_delete'])
-                        <li class="side-nav-item">
-                            <a data-bs-toggle="collapse" href="#reviews" aria-expanded="false" class="side-nav-link">
-                                <i class="ri-gallery-line"></i>
-                                <span>Reviews</span>
-                                <span class="menu-arrow"></span>
-                            </a>
-                            <div class="collapse" id="reviews">
-                                <ul class="side-nav-second-level">
-                                    @can('gallery_add')
-                                        <li><a href="{{ route('reviews.create') }}">Add Review</a></li>
-                                    @endcan
-                                    @can('gallery_view')
-                                        <li><a href="{{ route('reviews.index') }}">All Reviews</a></li>
-                                    @endcan
-                                </ul>
-                            </div>
-                        </li>
-                    @endcanany
+                   
+
+                    
 
                     <!-- Teacher Section -->
                     @canany(['teacher_view', 'teacher_add', 'teacher_edit', 'teacher_delete'])

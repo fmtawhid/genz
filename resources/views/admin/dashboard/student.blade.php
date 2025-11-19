@@ -103,10 +103,7 @@
 									<div class="p-6 bg-gray-50 rounded-lg">
 										<h4 class="text-xl font-semibold text-gray-700 mb-4">Class Information
 										</h4>
-										<p class="text-gray-600 mb-2"><strong>Class:</strong>
-											{{ $student->sreni->name }}</p>
-										<p class="text-gray-600 mb-2"><strong>Department:</strong>
-											{{ $student->bibag->name ?? 'No Department Assigned' }}</p>
+										
 										<p class="text-gray-600 mb-2"><strong>Roll Number:</strong>
 											{{ $student->roll_number }}</p>
 										<p class="text-gray-600 mb-2"><strong>Academic Session:</strong>
@@ -184,48 +181,7 @@
 						<div class="bg-white p-6 rounded-lg">
 							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">Exam Information</h3>
 							<div class="row">
-								<div class="col-12">
-									<label for="exam_name" class="form-label">Exams:</label>
-									<!-- Displaying Exams in DataTable -->
-									<table id="examsTable" class="table table-bordered table-striped w-100">
-										<thead>
-											<tr>
-												<th>Exam Name</th>
-												<th>Exam Type</th>
-												<th>Date</th>
-												<th>Admit Card</th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-										<tbody>
-											@if($exams->isNotEmpty())
-												@foreach($exams as $exam)
-													<tr>
-														<td>{{ $exam->name }}</td>
-														<td>{{ $exam->exam_type }}</td>
-														<td>{{ $exam->date }}</td>
-														<td>
-															<a href="{{ route('student.admitCard', ['exam_id' => $exam->id, 'student_id' => $student->id]) }}"
-																class="btn btn-info btn-sm" target="_blank">
-																Admit Card
-															</a>
-														</td>
-														<td>
-															<a href="{{ route('student.marksheet', ['exam_id' => $exam->id, 'student_id' => $student->id]) }}"
-																class="btn btn-primary btn-sm" target="_blank">
-																View Marksheet
-															</a>
-														</td>
-													</tr>
-												@endforeach
-											@else
-												<tr>
-													<td colspan="5" class="text-center">No Exams Assigned</td>
-												</tr>
-											@endif
-										</tbody>
-									</table>
-								</div>
+								
 							</div>
 						</div>
 					</div>
@@ -236,16 +192,7 @@
 							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">Class and Lessons</h3>
 
 							<div class="row">
-								<div class="col-md-12">
-									<h5>Class: {{ $sreni->name }}</h5>
-									<h6>Subjects</h6>
-									<!-- List subjects -->
-									<ul>
-										@foreach($subjects as $subject)
-											<li>{{ $subject->name }}</li>
-										@endforeach
-									</ul>
-								</div>
+								
 							</div>
 
 							<!-- Lessons DataTable -->
@@ -276,45 +223,7 @@
 					<div class="tab-pane mt-3 mx-2" id="payment-due">
 						<div class="bg-white p-6 rounded-lg">
 							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">Assigned Fees</h3>
-							<table class="table table-bordered">
-								<thead>
-									<tr>
-										<th>Fee Category</th>
-										<th>Month</th>
-										<th>Amount</th>
-									</tr>
-								</thead>
-								<tbody>
-									@forelse($fees as $fee)
-										<tr>
-											<td>{{ $fee['category'] }}</td>
-											<td>{{ $fee['month'] }}</td>
-											<td>{{ number_format($fee['amount'], 2) }}</td>
-										</tr>
-									@empty
-										<tr>
-											<td colspan="3" class="text-center">No assigned fees found.</td>
-										</tr>
-									@endforelse
-								</tbody>
-
-								@if(count($fees) > 0)
-									<tfoot>
-										<tr class="bg-gray-100 font-semibold">
-											<td colspan="2" class="text-end">Total Assigned:</td>
-											<td>{{ number_format($totalAssigned, 2) }}</td>
-										</tr>
-										<tr class="bg-green-100 font-semibold">
-											<td colspan="2" class="text-end">Total Paid:</td>
-											<td>{{ number_format($totalPayments, 2) }}</td>
-										</tr>
-										<tr class="bg-red-100 font-semibold">
-											<td colspan="2" class="text-end">Remaining Due:</td>
-											<td>{{ number_format($remainingDue, 2) }}</td>
-										</tr>
-									</tfoot>
-								@endif
-							</table>
+							
 						</div>
 					</div>
 

@@ -40,7 +40,7 @@ use App\Models\Attachment;
 use App\Models\Course;
 use App\Http\Controllers\SmsController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\Admin\SubjectController;
+use App\Models\StudentReview;
 use App\Http\Controllers\Admin\SreniSectionController;
 
 use App\Http\Controllers\Admin\FeeCategoryController;
@@ -63,29 +63,36 @@ use App\Http\Controllers\ResultController;
 */
 
 Route::get('/', function () {
-    $noticeOne = Notice::latest()->first();  // Fetch the latest notice
+    $noticeOne = Notice::latest()->first();
     $teachers = Teacher::where('staff_type', 'teacher')->get();
-
     $notices = Notice::latest()->paginate(15);
-
     $courses = Course::with(['teachers', 'topics'])->latest()->get();
 
-
-    // Map notices into the event format for the calendar
     $events = $notices->map(function ($notice) {
-        $date = explode('-', $notice->date); // Assuming 'date' is stored in 'YYYY-MM-DD' format
+        $date = explode('-', $notice->date);
         return [
-            'id' => $notice->id, // Include the ID for clickable links
-            'occasion' => $notice->section_title, // Title of the notice
+            'id' => $notice->id,
+            'occasion' => $notice->section_title,
             'year' => (int) $date[0],
             'month' => (int) $date[1],
             'day' => (int) $date[2],
-            'cancelled' => false, // Add your cancellation logic if necessary
+            'cancelled' => false,
         ];
     });
 
-    return view('frontend/home', compact('notices', 'noticeOne', 'teachers', 'events', 'courses'));
+    // ⭐ Get Student Reviews (latest 6)
+    $reviews = StudentReview::latest()->take(6)->get();
+
+    return view('frontend/home', compact(
+        'notices',
+        'noticeOne',
+        'teachers',
+        'events',
+        'courses',
+        'reviews'
+    ));
 });
+
 
 
 Route::prefix('panel')->group(function () {
@@ -368,14 +375,6 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function 
 
 
 
-    // 🟢 Sreni (Class) Management Routes with Spatie Permissions
-    Route::middleware(['permission:sreni_view'])->get('/srenis', [SreniController::class, 'index'])->name('srenis.index'); // View Sreni list
-    Route::middleware(['permission:sreni_add'])->get('/srenis/create', [SreniController::class, 'create'])->name('srenis.create'); // Show form to create Sreni
-    Route::middleware(['permission:sreni_add'])->post('/srenis/store', [SreniController::class, 'store'])->name('srenis.store'); // Store Sreni data
-    Route::middleware(['permission:sreni_edit'])->get('/srenis/{id}/edit', [SreniController::class, 'edit'])->name('srenis.edit'); // Show form to edit Sreni
-    Route::middleware(['permission:sreni_edit'])->put('/srenis/{id}/update', [SreniController::class, 'update'])->name('srenis.update'); // Update Sreni data
-    Route::middleware(['permission:sreni_delete'])->delete('/srenis/{id}/destroy', [SreniController::class, 'destroy'])->name('srenis.destroy'); // Delete Sreni
-
     // 🟢 Expense Head Management Routes with Spatie Permissions
     Route::middleware(['permission:expense_head_view'])->get('/expense_heads', [ExpenseHeadController::class, 'index'])->name('expense_heads.index'); // View Expense Head list
     Route::middleware(['permission:expense_head_add'])->get('/expense_heads/create', [ExpenseHeadController::class, 'create'])->name('expense_heads.create'); // Show form to create Expense Head
@@ -454,24 +453,6 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function 
 
 
 
-    Route::middleware(['permission:notice_view'])->get('notices/list', [NoticeController::class, 'index'])->name('notices.list');
-    Route::middleware(['permission:notice_add'])->get('notices/add', [NoticeController::class, 'create'])->name('notices.add');
-    Route::middleware(['permission:notice_add'])->post('notices/store', [NoticeController::class, 'store'])->name('notices.store');
-    Route::middleware(['permission:notice_edit'])->get('notices/{id}/edit', [NoticeController::class, 'edit'])->name('notices.edit');
-    Route::middleware(['permission:notice_edit'])->put('notices/{id}/update', [NoticeController::class, 'update'])->name('notices.update');
-    Route::middleware(['permission:notice_delete'])->delete('notices/{id}', [NoticeController::class, 'destroy'])->name('notices.delete');
-
-
-
-
-
-    // 🟢 Gallery Admin Routes with Spatie Permissions
-    Route::middleware(['permission:gallery_view'])->get('/gallery/list', [GalleryController::class, 'index'])->name('gallery.list'); // Show all gallery items
-    Route::middleware(['permission:gallery_add'])->get('/gallery/create', [GalleryController::class, 'create'])->name('gallery.create'); // Show form to add a new gallery item
-    Route::middleware(['permission:gallery_add'])->post('/gallery/store', [GalleryController::class, 'store'])->name('gallery.store'); // Store new gallery item
-    Route::middleware(['permission:gallery_edit'])->get('/gallery/{id}/edit', [GalleryController::class, 'edit'])->name('gallery.edit'); // Show form to edit gallery item
-    Route::middleware(['permission:gallery_edit'])->put('/gallery/{id}/update', [GalleryController::class, 'update'])->name('gallery.update'); // Update gallery item
-    Route::middleware(['permission:gallery_delete'])->delete('/gallery/{id}/destroy', [GalleryController::class, 'destroy'])->name('gallery.destroy'); // Delete gallery item
 
 
     // 🟢 Teacher Admin Routes with Spatie Permissions
@@ -483,11 +464,6 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:admin'])->group(function 
     Route::middleware(['permission:teacher_delete'])->delete('/teacher/{id}/destroy', [TeacherController::class, 'destroy'])->name('teacher.destroy'); // Delete teacher
     Route::get('/teacher/{user_id}/generate-id', [TeacherController::class, 'generateID'])->name('admin.teacher.generateID');
 
-
-    // 🟢 Complaint Box Routes with Spatie Permissions
-    Route::middleware(['permission:complaint_view'])->get('/complaints', [ComplaintController::class, 'index'])->name('complaints.index'); // View complaints list
-    Route::middleware(['permission:complaint_view'])->get('/complaints/{id}', [ComplaintController::class, 'show'])->name('complaints.show'); // View a single complaint
-    Route::middleware(['permission:complaint_delete'])->delete('/complaints/{id}', [ComplaintController::class, 'destroy'])->name('complaints.destroy'); // Delete a complaint
 
 
     Route::prefix('students')->group(function () {
@@ -562,30 +538,9 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:student'])->group(functio
 
 
 
-
-
-
-
-//Gallery Routes
-Route::get('/gallery', [PageController::class, 'gallery'])->name('gallery');
-
-
-
 // Complaints Routes
 
 Route::post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
-
-
-
-
-
-
-
-
-// Route::get('notices/trash', [NoticeController::class, 'trash_index'])->name('notices.trash');
-// Route::get('notices/restore/{id}', [NoticeController::class, 'trash_restore'])->name('notices.restore');
-// Route::delete('notices/permanentDelete/{id}', [NoticeController::class, 'trash_permanentDelete'])->name('notices.permanentDelete');
-
 
 
 
