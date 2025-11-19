@@ -74,12 +74,6 @@ class Kernel extends HttpKernel
         'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
     ];
     // app/Console/Kernel.php
-    protected function schedule(Schedule $schedule)
-    {
-        // Schedule the auto delete function to run at the end of the year
-        $schedule->call(function () {
-            \App\Models\Lesson::autoDelete();
-        })->yearlyOn(12, 31, '23:59'); // Runs on 31st December at 11:59 PM
-    }
+    
 
 }

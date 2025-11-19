@@ -12,29 +12,22 @@ use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PurposeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PageController;
-use App\Http\Controllers\GalleryController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\NoticeController;
+
 use App\Http\Controllers\TeacherController;
-use App\Http\Controllers\AttendanceController;
-use App\Http\Controllers\AttendanceTypeController;
-use App\Http\Controllers\TeacherAttendanceController;
-use App\Http\Controllers\AttachmentController;
-use App\Http\Controllers\AttachmentTypeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\LessonController;
+
 use App\Http\Controllers\CourseController;
 
 
 use App\Http\Controllers\StudentReviewController;
 
-use App\Models\Notice;
 use App\Models\Teacher;
 use App\Models\Student;
 use App\Models\Bibag;
-use App\Models\Sreni;
+
 use App\Http\Controllers\ComplaintController;
 use App\Models\Attachment;
 use App\Models\Course;
@@ -63,31 +56,17 @@ use App\Http\Controllers\ResultController;
 */
 
 Route::get('/', function () {
-    $noticeOne = Notice::latest()->first();
+
     $teachers = Teacher::where('staff_type', 'teacher')->get();
-    $notices = Notice::latest()->paginate(15);
+
     $courses = Course::with(['teachers', 'topics'])->latest()->get();
 
-    $events = $notices->map(function ($notice) {
-        $date = explode('-', $notice->date);
-        return [
-            'id' => $notice->id,
-            'occasion' => $notice->section_title,
-            'year' => (int) $date[0],
-            'month' => (int) $date[1],
-            'day' => (int) $date[2],
-            'cancelled' => false,
-        ];
-    });
 
     // ⭐ Get Student Reviews (latest 6)
     $reviews = StudentReview::latest()->take(6)->get();
 
     return view('frontend/home', compact(
-        'notices',
-        'noticeOne',
         'teachers',
-        'events',
         'courses',
         'reviews'
     ));
@@ -531,23 +510,6 @@ Route::prefix('panel')->middleware(['auth', 'checkRole:student'])->group(functio
     Route::post('/update-password', [UserController::class, 'updatePassword'])->name('users.update-password');
     // Route::get('/results/{exam_id}/{student_id}', [ExamController::class, 'viewResults'])->name('viewResults');
 });
-
-
-
-
-
-
-
-// Complaints Routes
-
-Route::post('/complaints', [ComplaintController::class, 'store'])->name('complaints.store');
-
-
-
-//notice routes
-Route::get('/notice', [PageController::class, 'notice'])->name('notice');
-Route::get('/singelnotice/{id}', [PageController::class, 'singelnotice'])->name('singelnotice');
-
 
 
 

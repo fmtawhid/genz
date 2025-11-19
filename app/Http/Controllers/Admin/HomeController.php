@@ -59,8 +59,6 @@ class HomeController extends Controller
         $totalExpensesLast30Days = Expense::where('created_at', '>=', $thirtyDaysAgo)->sum('amount');
         $totalProfitLast30Days = $totalPaymentsLast30Days - $totalExpensesLast30Days;
 
-        $complaints = Complaint::all();
-        $notices = Notice::all();
 
 
 
@@ -105,8 +103,6 @@ class HomeController extends Controller
             'totalStudentsLast30Days' => $totalStudentsLast30Days,
             'totalExpensesLast30Days' => $totalExpensesLast30Days,
             'totalProfitLast30Days' => $totalProfitLast30Days,
-            'complaints' => $complaints,
-            'notices' => $notices,
             'revenues' => $revenues,
             'expenses' => $expenses,
             'expensesLast30Days' => $expensesLast30Days,
@@ -129,10 +125,9 @@ public function studentD(Request $request)
             $payments = $student->payments;
             $attendances = $student->attendances ?? collect([]);
             $attachments = $student->attachments;
-            $exams = $student->exams;
 
-            // Class & subject
-            $sreni = $student->sreni;
+
+
            
             
 
@@ -144,7 +139,7 @@ public function studentD(Request $request)
             // ✅ নতুন ভ্যারিয়েবল $fees পাঠানো হলো view-এ
             return view('admin.dashboard.student', compact(
                 'student', 'payments', 'attendances', 'attachments',
-                'exams', 'sreni', 'activeTab', 
+             'activeTab', 
             ));
         } else {
             return redirect()->route('studentD')->with('error', 'Student profile not found.');
@@ -153,55 +148,6 @@ public function studentD(Request $request)
 
     return redirect()->route('studentD')->with('error', 'User does not have a valid student profile.');
 }
-
-// public function studentD(Request $request)
-// {
-//     $user = auth()->user();
-//     if ($user && $user->student_dhakila_number) {
-//         $student = Student::where('dhakila_number', $user->student_dhakila_number)->first();
-
-//         if ($student) {
-//             // Fetch payments, attendances, and exams for the student
-//             $payments = $student->payments;
-//             $attendances = $student->attendances ?? collect([]);
-//             $attachments = $student->attachments;
-//             $exams = $student->exams;
-
-//             // Fetch the class (Sreni) the student belongs to and its subjects
-//             $sreni = $student->sreni;
-//             $subjects = Subject::where('sreni_id', $sreni->id)->get();
-
-//             // Fetch lessons for each subject and eager load 'subject' relation
-//             $lessons = collect();
-//             foreach ($subjects as $subject) {
-//                 $lessons = $lessons->merge($subject->lessons()->with('subject')->get());  // Eager load 'subject'
-//             }
-
-            
- 
-//             if ($request->ajax()) {
-//                 // Returning data for DataTables
-//                 return response()->json([
-//                     'exams' => DataTables::of($exams)->make(true)->getData(),
-//                     'lessons' => DataTables::of($lessons)->make(true)->getData(),
-//                 ]);
-//             }
-
-//             $activeTab = 'basic-info';
-
-
-
-            
-//             return view('admin.dashboard.student', compact('student', 'payments', 'attendances', 'attachments', 'exams', 'sreni', 'subjects', 'lessons', 'activeTab'));
-//         } else {
-//             return redirect()->route('studentD')->with('error', 'Student profile not found.');
-//         }
-//     }
-
-//     return redirect()->route('studentD')->with('error', 'User does not have a valid student profile.');
-// }
-
-
 
 
     public function getPayments($dhakila_number)

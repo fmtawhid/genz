@@ -199,7 +199,7 @@ return [
         App\Providers\SettingServiceProvider::class,
 
         // this is notice service provider
-        App\Providers\NoticeServiceProvider::class,
+
         
 
     ],

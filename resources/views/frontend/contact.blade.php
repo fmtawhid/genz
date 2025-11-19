@@ -65,14 +65,9 @@
             <input type="text" name="name" required class="w-full border border-slate-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-brand focus:outline-none">
           </div>
           <div>
-            <label class="block font-medium mb-2">Email Address</label>
-            <input type="email" name="email" required class="w-full border border-slate-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-brand focus:outline-none">
+            <label class="block font-medium mb-2">Number</label>
+            <input type="text" name="number" required class="w-full border border-slate-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-brand focus:outline-none">
           </div>
-        </div>
-
-        <div>
-          <label class="block font-medium mb-2">Subject</label>
-          <input type="text" name="subject" required class="w-full border border-slate-300 rounded-md px-4 py-3 focus:ring-2 focus:ring-brand focus:outline-none">
         </div>
 
         <div>
@@ -92,10 +87,11 @@
 <!-- Google Map -->
 <section class="mt-12">
   <div class="container mx-auto px-4">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3651.9033279482475!2d90.39123687455093!3d23.750859188809934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755b894e1f37a7d%3A0x7a2a8200ddfbbd04!2sDhaka!5e0!3m2!1sen!2sbd!4v1695312023456!5m2!1sen!2sbd" 
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3647.83944083588!2d90.330934!3d23.8953115!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3755c378e8e24cf5%3A0x736cbe1554de5569!2sGen-Z%20IT%20Institute%2C%20Ashulia!5e0!3m2!1sen!2sbd!4v1763535036946!5m2!1sen!2sbd"
       width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy">
     </iframe>
+
   </div>
 </section>
 

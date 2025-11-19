@@ -54,20 +54,14 @@
 					<li class="mx-2 @if ($activeTab == 'payment-info') active @endif">
 						<a href="#payment-info" role="tab" data-toggle="tab">Payment Info</a>
 					</li>
-					<li class="mx-2 @if ($activeTab == 'payment-due') active @endif">
-						<a href="#payment-due" role="tab" data-toggle="tab">Payment Due </a>
-					</li>
-					<li class="mx-2 @if ($activeTab == 'attendance-info') active @endif">
-						<a href="#attendance-info" role="tab" data-toggle="tab">Attendance Info</a>
-					</li>
+	
+	
 					<li class="mx-2 @if ($activeTab == 'document-info') active @endif">
 						<a href="#document-info" role="tab" data-toggle="tab">Document Info</a>
 					</li>
-					<li class="mx-2 @if ($activeTab == 'exam-info') active @endif">
-						<a href="#exam-info" role="tab" data-toggle="tab">Exam Info</a>
-					</li>
+
 					<li class="mx-2 @if ($activeTab == 'lesson-info') active @endif">
-						<a href="#lesson-info" role="tab" data-toggle="tab">Subject and Lesson </a>
+						<a href="#lesson-info" role="tab" data-toggle="tab">My Courses </a>
 					</li>
 
 				</ul>
@@ -141,22 +135,7 @@
 					</div>
 
 					<!-- Attendance Information Tab -->
-					<div class="tab-pane mt-3 mx-2" id="attendance-info">
-						<h3>Attendance Records</h3>
-						<table id="attendance_table" class="table table-striped dt-responsive nowrap w-100">
-							<thead>
-								<tr>
-									<th>#</th>
-									<th>Date</th>
-									<th>Attendance Type</th>
-									<th>Remark</th>
-								</tr>
-							</thead>
-							<tbody>
-								<!-- Data will be loaded via AJAX -->
-							</tbody>
-						</table>
-					</div>
+					
 
 					<!-- Document Information Tab -->
 					<div class="tab-pane mt-3 mx-2" id="document-info">
@@ -176,20 +155,12 @@
 					</div>
 
 
-					<!-- Exams Tab -->
-					<div class="tab-pane mt-3 mx-2" id="exam-info">
-						<div class="bg-white p-6 rounded-lg">
-							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">Exam Information</h3>
-							<div class="row">
-								
-							</div>
-						</div>
-					</div>
 
+					
 					<!-- Lessons Tab -->
 					<div class="tab-pane mt-3 mx-2" id="lesson-info">
 						<div class="bg-white p-6 rounded-lg">
-							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">Class and Lessons</h3>
+							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">My Course</h3>
 
 							<div class="row">
 								
@@ -219,79 +190,13 @@
 					</div>
 
 
-					<!-- Due Tab -->
-					<div class="tab-pane mt-3 mx-2" id="payment-due">
-						<div class="bg-white p-6 rounded-lg">
-							<h3 class="text-2xl font-semibold text-gray-700 mb-4 border-b-2 pb-2">Assigned Fees</h3>
-							
-						</div>
-					</div>
+		
+				
 
 
 					<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 					<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
 					<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap5.min.js"></script>
-
-					<script>
-						$(document).ready(function () {
-							// Initialize DataTables for Exams
-							$('#examsTable').DataTable({
-								processing: true,
-								serverSide: true,
-								ajax: {
-									url: '{{ route('studentD') }}',  // Your route to get the exams and lessons
-									type: 'GET',
-									dataSrc: function (json) {
-										return json.exams.data;  // Use 'data' inside 'exams' to fetch the records
-									}
-								},
-								columns: [
-									{ data: 'name', name: 'name' },
-									{ data: 'exam_type', name: 'exam_type' },
-									{ data: 'start_date', name: 'start_date' },
-									{
-										data: 'id',
-										render: function (data, type, row) {
-											return `<a href="/panel/results/${data}/${row.student_id}" class="btn btn-primary">View Results</a>`;
-										}
-									}
-
-
-
-
-								]
-							});
-
-							// Initialize DataTables for Lessons
-							$('#lessonsTable').DataTable({
-								processing: true,
-								serverSide: true,
-								ajax: {
-									url: '{{ route('studentD') }}',  // Your route to get the lessons data
-									type: 'GET',
-									dataSrc: function (json) {
-										return json.lessons.data;  // Use 'data' inside 'lessons' to fetch the records
-									}
-								},
-								columns: [
-									{ data: 'title', name: 'title' },
-									{ data: 'lesson_date', name: 'lesson_date' },
-									{ data: 'subject.name', name: 'subject.name' },
-									{ data: 'note', name: 'note' },
-									{
-										data: 'pdf_file',
-										name: 'pdf_file',
-										render: function (data) {
-											// Generate the correct URL for PDF using asset helper
-											var pdfUrl = data ? "{{ asset('') }}/" + data : 'No PDF';
-											return pdfUrl !== 'No PDF' ? `<a href="${pdfUrl}" target="_blank" class="btn btn-primary">View PDF</a>` : 'No PDF';
-										}
-									}
-								]
-							});
-						});
-					</script>
-
 
 
 				</div>
@@ -332,22 +237,7 @@
 				}
 			});
 
-			// Initialize DataTable for Attendance
-			$('#attendance_table').DataTable({
-				processing: true,
-				serverSide: true,
-				ajax: "{{ route('student.attendances', $student->dhakila_number) }}",
-				columns: [
-					{ data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false },
-					{ data: 'date', name: 'date' },
-					{ data: 'attendance_type', name: 'attendance_type' },
-					{ data: 'remark', name: 'remark' }
-				],
-				responsive: true,
-				language: {
-					processing: "Loading..."
-				}
-			});
+			
 		});
 	</script>
 
