@@ -15,7 +15,7 @@ return new class extends Migration
             $table->enum('staff_type', ['teacher', 'staff']);
             $table->date('date_of_birth')->nullable();
             $table->string('blood_group', 3)->nullable();
-            $table->string('user_id')->unique()->nullable();
+            $table->unsignedBigInteger('user_id')->unique()->nullable();
         });
     }
 
