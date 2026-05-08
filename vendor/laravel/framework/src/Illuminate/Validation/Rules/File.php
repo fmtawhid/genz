@@ -6,6 +6,7 @@ use Illuminate\Contracts\Validation\DataAwareRule;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Contracts\Validation\ValidatorAwareRule;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Support\Traits\Conditionable;
@@ -85,7 +86,7 @@ class File implements Rule, DataAwareRule, ValidatorAwareRule
      * If no arguments are passed, the default file rule configuration will be returned.
      *
      * @param  static|callable|null  $callback
-     * @return static|null
+     * @return static|void
      */
     public static function defaults($callback = null)
     {
@@ -117,11 +118,12 @@ class File implements Rule, DataAwareRule, ValidatorAwareRule
     /**
      * Limit the uploaded file to only image types.
      *
+     * @param  bool  $allowSvg
      * @return ImageFile
      */
-    public static function image()
+    public static function image($allowSvg = false)
     {
-        return new ImageFile();
+        return new ImageFile($allowSvg);
     }
 
     /**
@@ -215,13 +217,15 @@ class File implements Rule, DataAwareRule, ValidatorAwareRule
             return $size;
         }
 
+        $size = strtolower(trim($size));
+
         $value = floatval($size);
 
         return round(match (true) {
             Str::endsWith($size, 'kb') => $value * 1,
-            Str::endsWith($size, 'mb') => $value * 1000,
-            Str::endsWith($size, 'gb') => $value * 1000000,
-            Str::endsWith($size, 'tb') => $value * 1000000000,
+            Str::endsWith($size, 'mb') => $value * 1_000,
+            Str::endsWith($size, 'gb') => $value * 1_000_000,
+            Str::endsWith($size, 'tb') => $value * 1_000_000_000,
             default => throw new InvalidArgumentException('Invalid file size suffix.'),
         });
     }
@@ -276,7 +280,7 @@ class File implements Rule, DataAwareRule, ValidatorAwareRule
         $rules = array_merge($rules, $this->buildMimetypes());
 
         if (! empty($this->allowedExtensions)) {
-            $rules[] = 'extensions:'.implode(',', array_map('strtolower', $this->allowedExtensions));
+            $rules[] = 'extensions:'.implode(',', array_map(strtolower(...), $this->allowedExtensions));
         }
 
         $rules[] = match (true) {
@@ -329,9 +333,9 @@ class File implements Rule, DataAwareRule, ValidatorAwareRule
      */
     protected function fail($messages)
     {
-        $messages = collect(Arr::wrap($messages))->map(function ($message) {
-            return $this->validator->getTranslator()->get($message);
-        })->all();
+        $messages = Collection::wrap($messages)
+            ->map(fn ($message) => $this->validator->getTranslator()->get($message))
+            ->all();
 
         $this->messages = array_merge($this->messages, $messages);
 

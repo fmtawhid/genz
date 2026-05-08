@@ -46,10 +46,8 @@ class CacheAttributeListener implements EventSubscriberInterface
 
     /**
      * Handles HTTP validation headers.
-     *
-     * @return void
      */
-    public function onKernelControllerArguments(ControllerArgumentsEvent $event)
+    public function onKernelControllerArguments(ControllerArgumentsEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -92,10 +90,8 @@ class CacheAttributeListener implements EventSubscriberInterface
 
     /**
      * Modifies the response to apply HTTP cache headers when needed.
-     *
-     * @return void
      */
-    public function onKernelResponse(ResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event): void
     {
         $request = $event->getRequest();
 
@@ -123,7 +119,9 @@ class CacheAttributeListener implements EventSubscriberInterface
 
         unset($this->lastModified[$request]);
         unset($this->etags[$request]);
-        $hasVary = $response->headers->has('Vary');
+        // Check if the response has a Vary header that should be considered, ignoring cases where
+        // it's only 'Accept-Language' and the request has the '_vary_by_language' attribute
+        $hasVary = ['Accept-Language'] === $response->getVary() ? !$request->attributes->get('_vary_by_language') : $response->hasVary();
 
         foreach (array_reverse($attributes) as $cache) {
             if (null !== $cache->smaxage && !$response->headers->hasCacheControlDirective('s-maxage')) {
@@ -166,6 +164,14 @@ class CacheAttributeListener implements EventSubscriberInterface
 
             if (false === $cache->public) {
                 $response->setPrivate();
+            }
+
+            if (true === $cache->noStore) {
+                $response->headers->addCacheControlDirective('no-store');
+            }
+
+            if (false === $cache->noStore) {
+                $response->headers->removeCacheControlDirective('no-store');
             }
         }
     }

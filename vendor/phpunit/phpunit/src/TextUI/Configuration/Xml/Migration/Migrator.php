@@ -9,6 +9,7 @@
  */
 namespace PHPUnit\TextUI\XmlConfiguration;
 
+use function assert;
 use PHPUnit\Runner\Version;
 use PHPUnit\Util\Xml\Loader as XmlLoader;
 use PHPUnit\Util\Xml\XmlException;
@@ -18,11 +19,10 @@ use PHPUnit\Util\Xml\XmlException;
  *
  * @internal This class is not covered by the backward compatibility promise for PHPUnit
  */
-final class Migrator
+final readonly class Migrator
 {
     /**
      * @throws Exception
-     * @throws MigrationBuilderException
      * @throws MigrationException
      * @throws XmlException
      */
@@ -31,7 +31,7 @@ final class Migrator
         $origin = (new SchemaDetector)->detect($filename);
 
         if (!$origin->detected()) {
-            throw new Exception('The file does not validate against any know schema');
+            throw new Exception('The file does not validate against any known schema');
         }
 
         if ($origin->version() === Version::series()) {
@@ -47,6 +47,10 @@ final class Migrator
         $configurationDocument->formatOutput       = true;
         $configurationDocument->preserveWhiteSpace = false;
 
-        return $configurationDocument->saveXML();
+        $xml = $configurationDocument->saveXML();
+
+        assert($xml !== false);
+
+        return $xml;
     }
 }

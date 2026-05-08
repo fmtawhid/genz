@@ -41,7 +41,6 @@ class CacheManager implements FactoryContract
      * Create a new Cache manager instance.
      *
      * @param  \Illuminate\Contracts\Foundation\Application  $app
-     * @return void
      */
     public function __construct($app)
     {
@@ -73,6 +72,25 @@ class CacheManager implements FactoryContract
     }
 
     /**
+     * Get a memoized cache driver instance.
+     *
+     * @param  string|null  $driver
+     * @return \Illuminate\Contracts\Cache\Repository
+     */
+    public function memo($driver = null)
+    {
+        $driver = $driver ?: $this->getDefaultDriver();
+
+        if (! $this->app->bound($bindingKey = "cache.__memoized:{$driver}")) {
+            $this->app->scoped($bindingKey, fn () => $this->repository(
+                new MemoizedStore($driver, $this->store($driver)), ['events' => false]
+            ));
+        }
+
+        return $this->app->make($bindingKey);
+    }
+
+    /**
      * Resolve the given store.
      *
      * @param  string  $name
@@ -87,6 +105,21 @@ class CacheManager implements FactoryContract
         if (is_null($config)) {
             throw new InvalidArgumentException("Cache store [{$name}] is not defined.");
         }
+
+        $config = Arr::add($config, 'store', $name);
+
+        return $this->build($config);
+    }
+
+    /**
+     * Build a cache repository with the given configuration.
+     *
+     * @param  array  $config
+     * @return \Illuminate\Cache\Repository
+     */
+    public function build(array $config)
+    {
+        $config = Arr::add($config, 'store', $config['name'] ?? 'ondemand');
 
         if (isset($this->customCreators[$config['driver']])) {
             return $this->callCustomCreator($config);
@@ -122,7 +155,7 @@ class CacheManager implements FactoryContract
     {
         $prefix = $this->getPrefix($config);
 
-        return $this->repository(new ApcStore(new ApcWrapper, $prefix));
+        return $this->repository(new ApcStore(new ApcWrapper, $prefix), $config);
     }
 
     /**
@@ -133,70 +166,7 @@ class CacheManager implements FactoryContract
      */
     protected function createArrayDriver(array $config)
     {
-        return $this->repository(new ArrayStore($config['serialize'] ?? false));
-    }
-
-    /**
-     * Create an instance of the file cache driver.
-     *
-     * @param  array  $config
-     * @return \Illuminate\Cache\Repository
-     */
-    protected function createFileDriver(array $config)
-    {
-        return $this->repository(
-            (new FileStore($this->app['files'], $config['path'], $config['permission'] ?? null))
-                ->setLockDirectory($config['lock_path'] ?? null)
-        );
-    }
-
-    /**
-     * Create an instance of the Memcached cache driver.
-     *
-     * @param  array  $config
-     * @return \Illuminate\Cache\Repository
-     */
-    protected function createMemcachedDriver(array $config)
-    {
-        $prefix = $this->getPrefix($config);
-
-        $memcached = $this->app['memcached.connector']->connect(
-            $config['servers'],
-            $config['persistent_id'] ?? null,
-            $config['options'] ?? [],
-            array_filter($config['sasl'] ?? [])
-        );
-
-        return $this->repository(new MemcachedStore($memcached, $prefix));
-    }
-
-    /**
-     * Create an instance of the Null cache driver.
-     *
-     * @return \Illuminate\Cache\Repository
-     */
-    protected function createNullDriver()
-    {
-        return $this->repository(new NullStore);
-    }
-
-    /**
-     * Create an instance of the Redis cache driver.
-     *
-     * @param  array  $config
-     * @return \Illuminate\Cache\Repository
-     */
-    protected function createRedisDriver(array $config)
-    {
-        $redis = $this->app['redis'];
-
-        $connection = $config['connection'] ?? 'default';
-
-        $store = new RedisStore($redis, $this->getPrefix($config), $connection);
-
-        return $this->repository(
-            $store->setLockConnection($config['lock_connection'] ?? $connection)
-        );
+        return $this->repository(new ArrayStore($config['serialize'] ?? false), $config);
     }
 
     /**
@@ -218,9 +188,12 @@ class CacheManager implements FactoryContract
             $config['lock_timeout'] ?? 86400,
         );
 
-        return $this->repository($store->setLockConnection(
-            $this->app['db']->connection($config['lock_connection'] ?? $config['connection'] ?? null)
-        ));
+        return $this->repository(
+            $store->setLockConnection(
+                $this->app['db']->connection($config['lock_connection'] ?? $config['connection'] ?? null)
+            ),
+            $config
+        );
     }
 
     /**
@@ -241,7 +214,8 @@ class CacheManager implements FactoryContract
                 $config['attributes']['value'] ?? 'value',
                 $config['attributes']['expiration'] ?? 'expires_at',
                 $this->getPrefix($config)
-            )
+            ),
+            $config
         );
     }
 
@@ -262,25 +236,128 @@ class CacheManager implements FactoryContract
             $dynamoConfig['credentials'] = Arr::only(
                 $config, ['key', 'secret']
             );
-        }
 
-        if (! empty($config['token'])) {
-            $dynamoConfig['credentials']['token'] = $config['token'];
+            if (! empty($config['token'])) {
+                $dynamoConfig['credentials']['token'] = $config['token'];
+            }
         }
 
         return new DynamoDbClient($dynamoConfig);
     }
 
     /**
+     * Create an instance of the file cache driver.
+     *
+     * @param  array  $config
+     * @return \Illuminate\Cache\Repository
+     */
+    protected function createFileDriver(array $config)
+    {
+        return $this->repository(
+            (new FileStore($this->app['files'], $config['path'], $config['permission'] ?? null))
+                ->setLockDirectory($config['lock_path'] ?? null),
+            $config
+        );
+    }
+
+    /**
+     * Create an instance of the Memcached cache driver.
+     *
+     * @param  array  $config
+     * @return \Illuminate\Cache\Repository
+     */
+    protected function createMemcachedDriver(array $config)
+    {
+        $prefix = $this->getPrefix($config);
+
+        $memcached = $this->app['memcached.connector']->connect(
+            $config['servers'],
+            $config['persistent_id'] ?? null,
+            $config['options'] ?? [],
+            array_filter($config['sasl'] ?? [])
+        );
+
+        return $this->repository(new MemcachedStore($memcached, $prefix), $config);
+    }
+
+    /**
+     * Create an instance of the Null cache driver.
+     *
+     * @return \Illuminate\Cache\Repository
+     */
+    protected function createNullDriver()
+    {
+        return $this->repository(new NullStore, []);
+    }
+
+    /**
+     * Create an instance of the Redis cache driver.
+     *
+     * @param  array  $config
+     * @return \Illuminate\Cache\Repository
+     */
+    protected function createRedisDriver(array $config)
+    {
+        $redis = $this->app['redis'];
+
+        $connection = $config['connection'] ?? 'default';
+
+        $store = new RedisStore($redis, $this->getPrefix($config), $connection);
+
+        return $this->repository(
+            $store->setLockConnection($config['lock_connection'] ?? $connection),
+            $config
+        );
+    }
+
+    /**
+     * Create an instance of the session cache driver.
+     *
+     * @param  array  $config
+     * @return \Illuminate\Cache\Repository
+     */
+    protected function createSessionDriver(array $config)
+    {
+        return $this->repository(
+            new SessionStore(
+                $this->getSession(),
+                $config['key'] ?? '_cache',
+            ),
+            $config
+        );
+    }
+
+    /**
+     * Get the session store implementation.
+     *
+     * @return \Illuminate\Contracts\Session\Session
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function getSession()
+    {
+        $session = $this->app['session'] ?? null;
+
+        if (! $session) {
+            throw new InvalidArgumentException('Session store requires session manager to be available in container.');
+        }
+
+        return $session;
+    }
+
+    /**
      * Create a new cache repository with the given implementation.
      *
      * @param  \Illuminate\Contracts\Cache\Store  $store
+     * @param  array  $config
      * @return \Illuminate\Cache\Repository
      */
-    public function repository(Store $store)
+    public function repository(Store $store, array $config = [])
     {
-        return tap(new Repository($store), function ($repository) {
-            $this->setEventDispatcher($repository);
+        return tap(new Repository($store, Arr::only($config, ['store'])), function ($repository) use ($config) {
+            if ($config['events'] ?? true) {
+                $this->setEventDispatcher($repository);
+            }
         });
     }
 
@@ -308,7 +385,7 @@ class CacheManager implements FactoryContract
      */
     public function refreshEventDispatcher()
     {
-        array_map([$this, 'setEventDispatcher'], $this->stores);
+        array_map($this->setEventDispatcher(...), $this->stores);
     }
 
     /**
@@ -395,6 +472,9 @@ class CacheManager implements FactoryContract
      *
      * @param  string  $driver
      * @param  \Closure  $callback
+     *
+     * @param-closure-this  $this  $callback
+     *
      * @return $this
      */
     public function extend($driver, Closure $callback)

@@ -306,14 +306,14 @@ trait CompilesConditionals
     }
 
     /**
-     * Compile a selected block into valid PHP.
+     * Compile a boolean value into a raw true / false value for embedding into HTML attributes or JavaScript.
      *
-     * @param  string  $condition
+     * @param  bool  $condition
      * @return string
      */
-    protected function compileSelected($condition)
+    protected function compileBool($condition)
     {
-        return "<?php if{$condition}: echo 'selected'; endif; ?>";
+        return "<?php echo ($condition ? 'true' : 'false'); ?>";
     }
 
     /**
@@ -361,6 +361,17 @@ trait CompilesConditionals
     }
 
     /**
+     * Compile a selected block into valid PHP.
+     *
+     * @param  string  $condition
+     * @return string
+     */
+    protected function compileSelected($condition)
+    {
+        return "<?php if{$condition}: echo 'selected'; endif; ?>";
+    }
+
+    /**
      * Compile the push statements into valid PHP.
      *
      * @param  string  $expression
@@ -368,7 +379,16 @@ trait CompilesConditionals
      */
     protected function compilePushIf($expression)
     {
-        $parts = explode(',', $this->stripParentheses($expression), 2);
+        $parts = explode(',', $this->stripParentheses($expression));
+
+        if (count($parts) > 2) {
+            $last = array_pop($parts);
+
+            $parts = [
+                implode(',', $parts),
+                trim($last),
+            ];
+        }
 
         return "<?php if({$parts[0]}): \$__env->startPush({$parts[1]}); ?>";
     }
