@@ -3,10 +3,10 @@
 @section('content')
 <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
     <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800">Merchants List</h2>
+        <h2 class="text-2xl font-bold text-gray-800">Students List</h2>
         <a href="{{ route('admin.merchant.create') }}" 
            class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-md transition duration-300">
-            Add Merchant
+            Add Student
         </a>
     </div>
 

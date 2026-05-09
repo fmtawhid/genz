@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pharmacy - Admin Dashboard</title>
+    <title>Gen Z IT Pro - Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -92,7 +92,7 @@
             <div class="p-6 border-b border-gray-200">
                 <h1 class="text-xl font-bold flex items-center text-primary-700">
                     <i class="fas fa-credit-card mr-2"></i>
-                    Pharmacy
+                    Gen Z IT
                 </h1>
                 <p class="text-xs text-gray-500 mt-1">{{ auth()->user()->role }} dashboard</p>
             </div>
@@ -100,7 +100,6 @@
             <!-- Navigation -->
             <nav class="flex-1 p-4">
                 <ul class="space-y-2">
-                    <!-- Dashboard -->
                     <li>
                         <a href="{{ route('admin.index') }}"
                             class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.index') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
@@ -110,50 +109,35 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.merchant.index') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.merchant.index', 'admin.merchant.create', 'admin.merchant.edit') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <i class="fas fa-boxes mr-3"></i>
-                            Merchants
+                        <a href="{{ route('admin.courses.index') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.courses.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+
+                            <i class="fas fa-book mr-3"></i>
+                            Courses
                         </a>
-                    </li>
 
-                  
+                        <ul class="ml-6 mt-2 space-y-2">
 
-                    <!-- People -->
-                    <li>
-                        <div class="p-3 text-gray-500 uppercase text-xs font-semibold">
-                            People
-                        </div>
-                        <ul class="ml-6 space-y-1">
                             <li>
-                                <a href="{{ route('admin.customer.list') }}"
-                                    class="block p-2 rounded text-gray-600 hover:bg-gray-100 {{ request()->routeIs('admin.customer.list') ? 'bg-primary-50 text-primary-700' : '' }}">
-                                    Customer
+                                <a href="{{ route('admin.courses.create') }}"
+                                    class="flex items-center p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+
+                                    <i class="fas fa-plus mr-3"></i>
+                                    Add Course
                                 </a>
                             </li>
-                            <li>
-                                <a href="{{ route('admin.supplier.list') }}"
-                                    class="block p-2 rounded text-gray-600 hover:bg-gray-100 {{ request()->routeIs('admin.supplier.list') ? 'bg-primary-50 text-primary-700' : '' }}">
-                                    Supplier
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('admin.merchant.list') }}"
-                                    class="block p-2 rounded text-gray-600 hover:bg-gray-100 {{ request()->routeIs('admin.merchant.list') ? 'bg-primary-50 text-primary-700' : '' }}">
-                                    Saller
-                                </a>
-                            </li>
+
                         </ul>
                     </li>
-
-                    <!-- Reports -->
                     <li>
-                        <a href="{{ route('admin.reports.index') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.reports.index', 'admin.reports.sales', 'admin.reports.products', 'admin.reports.merchants') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <i class="fas fa-chart-bar mr-3"></i>
-                            Reports
+                        <a href="{{ route('admin.merchant.list') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.merchant.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-users mr-3"></i>
+                            Students
                         </a>
                     </li>
+                    
+                    
                 </ul>
             </nav>
 
