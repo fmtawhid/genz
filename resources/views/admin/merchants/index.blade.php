@@ -43,6 +43,12 @@
                         </span>
                     </td>
                     <td class="px-6 py-4 flex space-x-2">
+                        <a href="{{ route('admin.merchant.show', $merchant->id) }}"
+                            class="px-3 py-1 bg-green-500 text-white rounded">
+
+                            View Details
+
+                        </a>
                         <a href="{{ route('admin.merchant.edit', $merchant->id) }}" 
                            class="px-3 py-1 bg-blue-500 hover:bg-blue-600 text-white text-sm rounded-md transition duration-300">
                            Edit

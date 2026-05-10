@@ -6,6 +6,8 @@
   <title>GenZ IT - Learn Professional Skills Online</title>
   <meta name="description" content="Learn professional skills in Graphic Design, Web Development, Digital Marketing and more from industry experts" />
   <script src="https://cdn.tailwindcss.com"></script>
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
   <script>
     tailwind.config = {
       theme: {
@@ -71,15 +73,22 @@
       <!-- RIGHT SIDE -->
       <div class="flex items-center gap-3">
 
-        <a href="{{ route('login') }}"
-           class="hidden sm:inline-block text-slate-700 px-4 py-2 rounded-md hover:bg-slate-100">
-          Login
-        </a>
+        @guest
+          <a href="{{ route('login') }}"
+             class="hidden sm:inline-block text-slate-700 px-4 py-2 rounded-md hover:bg-slate-100">
+            Login
+          </a>
 
-        <a href="{{ route('register') }}"
-           class="hidden sm:inline-block bg-brand text-white px-4 py-2 rounded-md shadow">
-          Register
-        </a>
+          <a href="{{ route('register') }}"
+             class="hidden sm:inline-block bg-brand text-white px-4 py-2 rounded-md shadow">
+            Register
+          </a>
+        @else
+          <a href="{{ route('merchant.index') }}"
+             class="hidden sm:inline-block bg-brand text-white px-4 py-2 rounded-md shadow">
+            Dashboard
+          </a>
+        @endguest
 
         <!-- MOBILE BUTTON -->
         <button id="mobileMenuBtn"

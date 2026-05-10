@@ -58,7 +58,12 @@ class RegisteredUserController extends Controller
         event(new Registered($user));
 
         Auth::login($user);
-
+        // Role-based redirect
+        if ($user->role === 'admin') {
+            return redirect()->route('admin.index');
+        } elseif ($user->role === 'merchant') {
+            return redirect()->route('merchant.index');
+        }
         return redirect(route('merchant.index', absolute: false));
     }
 }

@@ -25,4 +25,9 @@ class Course extends Model
     {
         return $this->hasMany(Lesson::class);
     }
+
+    public function admissions()
+    {
+        return $this->hasMany(\App\Models\Admission::class);
+    }
 }

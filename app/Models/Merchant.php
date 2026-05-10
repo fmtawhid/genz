@@ -55,4 +55,8 @@ class Merchant extends Authenticatable
             ->withPivot('joined_at')
             ->withCasts(['joined_at' => 'datetime']);
     }
+    public function admissions()
+    {
+        return $this->hasMany(Admission::class);
+    }
 }

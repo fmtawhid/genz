@@ -13,7 +13,11 @@ class MerchantsController extends Controller
     // ================= INDEX =================
     public function index()
     {
-        $merchants = Merchant::with('user')->get();
+        $merchants = Merchant::with([
+            'user',
+            'admissions.course'
+        ])->latest()->get();
+
         return view('admin.merchants.index', compact('merchants'));
     }
 
@@ -181,5 +185,14 @@ class MerchantsController extends Controller
 
         return redirect()->route('admin.merchant.list')
             ->with('success', 'Student deleted successfully.');
+    }
+    public function show($id)
+    {
+        $merchant = Merchant::with([
+            'user',
+            'admissions.course'
+        ])->findOrFail($id);
+
+        return view('admin.merchants.show', compact('merchant'));
     }
 }

@@ -189,4 +189,15 @@ class CourseController extends Controller
 
         return redirect()->back()->with('success', 'Lesson deleted successfully');
     }
+
+    public function show($id)
+    {
+        $course = Course::with([
+            'lessons',
+            'admissions.merchant',
+            'admissions.user'
+        ])->findOrFail($id);
+
+        return view('admin.courses.show', compact('course'));
+    }
 }

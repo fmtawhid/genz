@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\MerchantsController;
 use App\Http\Controllers\Admin\ProjectsController;
 use App\Http\Controllers\Admin\TasksController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\AdmissionController;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
@@ -13,13 +14,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/', [AdminController::class, 'index'])->name('index');
 
     // ================= MERCHANTS CRUD =================
-    Route::prefix('merchants')->name('merchant.')->group(function () {
+    Route::prefix('students')->name('merchant.')->group(function () {
         Route::get('/', [MerchantsController::class, 'index'])->name('list');
         Route::get('/create', [MerchantsController::class, 'create'])->name('create');
         Route::post('/store', [MerchantsController::class, 'store'])->name('store');
         Route::get('/{id}/edit', [MerchantsController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [MerchantsController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [MerchantsController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}', [MerchantsController::class, 'show'])->name('show');
     });
 
     // ================= PROJECTS CRUD =================
@@ -50,7 +52,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         Route::get('/{id}/edit', [CourseController::class, 'edit'])->name('edit');
         Route::put('/{id}/update', [CourseController::class, 'update'])->name('update');
         Route::delete('/{id}/destroy', [CourseController::class, 'destroy'])->name('destroy');
-
+        Route::get('/{id}', [CourseController::class, 'show'])->name('show');
         // ================= LESSONS (INSIDE COURSE) =================
         Route::post('/{course}/lessons/store', [CourseController::class, 'storeLesson'])
             ->name('lessons.store');
@@ -65,4 +67,21 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // ================= GENERAL TASKS =================
     Route::get('tasks', [TasksController::class, 'generalIndex'])->name('tasks.index');
 
+
+    // ================= ADMISSIONS =================
+    Route::prefix('admissions')->name('admissions.')->group(function () {
+
+        Route::get('/', [AdmissionController::class, 'index'])
+            ->name('index');
+
+        Route::get('/{id}', [AdmissionController::class, 'show'])
+            ->name('show');
+
+        Route::put('/{id}/status', [AdmissionController::class, 'updateStatus'])
+            ->name('status');
+
+        Route::delete('/{id}/destroy', [AdmissionController::class, 'destroy'])
+            ->name('destroy');
+
+    });
 });

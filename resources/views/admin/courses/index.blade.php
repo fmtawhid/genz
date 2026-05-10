@@ -50,6 +50,12 @@
                     <td class="p-3">{{ $course->level }}</td>
 
                     <td class="p-3 flex gap-2">
+                        <a href="{{ route('admin.courses.show', $course->id) }}"
+                        class="px-3 py-1 bg-green-500 text-white rounded">
+
+                            Details
+
+                        </a>
                         <a href="{{ route('admin.courses.edit', $course->id) }}"
                            class="px-3 py-1 bg-blue-500 text-white rounded">
                             Edit

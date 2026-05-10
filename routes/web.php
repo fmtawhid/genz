@@ -3,6 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\AdmissionController;
 
 Route::get('/', [PageController::class, 'index'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
@@ -12,13 +13,11 @@ Route::get('/course/{slug}', [PageController::class, 'courseDetails'])->name('co
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
 Route::get('/success-stories', [PageController::class, 'successStories'])->name('success.stories');
-Route::get('/admission', [PageController::class, 'admission'])->name('admission');
+Route::get('/admission', [AdmissionController::class, 'index'])
+    ->name('admission');
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware('auth')->name('dashboard');
-
+Route::post('/admission/store', [AdmissionController::class, 'store'])
+    ->name('admission.store');
 
 require __DIR__.'/auth.php';
 require __DIR__.'/merchant.php';

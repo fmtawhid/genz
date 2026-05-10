@@ -97,50 +97,160 @@
                 <p class="text-xs text-gray-500 mt-1">{{ auth()->user()->role }} dashboard</p>
             </div>
 
+            
+
             <!-- Navigation -->
-            <nav class="flex-1 p-4">
+            <nav class="flex-1 p-4 overflow-y-auto">
+
                 <ul class="space-y-2">
+
+                    <!-- Dashboard -->
                     <li>
                         <a href="{{ route('admin.index') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.index') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                        class="flex items-center p-3 rounded-xl transition-all duration-300
+                        {{ request()->routeIs('admin.index')
+                                ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+
                             <i class="fas fa-tachometer-alt mr-3"></i>
                             Dashboard
+
                         </a>
                     </li>
 
+                    <!-- COURSES -->
                     <li>
-                        <a href="{{ route('admin.courses.index') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.courses.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                        <details class="group"
+                            @if(request()->routeIs('admin.courses.*')) open @endif>
 
-                            <i class="fas fa-book mr-3"></i>
-                            Courses
-                        </a>
+                            <summary
+                                class="list-none flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-300
+                                {{ request()->routeIs('admin.courses.*')
+                                    ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
 
-                        <ul class="ml-6 mt-2 space-y-2">
+                                <div class="flex items-center">
+                                    <i class="fas fa-book mr-3"></i>
+                                    Courses
+                                </div>
 
-                            <li>
+                                <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+
+                            </summary>
+
+                            <div class="ml-6 mt-2 space-y-2 border-l border-gray-200 pl-4">
+
+                                <a href="{{ route('admin.courses.index') }}"
+                                class="flex items-center p-2 rounded-lg text-sm transition
+                                {{ request()->routeIs('admin.courses.index')
+                                        ? 'bg-primary-100 text-primary-700'
+                                        : 'hover:bg-gray-100 text-gray-600' }}">
+
+                                    <i class="fas fa-list mr-3"></i>
+                                    All Courses
+
+                                </a>
+
                                 <a href="{{ route('admin.courses.create') }}"
-                                    class="flex items-center p-2 rounded-lg text-gray-600 hover:bg-gray-100 hover:text-gray-900">
+                                class="flex items-center p-2 rounded-lg text-sm hover:bg-gray-100 text-gray-600">
 
                                     <i class="fas fa-plus mr-3"></i>
                                     Add Course
+
                                 </a>
-                            </li>
 
-                        </ul>
+                            </div>
+
+                        </details>
                     </li>
+
+                    <!-- STUDENTS -->
                     <li>
-                        <a href="{{ route('admin.merchant.list') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('admin.merchant.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <i class="fas fa-users mr-3"></i>
-                            Students
-                        </a>
-                    </li>
-                    
-                    
-                </ul>
-            </nav>
+                        <details class="group"
+                            @if(request()->routeIs('admin.merchant.*')) open @endif>
 
+                            <summary
+                                class="list-none flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-300
+                                {{ request()->routeIs('admin.merchant.*')
+                                    ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+
+                                <div class="flex items-center">
+                                    <i class="fas fa-users mr-3"></i>
+                                    Students
+                                </div>
+
+                                <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+
+                            </summary>
+
+                            <div class="ml-6 mt-2 space-y-2 border-l border-gray-200 pl-4">
+
+                                <a href="{{ route('admin.merchant.list') }}"
+                                class="flex items-center p-2 rounded-lg text-sm transition
+                                {{ request()->routeIs('admin.merchant.list')
+                                        ? 'bg-primary-100 text-primary-700'
+                                        : 'hover:bg-gray-100 text-gray-600' }}">
+
+                                    <i class="fas fa-user-graduate mr-3"></i>
+                                    All Students
+
+                                </a>
+
+                                <a href="{{ route('admin.merchant.create') }}"
+                                class="flex items-center p-2 rounded-lg text-sm hover:bg-gray-100 text-gray-600">
+
+                                    <i class="fas fa-user-plus mr-3"></i>
+                                    Add Student
+
+                                </a>
+
+                            </div>
+
+                        </details>
+                    </li>
+
+                    <!-- ADMISSIONS -->
+                    <li>
+                        <details class="group"
+                            @if(request()->routeIs('admin.admissions.*')) open @endif>
+
+                            <summary
+                                class="list-none flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-300
+                                {{ request()->routeIs('admin.admissions.*')
+                                    ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+
+                                <div class="flex items-center">
+                                    <i class="fas fa-user-graduate mr-3"></i>
+                                    Admissions
+                                </div>
+
+                                <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+
+                            </summary>
+
+                            <div class="ml-6 mt-2 space-y-2 border-l border-gray-200 pl-4">
+
+                                <a href="{{ route('admin.admissions.index') }}"
+                                class="flex items-center p-2 rounded-lg text-sm transition
+                                {{ request()->routeIs('admin.admissions.index')
+                                        ? 'bg-primary-100 text-primary-700'
+                                        : 'hover:bg-gray-100 text-gray-600' }}">
+
+                                    <i class="fas fa-inbox mr-3"></i>
+                                    Admission Requests
+
+                                </a>
+
+                            </div>
+
+                        </details>
+                    </li>
+
+                </ul>
+
+            </nav>
             <!-- User Profile -->
             <div class="p-4 border-t border-gray-200">
                 <div class="flex items-center">

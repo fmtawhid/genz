@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayGate Pro - Admin Dashboard</title>
+    <title>Gen Z IT - Admin Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
@@ -108,17 +108,10 @@
                         </a>
                     </li>
                     <li>
-                        <a href="{{ route('merchant.projects.index') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('merchant.projects.index') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <i class="fas fa-list mr-3"></i>
-                            Projects
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('merchant.projects.my') }}"
-                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('merchant.projects.my') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
-                            <i class="fas fa-check-circle mr-3"></i>
-                            My Projects
+                        <a href="{{ route('merchant.courses.index') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('merchant.courses.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-graduation-cap mr-3"></i>
+                            My Courses
                         </a>
                     </li>
                     <li>

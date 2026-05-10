@@ -48,8 +48,8 @@ class PageController extends Controller
         return view('templates.success-stories');
     }
 
-    public function admission()
-    {
-        return view('templates.admission');
-    }
+    // public function admission()
+    // {
+    //     return view('templates.admission');
+    // }
 }
