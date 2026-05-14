@@ -94,7 +94,7 @@
                     <i class="fas fa-credit-card mr-2"></i>
                     Gen Z IT
                 </h1>
-                <p class="text-xs text-gray-500 mt-1">Merchant Dashboard</p>
+                <p class="text-xs text-gray-500 mt-1">Student Dashboard</p>
             </div>
 
             <!-- Navigation -->

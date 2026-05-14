@@ -170,7 +170,7 @@
 
             <div class="space-y-4">
 
-                @foreach($courses as $course)
+                @foreach($courses->take(5) as $course)
 
                     <div class="bg-white p-4 rounded-lg shadow-sm">
 

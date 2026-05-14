@@ -45,23 +45,7 @@
                     <textarea name="address" class="w-full border px-3 py-2 rounded">{{ old('address', $merchant->address) }}</textarea>
                 </div>
 
-                {{-- Store Name --}}
-                <div>
-                    <label class="block text-gray-700 font-medium">Store Name</label>
-                    <input type="text" name="store_name" class="w-full border px-3 py-2 rounded" value="{{ old('store_name', $merchant->store_name) }}">
-                </div>
-
-                {{-- Trade License --}}
-                <div>
-                    <label class="block text-gray-700 font-medium">Trade License</label>
-                    <input type="text" name="trade_license" class="w-full border px-3 py-2 rounded" value="{{ old('trade_license', $merchant->trade_license) }}">
-                </div>
-
-                {{-- Wallet Balance --}}
-                <div>
-                    <label class="block text-gray-700 font-medium">Wallet Balance</label>
-                    <input type="number" name="wallet_balance" class="w-full border px-3 py-2 rounded" step="0.01" value="{{ old('wallet_balance', $merchant->wallet_balance) }}">
-                </div>
+            
 
                 {{-- Bank Info --}}
                 <div>
@@ -97,7 +81,7 @@
 
                 {{-- Logo --}}
                 <div>
-                    <label class="block text-gray-700 font-medium">Logo</label>
+                    <label class="block text-gray-700 font-medium">Image</label>
                     <input type="file" name="logo" class="w-full">
                     @if($merchant->logo)
                         <img src="{{ asset('uploads/merchants/'.$merchant->logo) }}" class="mt-2 w-32 h-auto border rounded">

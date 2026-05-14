@@ -92,10 +92,10 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
             <!-- Team Member 1 -->
             <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden text-center animate-fadeInUp">
-                <div class="relative h-48 bg-gradient-to-b from-brand/20 to-white">
+                <div class="relative  bg-gradient-to-b from-brand/20 to-white">
                     <img src="https://randomuser.me/api/portraits/men/32.jpg" class="w-32 h-32 rounded-full mx-auto mt-12 border-4 border-white shadow-md object-cover">
                 </div>
-                <div class="p-5 pt-16">
+                <div class="p-5">
                     <h5 class="text-xl font-bold text-gray-800">Rahim Ahmed</h5>
                     <p class="text-brand text-sm">Senior Web Developer</p>
                     <div class="flex justify-center gap-3 mt-3">
@@ -107,10 +107,10 @@
             </div>
             <!-- Team Member 2 -->
             <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden text-center animate-fadeInUp" style="animation-delay: 0.1s">
-                <div class="relative h-48 bg-gradient-to-b from-brand/20 to-white">
+                <div class="relative bg-gradient-to-b from-brand/20 to-white">
                     <img src="https://randomuser.me/api/portraits/men/45.jpg" class="w-32 h-32 rounded-full mx-auto mt-12 border-4 border-white shadow-md object-cover">
                 </div>
-                <div class="p-5 pt-16">
+                <div class="p-5">
                     <h5 class="text-xl font-bold text-gray-800">Karim Hasan</h5>
                     <p class="text-brand text-sm">Lead Graphic Designer</p>
                     <div class="flex justify-center gap-3 mt-3">
@@ -122,10 +122,10 @@
             </div>
             <!-- Team Member 3 -->
             <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden text-center animate-fadeInUp" style="animation-delay: 0.2s">
-                <div class="relative h-48 bg-gradient-to-b from-brand/20 to-white">
+                <div class="relative bg-gradient-to-b from-brand/20 to-white">
                     <img src="https://randomuser.me/api/portraits/women/68.jpg" class="w-32 h-32 rounded-full mx-auto mt-12 border-4 border-white shadow-md object-cover">
                 </div>
-                <div class="p-5 pt-16">
+                <div class="p-5">
                     <h5 class="text-xl font-bold text-gray-800">Nusrat Jahan</h5>
                     <p class="text-brand text-sm">Digital Marketing Expert</p>
                     <div class="flex justify-center gap-3 mt-3">
@@ -137,10 +137,10 @@
             </div>
             <!-- Team Member 4 -->
             <div class="bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden text-center animate-fadeInUp" style="animation-delay: 0.3s">
-                <div class="relative h-48 bg-gradient-to-b from-brand/20 to-white">
+                <div class="relative bg-gradient-to-b from-brand/20 to-white">
                     <img src="https://randomuser.me/api/portraits/men/22.jpg" class="w-32 h-32 rounded-full mx-auto mt-12 border-4 border-white shadow-md object-cover">
                 </div>
-                <div class="p-5 pt-16">
+                <div class="p-5">
                     <h5 class="text-xl font-bold text-gray-800">Sabbir Khan</h5>
                     <p class="text-brand text-sm">Lead Instructor (MERN)</p>
                     <div class="flex justify-center gap-3 mt-3">
