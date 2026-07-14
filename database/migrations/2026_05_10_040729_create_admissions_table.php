@@ -32,6 +32,7 @@ return new class extends Migration
             $table->string('attachment')->nullable();
 
             $table->string('status')->default('pending');
+            $table->string('verification_token')->nullable()->unique();
 
             $table->timestamps();
         });

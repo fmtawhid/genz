@@ -115,6 +115,13 @@
                         </a>
                     </li>
                     <li>
+                        <a href="{{ route('merchant.certificates.index') }}"
+                            class="flex items-center p-3 rounded-lg {{ request()->routeIs('merchant.certificates.*') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-certificate mr-3"></i>
+                            Certificates
+                        </a>
+                    </li>
+                    <li>
                         <a href="{{ route('merchant.settings.edit') }}"
                             class="flex items-center p-3 rounded-lg {{ request()->routeIs('merchant.setting.edit') ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700' : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
                             <i class="fas fa-tachometer-alt mr-3"></i>

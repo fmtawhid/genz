@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Certificate of Achievement - GEN-Z IT Institute</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700;800;900&family=Cinzel:wght@500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #dfe6e2;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .certificate-page {
+    width: 1123px;
+    height: 794px;
+    margin: 20px auto;
+    position: relative;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  }
+
+  /* ===================== OUTER FRAME ===================== */
+  .outer-border {
+    position: absolute;
+    inset: 0;
+    border: 20px solid #0b5d38;
+  }
+
+  .border-scallop {
+    position: absolute;
+    inset: 20px;
+    border: 3px solid #0b5d38;
+    background-image:
+      radial-gradient(circle at 0 0, transparent 8px, #0b5d38 8.5px, #0b5d38 9px, transparent 9.5px);
+    background-size: 18px 18px;
+    padding: 14px;
+  }
+
+  .inner-frame {
+    position: absolute;
+    inset: 34px;
+    border: 2px solid #0b5d38;
+    background: #fffdfa;
+  }
+
+  .inner-frame-2 {
+    position: absolute;
+    inset: 42px;
+    border: 1px solid #c8942f;
+  }
+
+  /* thin decorative teeth pattern along the scallop band */
+  .scallop-band {
+    position: absolute;
+    inset: 20px;
+    height: calc(100% - 40px);
+    width: calc(100% - 40px);
+    pointer-events: none;
+    background-image:
+      repeating-linear-gradient(90deg, #0b5d38 0 2px, transparent 2px 16px);
+    opacity: 0.15;
+  }
+
+  /* ===================== SECURITY BACKGROUND ===================== */
+  .guilloche-bg {
+    position: absolute;
+    inset: 42px;
+    overflow: hidden;
+    background: #fffefb;
+  }
+
+  .guilloche-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+  }
+
+  .wave-bottom {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 260px;
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .microtext-layer {
+    position: absolute;
+    inset: 0;
+    color: #b23b3b;
+    font-size: 6px;
+    line-height: 10px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    opacity: 0.10;
+    word-spacing: 4px;
+    overflow: hidden;
+    user-select: none;
+    padding: 4px;
+    font-family: 'Poppins', sans-serif;
+    text-transform: uppercase;
+  }
+
+  .center-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 380px;
+    height: 380px;
+    transform: translate(-50%, -50%);
+    opacity: 0.06;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* ===================== CONTENT LAYER ===================== */
+  .content-layer {
+    position: absolute;
+    inset: 42px;
+    z-index: 5;
+  }
+
+  .flourish {
+    display: block;
+    margin: 0 auto;
+    height: 20px;
+  }
+
+  .serif-title {
+    font-family: 'Cinzel', serif;
+  }
+
+  .display-name {
+    font-family: 'Playfair Display', serif;
+  }
+
+  .sig-line {
+    border-top: 1.5px solid #333;
+    width: 220px;
+  }
+
+  .id-box {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .qr-circle {
+    width: 168px;
+    height: 168px;
+    border-radius: 9999px;
+    background: #ffffff;
+    border: 3px solid #0b5d38;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25), inset 0 0 0 6px #fdfdfb;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #qrcode-canvas img, #qrcode-canvas canvas {
+    border-radius: 8px;
+  }
+
+  @media print {
+    html, body { background: #fff; }
+    .certificate-page {
+      margin: 0;
+      box-shadow: none;
+      page-break-after: avoid;
+      page-break-inside: avoid;
+    }
+    @page {
+      size: 1123px 794px landscape;
+      margin: 0;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="certificate-page">
+
+  <!-- Outer frame layers -->
+  <div class="outer-border"></div>
+  <div class="border-scallop"></div>
+  <div class="inner-frame"></div>
+  <div class="inner-frame-2"></div>
+
+  <!-- Security background -->
+  <div class="guilloche-bg">
+
+    <!-- Guilloche pattern (SVG) -->
+    <svg class="guilloche-svg" viewBox="0 0 1040 710" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <pattern id="guilloche" width="60" height="60" patternUnits="userSpaceOnUse">
+          <circle cx="30" cy="30" r="26" fill="none" stroke="#1a7a4c" stroke-width="0.4"/>
+          <circle cx="30" cy="30" r="18" fill="none" stroke="#1a7a4c" stroke-width="0.3"/>
+          <circle cx="0" cy="0" r="26" fill="none" stroke="#2c6ea5" stroke-width="0.3"/>
+          <circle cx="60" cy="60" r="26" fill="none" stroke="#2c6ea5" stroke-width="0.3"/>
+        </pattern>
+      </defs>
+      <rect x="0" y="0" width="1040" height="710" fill="url(#guilloche)"/>
+    </svg>
+
+    <!-- micro text watermark repeated -->
+    <div class="microtext-layer" id="microtext"></div>
+
+    <!-- bottom wave pattern -->
+    <svg class="wave-bottom" viewBox="0 0 1040 260" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,180 C150,120 300,220 480,160 C660,100 800,200 1040,140 L1040,260 L0,260 Z" fill="#0b5d38" opacity="0.10"/>
+      <path d="M0,210 C180,150 350,240 520,190 C700,130 850,230 1040,170 L1040,260 L0,260 Z" fill="#2c6ea5" opacity="0.10"/>
+      <path d="M0,230 C200,190 400,250 560,215 C740,175 900,245 1040,205 L1040,260 L0,260 Z" fill="#0b5d38" opacity="0.08"/>
+    </svg>
+
+    <!-- Center faded logo watermark -->
+    <svg class="center-watermark" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="100" cy="100" r="95" fill="none" stroke="#0b5d38" stroke-width="3"/>
+      <text x="100" y="90" text-anchor="middle" font-family="Cinzel, serif" font-size="34" font-weight="700" fill="#0b5d38">GEN-Z</text>
+      <text x="100" y="130" text-anchor="middle" font-family="Poppins, sans-serif" font-size="14" letter-spacing="3" fill="#0b5d38">IT INSTITUTE</text>
+    </svg>
+
+  </div>
+
+  <!-- Main content -->
+  <div class="content-layer">
+
+    <!-- ID NO top right -->
+    <div class="absolute top-0 right-0 text-right id-box">
+      <p class="text-[13px] font-bold text-gray-800 tracking-wide">ID NO:</p>
+      <p class="text-[15px] font-extrabold text-gray-900 tracking-wide">CB 250508</p>
+    </div>
+
+    <!-- Header -->
+    <div class="flex items-center justify-center gap-4 pt-1">
+      <!-- Logo -->
+      <svg width="70" height="60" viewBox="0 0 70 60" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="66" height="46" rx="4" fill="none" stroke="#111" stroke-width="2"/>
+        <text x="35" y="20" text-anchor="middle" font-family="Poppins" font-size="9" font-weight="800" fill="#111">GEN</text>
+        <text x="35" y="20" text-anchor="middle" font-family="Poppins" font-size="9" font-weight="800" fill="#111" dx="0"></text>
+        <line x1="8" y1="26" x2="62" y2="26" stroke="#111" stroke-width="1.5"/>
+        <text x="35" y="42" text-anchor="middle" font-family="Poppins" font-size="11" font-weight="900" fill="#111">IT</text>
+        <path d="M14 6 L 30 6 L 14 26 L 30 26" fill="none" stroke="#0b5d38" stroke-width="2.5"/>
+        <text x="52" y="56" text-anchor="middle" font-family="Poppins" font-size="6" fill="#555">EST.</text>
+      </svg>
+
+      <h1 class="text-[58px] leading-none font-black text-gray-900 tracking-tight" style="font-family:'Poppins',sans-serif;">
+        GEN-Z <span class="text-gray-900">IT</span> INSTITUTE
+      </h1>
+    </div>
+
+    <!-- Divider under header -->
+    <div class="flex justify-center mt-2">
+      <div class="w-[520px] border-t-2 border-[#0b5d38]"></div>
+    </div>
+
+    <!-- Certificate title block -->
+    <div class="text-center mt-5">
+      <svg class="flourish" viewBox="0 0 300 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,12 C60,2 90,22 150,12 C210,2 240,22 290,12" fill="none" stroke="#0b5d38" stroke-width="1.4"/>
+        <circle cx="150" cy="12" r="4" fill="#0b5d38"/>
+      </svg>
+
+      <h2 class="serif-title text-[52px] font-bold text-[#0b5d38] tracking-[6px] leading-none mt-1">CERTIFICATE</h2>
+      <h3 class="serif-title text-[22px] font-semibold text-[#0b5d38] tracking-[8px] mt-1">OF ACHIEVEMENT</h3>
+
+      <svg class="flourish mt-1" viewBox="0 0 300 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10,12 C60,22 90,2 150,12 C210,22 240,2 290,12" fill="none" stroke="#0b5d38" stroke-width="1.4"/>
+        <circle cx="150" cy="12" r="4" fill="#0b5d38"/>
+      </svg>
+    </div>
+
+    <!-- Body text -->
+    <div class="text-center mt-6">
+      <p class="text-[15px] text-gray-700 italic" style="font-family:'Playfair Display',serif;">This is to certify that</p>
+
+      <h2 class="display-name text-[46px] font-bold text-gray-900 tracking-wide mt-1 mb-1 uppercase">Jonaky Akter</h2>
+
+      <p class="text-[13.5px] text-gray-700 mt-2">Daughter of Sheikh Saadi Khan &amp; Firoja Begum.</p>
+      <p class="text-[13.5px] text-gray-700">Has successfully demonstrated proficient comprehension</p>
+      <p class="text-[13.5px] text-gray-700 mb-3">In the course of</p>
+
+      <h3 class="text-[24px] font-extrabold text-gray-900 tracking-wide">
+        &ldquo;COMPUTER BASIC &amp; OFFICE APPLICATION COURSE&rdquo;
+      </h3>
+      <p class="text-[14px] text-gray-700 mt-1">From June 2025 to December 2025.</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="absolute bottom-0 left-0 right-0 flex items-end justify-between px-2 pb-1">
+
+      <!-- Date of Issue -->
+      <div class="text-left">
+        <p class="text-[13px] font-semibold text-gray-800">Date of Issue:</p>
+        <p class="text-[15px] font-bold text-gray-900">08 January 2026</p>
+      </div>
+
+      <!-- Signature -->
+      <div class="text-center flex flex-col items-center pb-1">
+        <div class="sig-line mb-1"></div>
+        <p class="text-[13px] font-semibold text-gray-800 tracking-wide">Authorized Signature</p>
+      </div>
+
+      <!-- QR -->
+      <div class="qr-circle">
+        <div id="qrcode-canvas"></div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Fill microtext watermark layer with repeated security text
+  (function() {
+    const el = document.getElementById('microtext');
+    const unit = 'GEN-Z INSTITUTE &bull; GEN-Z INSTITUTE &bull; ';
+    let str = '';
+    for (let i = 0; i < 500; i++) str += unit;
+    el.innerHTML = str;
+  })();
+
+  // Generate QR code
+  window.addEventListener('load', function() {
+    new QRCode(document.getElementById("qrcode-canvas"), {
+      text: "https://genzit-institute.example.com/verify/CB250508",
+      width: 130,
+      height: 130,
+      colorDark: "#0b5d38",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  });
+</script>
+
+</body>
+</html>

@@ -24,6 +24,19 @@ Route::middleware(['auth','merchant'])->prefix('student')->name('merchant.')->gr
 
     Route::get('/courses/{id}', [\App\Http\Controllers\Merchant\CoursesController::class, 'show'])
         ->name('courses.show');
+
+    // ================= CERTIFICATES =================
+    Route::get('/certificates', [\App\Http\Controllers\Merchant\CertificatesController::class, 'index'])
+        ->name('certificates.index');
+
+    Route::get('/certificates/{id}', [\App\Http\Controllers\Merchant\CertificatesController::class, 'show'])
+        ->name('certificates.show');
+
+    Route::get('/certificates/{id}/download', [\App\Http\Controllers\Merchant\CertificatesController::class, 'download'])
+        ->name('certificates.download');
+
+    Route::get('/certificates/verify/{token}', [\App\Http\Controllers\Merchant\CertificatesController::class, 'verify'])
+        ->name('certificates.verify');
 });
 
 
