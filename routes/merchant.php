@@ -5,6 +5,11 @@ use App\Http\Controllers\Merchant\AdminController as MerchantDashboard;
 use App\Http\Controllers\Merchant\SettingController;
 use App\Http\Controllers\Merchant\ProjectsController;
 
+Route::prefix('student')->name('merchant.')->group(function () {
+    Route::get('/certificates/verify/{token}', [\App\Http\Controllers\Merchant\CertificatesController::class, 'verify'])
+        ->name('certificates.verify');
+});
+
 Route::middleware(['auth','merchant'])->prefix('student')->name('merchant.')->group(function() {
     Route::get('/', [MerchantDashboard::class, 'index'])->name('index');
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.edit');
@@ -34,9 +39,6 @@ Route::middleware(['auth','merchant'])->prefix('student')->name('merchant.')->gr
 
     Route::get('/certificates/{id}/download', [\App\Http\Controllers\Merchant\CertificatesController::class, 'download'])
         ->name('certificates.download');
-
-    Route::get('/certificates/verify/{token}', [\App\Http\Controllers\Merchant\CertificatesController::class, 'verify'])
-        ->name('certificates.verify');
 });
 
 
