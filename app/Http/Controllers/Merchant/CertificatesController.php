@@ -51,8 +51,14 @@ class CertificatesController extends Controller
             ->findOrFail($id);
 
         $certificateUrl = route('merchant.certificates.verify', ['token' => $this->makeVerificationToken($certificate)]);
+        $qrImageData = $this->makeQrCodeDataUri($certificateUrl);
 
-        $pdf = Pdf::loadView('merchant.certificates.pdf', compact('certificate', 'certificateUrl'));
+        $pdf = Pdf::loadView('merchant.certificates.pdf', compact('certificate', 'certificateUrl', 'qrImageData'))
+            ->setPaper('a4', 'landscape');
+        $pdf->getDomPDF()->set_option('isRemoteEnabled', true);
+        $pdf->getDomPDF()->set_option('dpi', 96);
+        $pdf->getDomPDF()->set_option('defaultFont', 'Helvetica');
+        $pdf->getDomPDF()->set_option('enable_css_float', true);
 
         return $pdf->download(Str::slug($certificate->course->title) . '-certificate.pdf');
     }
@@ -86,5 +92,22 @@ class CertificatesController extends Controller
         }
 
         return $token;
+    }
+
+    protected function makeQrCodeDataUri(string $url): string
+    {
+        $qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=' . rawurlencode($url);
+        $ch = curl_init($qrUrl);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        $image = curl_exec($ch);
+        curl_close($ch);
+
+        if ($image === false || strlen($image) < 10) {
+            return '';
+        }
+
+        return 'data:image/png;base64,' . base64_encode($image);
     }
 }

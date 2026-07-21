@@ -111,6 +111,8 @@ return [
          * Whether to enable font subsetting or not.
          */
         'enable_font_subsetting' => false,
+        'enable_html5_parser' => true,
+        'enable_remote' => true,
 
         /**
          * The PDF rendering backend to use

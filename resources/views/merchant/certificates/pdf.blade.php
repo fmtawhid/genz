@@ -4,130 +4,218 @@
     <meta charset="UTF-8">
     <title>Certificate of Achievement</title>
     <style>
-        body {
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+        html, body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
+            width: 100%;
+            height: 100%;
+            background: #e7ece8;
             color: #111827;
+            font-family: Arial, Helvetica, sans-serif;
         }
-        .certificate {
-            width: 1000px;
-            height: 700px;
-            margin: 20px auto;
-            padding: 28px;
-            box-sizing: border-box;
-            border: 12px solid #0b5d38;
-            background: #fffdfa;
-            position: relative;
+
+        body {
             overflow: hidden;
         }
-        .header {
-            border-bottom: 1px solid rgba(11,93,56,0.2);
-            padding-bottom: 16px;
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
         }
-        .header-title {
-            text-align: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: #0b5d38;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+
+        .certificate-page {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+            background: #fffdfa;
+            border: 12px solid #0b5d38;
+            box-sizing: border-box;
+            page-break-inside: avoid;
+            page-break-after: avoid;
         }
-        .header-subtitle {
-            text-align: center;
-            font-size: 16px;
-            color: #0b5d38;
-            margin-top: 6px;
-            letter-spacing: 3px;
-            font-weight: 600;
-        }
-        .content {
-            text-align: center;
-            padding-top: 28px;
+
+        .inner-frame {
+            border: 2px solid #0b5d38;
+            margin: 8px;
+            height: calc(100% - 16px);
+            box-sizing: border-box;
+            background: rgba(255, 253, 250, 0.92);
             position: relative;
             z-index: 2;
         }
+
+        .inner-frame-2 {
+            border: 1px solid #c8942f;
+            margin: 8px;
+            height: calc(100% - 16px);
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .content {
+            padding: 8px 24px 0;
+            box-sizing: border-box;
+            height: 100%;
+        }
+
+        .header-row {
+            text-align: center;
+            padding-top: 4px;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .divider {
+            width: 420px;
+            height: 1px;
+            border-top: 2px solid #0b5d38;
+            margin: 4px auto 0;
+        }
+
+        .title-block {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .certificate-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0b5d38;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        .certificate-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0b5d38;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .body-text {
+            text-align: center;
+            margin-top: 10px;
+        }
+
         .lead {
-            font-size: 15px;
+            font-size: 13px;
             color: #6b7280;
             font-style: italic;
+            margin: 0;
         }
+
         .name {
-            margin-top: 16px;
-            font-size: 34px;
+            margin-top: 6px;
+            font-size: 24px;
             font-weight: 700;
             text-transform: uppercase;
             color: #111827;
+            letter-spacing: 2px;
         }
+
+        .meta {
+            margin-top: 6px;
+            font-size: 11px;
+            color: #4b5563;
+            margin-bottom: 0;
+        }
+
         .course {
-            margin-top: 20px;
-            font-size: 22px;
+            margin-top: 6px;
+            font-size: 16px;
             font-weight: 700;
             color: #111827;
         }
-        .meta {
-            margin-top: 18px;
-            font-size: 14px;
-            color: #4b5563;
-            line-height: 1.6;
+
+        .footer-table {
+            margin-top: 16px;
+            width: 100%;
         }
-        .footer {
-            position: absolute;
-            bottom: 28px;
-            left: 28px;
-            right: 28px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            font-size: 12px;
-            color: #4b5563;
-            z-index: 2;
+
+        .footer-cell-left,
+        .footer-cell-middle,
+        .footer-cell-right {
+            vertical-align: bottom;
+            padding: 0;
         }
-        .signature {
+
+        .footer-cell-left {
+            width: 28%;
+            text-align: left;
+        }
+
+        .footer-cell-middle {
+            width: 44%;
             text-align: center;
         }
+
+        .footer-cell-right {
+            width: 28%;
+            text-align: right;
+        }
+
+        .date-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #111827;
+        }
+
+        .date-value {
+            font-size: 12px;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 2px;
+        }
+
         .sig-line {
-            width: 180px;
+            width: 150px;
             border-top: 2px solid #111827;
             margin: 0 auto 6px;
         }
-        .qr {
-            width: 90px;
-            height: 90px;
-            border: 2px solid #0b5d38;
-            padding: 6px;
-            background: white;
+
+        .sig-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #111827;
+        }
+
+        .qr-bg {
+            display: inline-block;
+            width: 76px;
+            height: 76px;
+            padding: 0;
+            background: #ffffff;
+            box-sizing: border-box;
+        }
+
+        .qr-bg img {
+            width: 76px;
+            height: 76px;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="certificate">
-        <div class="header">
-            <div class="header-title">GEN-Z IT INSTITUTE</div>
-            <div class="header-subtitle">CERTIFICATE OF ACHIEVEMENT</div>
-        </div>
-
-        <div class="content">
-            <p class="lead">This is to certify that</p>
-            <div class="name">{{ $certificate->name }}</div>
-            <p class="meta">has successfully completed the course</p>
-            <div class="course">{{ $certificate->course->title }}</div>
-            <p class="meta">Issued on {{ $certificate->updated_at->format('d M Y') }}</p>
-        </div>
-
-        <div class="footer">
-            <div>
-                <p><strong>Date of Issue:</strong> {{ $certificate->updated_at->format('d M Y') }}</p>
-            </div>
-            <div class="signature">
-                <div class="sig-line"></div>
-                <p>Authorized Signature</p>
-            </div>
-            <div>
-                <img class="qr" src="{{ $certificateUrl }}" alt="Verification link">
-            </div>
-        </div>
-    </div>
+    @include('merchant.certificates.partials.certificate-page')
 </body>
 </html>

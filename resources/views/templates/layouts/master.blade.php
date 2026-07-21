@@ -4,8 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>GenZ IT - Learn Professional Skills Online</title>
+  <link rel="icon" href="{{ asset('assets/img/favicon.png') }}" type="image/png" />
   <meta name="description" content="Learn professional skills in Graphic Design, Web Development, Digital Marketing and more from industry experts" />
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script>
     tailwind.config = {
@@ -48,9 +50,9 @@
     <div class="flex items-center justify-between py-4">
       <!-- LOGO -->
       <a href="{{ route('home') }}" class="flex items-center gap-3">
-        <img src="https://placehold.co/48x48?text=CI"
+        <img src="{{ asset('assets/img/logo.png') }}"
              alt="logo"
-             class="h-10 w-10 rounded-md object-cover shadow-sm" />
+             class="" width="75px" />
         <span class="font-bold text-xl tracking-tight text-slate-800">GenZ IT</span>
       </a>
 

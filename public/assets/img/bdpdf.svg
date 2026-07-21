@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120">
+  <rect width="1600" height="1120" fill="#fefdf8"/>
+  <g opacity="0.12" fill="#0b5d38">
+    <path d="M195 180h179v179H195z"/>
+    <path d="M470 240h240v240H470z"/>
+    <path d="M820 120h260v260H820z"/>
+    <path d="M1140 240h220v220h-220z"/>
+    <path d="M300 760h250v250H300z"/>
+    <path d="M860 760h250v250H860z"/>
+  </g>
+</svg>

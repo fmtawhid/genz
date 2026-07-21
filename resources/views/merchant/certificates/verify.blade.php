@@ -2,70 +2,218 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Certificate Verification</title>
+    <title>Certificate of Achievement</title>
     <style>
-        body {
+        @page {
+            size: A4 landscape;
             margin: 0;
-            padding: 40px;
-            font-family: Arial, sans-serif;
-            background: #f3f4f6;
-            color: #111827;
         }
-        .card {
-            max-width: 760px;
-            margin: auto;
-            padding: 28px;
-            border-radius: 24px;
+
+        html, body {
+            margin: 50px 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            background: #e7ece8;
+            color: #111827;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        table {
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+
+        .certificate-page {
+            width: 1123px;
+            height: 794px;
+            position: relative;
+            overflow: hidden;
             background: #fffdfa;
             border: 12px solid #0b5d38;
-            box-shadow: 0 18px 45px rgba(0,0,0,0.14);
+            box-sizing: border-box;
         }
-        .badge {
-            display: inline-block;
-            padding: 8px 12px;
-            background: #dcfce7;
-            color: #166534;
-            border-radius: 999px;
-            font-weight: 700;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 0.2em;
+
+        .inner-frame {
+            border: 2px solid #0b5d38;
+            margin: 8px;
+            height: 760px;
+            box-sizing: border-box;
+            background: rgba(255, 253, 250, 0.92);
+            position: relative;
+            z-index: 2;
         }
-        .title {
-            margin-top: 16px;
-            font-size: 28px;
+
+        .inner-frame-2 {
+            border: 1px solid #c8942f;
+            margin: 8px;
+            height: 736px;
+            box-sizing: border-box;
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .content {
+            padding: 8px 24px 0;
+        }
+
+        .header-row {
+            text-align: center;
+            padding-top: 4px;
+        }
+
+        .header-title {
+            font-size: 26px;
+            font-weight: 800;
+            color: #111827;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .divider {
+            width: 420px;
+            height: 1px;
+            border-top: 2px solid #0b5d38;
+            margin: 4px auto 0;
+        }
+
+        .title-block {
+            text-align: center;
+            margin-top: 8px;
+        }
+
+        .certificate-title {
+            font-size: 22px;
             font-weight: 700;
             color: #0b5d38;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            letter-spacing: 0.16em;
         }
-        .subtitle {
-            margin-top: 8px;
-            font-size: 16px;
+
+        .certificate-subtitle {
+            font-size: 12px;
+            font-weight: 600;
+            color: #0b5d38;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        .body-text {
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .lead {
+            font-size: 13px;
             color: #6b7280;
+            font-style: italic;
+            margin: 0;
         }
+
+        .name {
+            margin-top: 6px;
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #111827;
+            letter-spacing: 2px;
+        }
+
         .meta {
-            margin-top: 24px;
-            color: #374151;
-            line-height: 1.7;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #4b5563;
+            margin-bottom: 0;
         }
-        .meta p {
-            margin: 6px 0;
+
+        .course {
+            margin-top: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #111827;
+        }
+
+        .footer-table {
+            margin-top: 16px;
+            width: 100%;
+        }
+
+        .footer-cell-left,
+        .footer-cell-middle,
+        .footer-cell-right {
+            vertical-align: bottom;
+            padding: 0;
+        }
+
+        .footer-cell-left {
+            width: 28%;
+            text-align: left;
+        }
+
+        .footer-cell-middle {
+            width: 44%;
+            text-align: center;
+        }
+
+        .footer-cell-right {
+            width: 28%;
+            text-align: right;
+        }
+
+        .date-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #111827;
+        }
+
+        .date-value {
+            font-size: 12px;
+            font-weight: 700;
+            color: #111827;
+            margin-top: 2px;
+        }
+
+        .sig-line {
+            width: 150px;
+            border-top: 2px solid #111827;
+            margin: 0 auto 6px;
+        }
+
+        .sig-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #111827;
+        }
+
+        .qr-bg {
+            display: inline-block;
+            width: 76px;
+            height: 76px;
+            padding: 0;
+            background: #ffffff;
+            box-sizing: border-box;
+        }
+
+        .qr-bg img {
+            width: 76px;
+            height: 76px;
+            display: block;
         }
     </style>
 </head>
 <body>
-    <div class="card">
-        <div class="badge">Verified Certificate</div>
-        <div class="title">GEN-Z IT INSTITUTE</div>
-        <div class="subtitle">Certificate of Achievement</div>
-        <div class="meta">
-            <p><strong>Student:</strong> {{ $certificate->name }}</p>
-            <p><strong>Course:</strong> {{ $certificate->course->title }}</p>
-            <p><strong>Email:</strong> {{ $certificate->email }}</p>
-            <p><strong>Issued:</strong> {{ $certificate->updated_at->format('d M Y') }}</p>
-            <p><strong>Status:</strong> Approved</p>
-        </div>
-    </div>
+    @include('merchant.certificates.partials.certificate-page')
 </body>
 </html>
