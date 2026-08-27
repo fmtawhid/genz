@@ -19,37 +19,56 @@
     </div>
 </section>
 
-@php
-$videos = [
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-];
-@endphp
+
 
 <!-- Video Grid -->
 <section class="container mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 lg:py-20">
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 lg:gap-8">
 
-        @foreach($videos as $video)
-            <div class="rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300 bg-black">
+        @foreach($successStories as $story)
+            @php
+                $youtubeUrl = trim($story->youtube_url);
+                $youtubeParts = parse_url($youtubeUrl);
+                $youtubeHost = strtolower($youtubeParts['host'] ?? '');
+                $videoId = null;
+
+                if (str_contains($youtubeHost, 'youtu.be')) {
+                    $videoId = trim($youtubeParts['path'] ?? '', '/');
+                } elseif (str_contains($youtubeHost, 'youtube.com')) {
+                    parse_str($youtubeParts['query'] ?? '', $youtubeQuery);
+                    $videoId = $youtubeQuery['v'] ?? null;
+
+                    if (!$videoId && str_starts_with($youtubeParts['path'] ?? '', '/embed/')) {
+                        $videoId = trim(str_replace('/embed/', '', $youtubeParts['path']), '/');
+                    }
+                }
+
+                $embedUrl = $videoId
+                    ? 'https://www.youtube.com/embed/' . $videoId . '?autoplay=0&rel=0'
+                    : $youtubeUrl;
+            @endphp
+
+            <article class="rounded-xl sm:rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition duration-300 bg-black">
 
                 <div class="aspect-video">
                     <iframe
                         class="w-full h-full"
-                        src="{{ $video }}?autoplay=0"
-                        title="YouTube video"
+                        src="{{ $embedUrl }}"
+                        title="{{ $story->title }}"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen>
                     </iframe>
                 </div>
 
-            </div>
+                <div class="bg-white p-4 sm:p-5">
+                    <h2 class="text-lg font-bold text-gray-800">{{ $story->title }}</h2>
+                    @if($story->note)
+                        <p class="mt-2 text-sm text-gray-600">{{ $story->note }}</p>
+                    @endif
+                </div>
+            </article>
         @endforeach
 
     </div>

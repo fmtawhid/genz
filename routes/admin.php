@@ -7,6 +7,9 @@ use App\Http\Controllers\Admin\ProjectsController;
 use App\Http\Controllers\Admin\TasksController;
 use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\AdmissionController;
+use App\Http\Controllers\Admin\SuccessStoryController;
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\ReviewController;
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
 
@@ -62,6 +65,34 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
         Route::delete('/lessons/{id}/destroy', [CourseController::class, 'deleteLesson'])
             ->name('lessons.destroy');
+    });
+
+    // ================= SUCCESS STORIES CRUD =================
+    Route::prefix('success-stories')->name('success-stories.')->group(function () {
+        Route::get('/', [SuccessStoryController::class, 'index'])->name('index');
+        Route::get('/create', [SuccessStoryController::class, 'create'])->name('create');
+        Route::post('/store', [SuccessStoryController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [SuccessStoryController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [SuccessStoryController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [SuccessStoryController::class, 'destroy'])->name('destroy');
+        Route::get('/{id}', [SuccessStoryController::class, 'show'])->name('show');
+    });
+
+    // ================= CONTACT MESSAGES =================
+    Route::prefix('contact-messages')->name('contact-messages.')->group(function () {
+        Route::get('/', [ContactMessageController::class, 'index'])->name('index');
+        Route::get('/{id}', [ContactMessageController::class, 'show'])->name('show');
+        Route::delete('/{id}/destroy', [ContactMessageController::class, 'destroy'])->name('destroy');
+    });
+
+    // ================= REVIEWS CRUD =================
+    Route::prefix('reviews')->name('reviews.')->group(function () {
+        Route::get('/', [ReviewController::class, 'index'])->name('index');
+        Route::get('/create', [ReviewController::class, 'create'])->name('create');
+        Route::post('/store', [ReviewController::class, 'store'])->name('store');
+        Route::get('/{id}/edit', [ReviewController::class, 'edit'])->name('edit');
+        Route::put('/{id}/update', [ReviewController::class, 'update'])->name('update');
+        Route::delete('/{id}/destroy', [ReviewController::class, 'destroy'])->name('destroy');
     });
 
     // ================= GENERAL TASKS =================

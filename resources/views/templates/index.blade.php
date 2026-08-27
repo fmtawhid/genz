@@ -177,45 +177,24 @@
             <p class="text-gray-500 mt-2">Real people, real results – from our students</p>
         </div>
         <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 animate-fadeInUp">
-                <div class="flex items-center gap-4">
-                    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Ahmed Hassan</h4>
-                        <p class="text-sm text-brand">Web Developer at TechCorp</p>
+            @forelse($reviews as $review)
+                <article class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 animate-fadeInUp" style="animation-delay: {{ $loop->index * 0.1 }}s">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <h4 class="font-bold text-gray-800">{{ $review->name }}</h4>
+                            <p class="text-sm text-brand">{{ $review->profession }}</p>
+                        </div>
+                        <div class="text-yellow-400 flex text-sm" aria-label="{{ $review->rating }} out of 5 stars">
+                            @for($star = 1; $star <= 5; $star++)
+                                <i class="fas fa-star {{ $star <= $review->rating ? '' : 'text-gray-300' }}"></i>
+                            @endfor
+                        </div>
                     </div>
-                </div>
-                <p class="mt-4 text-gray-600 italic">“The course was amazing! I got my first job within 3 months of completing the program.”</p>
-                <div class="mt-3 text-yellow-400 flex">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 animate-fadeInUp" style="animation-delay: 0.1s">
-                <div class="flex items-center gap-4">
-                    <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Fariha Khan</h4>
-                        <p class="text-sm text-brand">Graphics Designer at DesignHub</p>
-                    </div>
-                </div>
-                <p class="mt-4 text-gray-600 italic">“Excellent mentorship and hands-on projects. Highly recommended for beginners!”</p>
-                <div class="mt-3 text-yellow-400 flex">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                </div>
-            </div>
-            <div class="bg-white rounded-2xl p-6 shadow-md hover:shadow-xl transition-all duration-300 animate-fadeInUp" style="animation-delay: 0.2s">
-                <div class="flex items-center gap-4">
-                    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Student" class="w-16 h-16 rounded-full object-cover">
-                    <div>
-                        <h4 class="font-bold text-gray-800">Karim Ahmed</h4>
-                        <p class="text-sm text-brand">Digital Marketer at BrandWorks</p>
-                    </div>
-                </div>
-                <p class="mt-4 text-gray-600 italic">“Best decision ever! The instructors are very supportive and the curriculum is industry-focused.”</p>
-                <div class="mt-3 text-yellow-400 flex">
-                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                </div>
-            </div>
+                    <p class="mt-4 text-gray-600 italic">“{{ $review->message }}”</p>
+                </article>
+            @empty
+                <p class="col-span-full text-center text-gray-500">Reviews will appear here soon.</p>
+            @endforelse
         </div>
     </div>
 </section>

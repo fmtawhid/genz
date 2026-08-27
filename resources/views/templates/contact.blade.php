@@ -4,10 +4,10 @@
 
 <!-- Hero Section -->
 <section class="relative bg-cover bg-center bg-no-repeat"
-         style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.6), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
+         style="background-image: linear-gradient(to bottom, rgba(127,29,29,0.9), rgba(185,28,28,0.72)), url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');">
     <div class="container mx-auto px-4 lg:px-8 py-20 lg:py-28 text-center relative z-10">
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white animate-fadeInDown">
-            Contact <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">Us</span>
+            Contact <span class="text-red-200">Us</span>
         </h1>
         <p class="mt-4 text-lg text-gray-200 max-w-2xl mx-auto animate-fadeInUp">
             Have questions? We're here to help. Reach out anytime.
@@ -23,8 +23,8 @@
         <div class="space-y-6 animate-fadeInUp">
             <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition group">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-700 transition">
-                        <i class="fas fa-phone-alt text-xl text-primary-700 group-hover:text-white"></i>
+                    <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center transition">
+                        <i class="fas fa-phone-alt text-xl text-brand"></i>
                     </div>
                     <div>
                         <h4 class="font-bold text-gray-800">Phone</h4>
@@ -36,8 +36,8 @@
             
             <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition group">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-700 transition">
-                        <i class="fas fa-envelope text-xl text-primary-700 group-hover:text-white"></i>
+                    <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center transition">
+                        <i class="fas fa-envelope text-xl text-brand"></i>
                     </div>
                     <div>
                         <h4 class="font-bold text-gray-800">Email</h4>
@@ -49,8 +49,8 @@
             
             <div class="bg-white p-6 rounded-2xl shadow-md hover:shadow-lg transition group">
                 <div class="flex items-center gap-4">
-                    <div class="w-12 h-12 bg-primary-100 rounded-xl flex items-center justify-center group-hover:bg-primary-700 transition">
-                        <i class="fas fa-map-marker-alt text-xl text-primary-700 group-hover:text-white"></i>
+                    <div class="w-12 h-12 bg-brand/10 rounded-xl flex items-center justify-center transition">
+                        <i class="fas fa-map-marker-alt text-xl text-brand"></i>
                     </div>
                     <div>
                         <h4 class="font-bold text-gray-800">Address</h4>
@@ -61,7 +61,7 @@
             </div>
 
             <!-- WhatsApp Card -->
-            <div class="bg-gradient-to-r from-primary-50 to-white p-6 rounded-2xl shadow-md text-center border border-primary-100">
+            <div class="bg-brand/5 p-6 rounded-2xl shadow-md text-center border border-brand/10">
                 <i class="fab fa-whatsapp text-4xl text-green-500 mb-2"></i>
                 <h4 class="font-bold text-gray-800">Need instant reply?</h4>
                 <p class="text-gray-500 text-sm mt-1">Chat with us on WhatsApp</p>
@@ -75,16 +75,16 @@
             <div class="bg-white p-6 rounded-2xl shadow-md text-center">
                 <h4 class="font-bold text-gray-800 mb-3">Follow Us</h4>
                 <div class="flex justify-center gap-4">
-                    <a href="#" class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 hover:bg-primary-700 hover:text-white transition">
+                    <a href="#" class="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand hover:bg-brand hover:text-white transition">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 hover:bg-primary-700 hover:text-white transition">
+                    <a href="#" class="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand hover:bg-brand hover:text-white transition">
                         <i class="fab fa-linkedin-in"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 hover:bg-primary-700 hover:text-white transition">
+                    <a href="#" class="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand hover:bg-brand hover:text-white transition">
                         <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="w-10 h-10 bg-primary-100 rounded-full flex items-center justify-center text-primary-700 hover:bg-primary-700 hover:text-white transition">
+                    <a href="#" class="w-10 h-10 bg-brand/10 rounded-full flex items-center justify-center text-brand hover:bg-brand hover:text-white transition">
                         <i class="fab fa-youtube"></i>
                     </a>
                 </div>
@@ -96,37 +96,50 @@
             <h2 class="text-2xl font-bold text-gray-800 mb-2">Send us a Message</h2>
             <p class="text-gray-500 mb-6">We'll get back to you within 24 hours.</p>
             
-            <form action="#" method="POST" class="space-y-5">
+            @if(session('success'))
+                <div class="mb-6 p-4 rounded-lg bg-green-100 text-green-800 border border-green-200">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="mb-6 p-4 rounded-lg bg-red-100 text-red-800 border border-red-200">
+                    <ul class="list-disc ml-5 space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <form action="{{ route('contact.store') }}" method="POST" class="space-y-5">
                 @csrf
                 <div class="grid md:grid-cols-2 gap-5">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                        <input type="text" name="name" required 
-                               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-primary-700 focus:border-primary-700 transition">
+                        <input type="text" name="name" value="{{ old('name') }}" required
+                               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-brand focus:border-brand transition">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                        <input type="tel" name="phone" required 
-                               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-primary-700 focus:border-primary-700 transition">
+                        <input type="tel" name="phone" value="{{ old('phone') }}" required
+                               class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-brand focus:border-brand transition">
                     </div>
                 </div>
+
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-                    <input type="email" name="email" required 
-                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-primary-700 focus:border-primary-700 transition">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Subject</label>
-                    <input type="text" name="subject" 
-                           class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-primary-700 focus:border-primary-700 transition">
-                </div>
-                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                          <input type="email" name="email" value="{{ old('email') }}"
+                              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-brand focus:border-brand transition">
+                      </div>
+
+                      <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">Your Message *</label>
-                    <textarea name="message" rows="5" required 
-                              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-primary-700 focus:border-primary-700 transition"></textarea>
+                    <textarea name="message" rows="5" required
+                              class="w-full border border-gray-300 rounded-lg px-4 py-3 focus:ring-brand focus:border-brand transition">{{ old('message') }}</textarea>
                 </div>
                 <button type="submit" 
-                        class="w-full bg-primary-700 text-white py-3 rounded-lg font-semibold hover:bg-primary-800 transition shadow-md">
+                        class="w-full bg-brand text-white py-3 rounded-lg font-semibold hover:bg-brand-600 transition shadow-md">
                     Send Message <i class="fas fa-paper-plane ml-2"></i>
                 </button>
             </form>
@@ -149,12 +162,12 @@
 </section>
 
 <!-- CTA Section -->
-<section class="bg-primary-700 py-16 lg:py-20 text-center">
+<section class="bg-brand-700 py-16 lg:py-20 text-center">
     <div class="container mx-auto px-4">
         <h2 class="text-2xl md:text-3xl font-bold text-white">Still Confused About Your Career?</h2>
-        <p class="mt-2 text-primary-100 max-w-lg mx-auto">Join our free seminar & get clear direction from industry experts.</p>
+        <p class="mt-2 text-red-100 max-w-lg mx-auto">Join our free seminar & get clear direction from industry experts.</p>
         <div class="mt-6">
-            <a href="#" class="inline-flex items-center gap-2 bg-white text-primary-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition shadow-lg">
+            <a href="#" class="inline-flex items-center gap-2 bg-white text-brand px-6 py-3 rounded-lg font-semibold hover:bg-red-50 transition shadow-lg">
                 Join Free Seminar <i class="fas fa-arrow-right"></i>
             </a>
         </div>

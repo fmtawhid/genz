@@ -164,6 +164,79 @@
                         </details>
                     </li>
 
+                    <!-- SUCCESS STORIES -->
+                    <li>
+                        <details class="group"
+                            @if(request()->routeIs('admin.success-stories.*')) open @endif>
+
+                            <summary
+                                class="list-none flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-300
+                                {{ request()->routeIs('admin.success-stories.*')
+                                    ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+
+                                <div class="flex items-center">
+                                    <i class="fas fa-star mr-3"></i>
+                                    Success Stories
+                                </div>
+
+                                <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+
+                            </summary>
+
+                            <div class="ml-6 mt-2 space-y-2 border-l border-gray-200 pl-4">
+                                <a href="{{ route('admin.success-stories.index') }}" class="flex items-center p-2 rounded-lg text-sm transition {{ request()->routeIs('admin.success-stories.index') ? 'bg-primary-100 text-primary-700' : 'hover:bg-gray-100 text-gray-600' }}">
+                                    <i class="fas fa-list mr-3"></i>
+                                    All Success Stories
+                                </a>
+
+                                <a href="{{ route('admin.success-stories.create') }}" class="flex items-center p-2 rounded-lg text-sm hover:bg-gray-100 text-gray-600">
+                                    <i class="fas fa-plus mr-3"></i>
+                                    Add Success Story
+                                </a>
+                            </div>
+                        </details>
+                    </li>
+
+                    <!-- CONTACT MESSAGES -->
+                    <li>
+                        <a href="{{ route('admin.contact-messages.index') }}"
+                           class="flex items-center p-3 rounded-xl transition-all duration-300
+                           {{ request()->routeIs('admin.contact-messages.*')
+                                ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                            <i class="fas fa-envelope mr-3"></i>
+                            Contact Messages
+                        </a>
+                    </li>
+
+                    <!-- REVIEWS -->
+                    <li>
+                        <details class="group"
+                            @if(request()->routeIs('admin.reviews.*')) open @endif>
+                            <summary class="list-none flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-300
+                                {{ request()->routeIs('admin.reviews.*')
+                                    ? 'bg-primary-50 text-primary-700 border-l-4 border-primary-700 shadow-sm'
+                                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900' }}">
+                                <div class="flex items-center">
+                                    <i class="fas fa-star mr-3"></i>
+                                    Reviews
+                                </div>
+                                <i class="fas fa-chevron-down text-xs transition-transform group-open:rotate-180"></i>
+                            </summary>
+                            <div class="ml-6 mt-2 space-y-2 border-l border-gray-200 pl-4">
+                                <a href="{{ route('admin.reviews.index') }}" class="flex items-center p-2 rounded-lg text-sm transition {{ request()->routeIs('admin.reviews.index') ? 'bg-primary-100 text-primary-700' : 'hover:bg-gray-100 text-gray-600' }}">
+                                    <i class="fas fa-list mr-3"></i>
+                                    All Reviews
+                                </a>
+                                <a href="{{ route('admin.reviews.create') }}" class="flex items-center p-2 rounded-lg text-sm hover:bg-gray-100 text-gray-600">
+                                    <i class="fas fa-plus mr-3"></i>
+                                    Add Review
+                                </a>
+                            </div>
+                        </details>
+                    </li>
+
                     <!-- STUDENTS -->
                     <li>
                         <details class="group"

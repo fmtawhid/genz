@@ -12,6 +12,7 @@ Route::get('/courses', [PageController::class, 'courses'])->name('courses');
 Route::get('/course/{slug}', [PageController::class, 'courseDetails'])->name('course.details');
 
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::post('/contact', [PageController::class, 'contactStore'])->name('contact.store');
 Route::get('/success-stories', [PageController::class, 'successStories'])->name('success.stories');
 Route::get('/admission', [AdmissionController::class, 'index'])
     ->name('admission');
